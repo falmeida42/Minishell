@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:08:29 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/11 16:19:57 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int main(int argc, char **argv, char **env)
 	mini.env = get_env(env);
 	mini.exit = false;
 
+	printf("Hello World\n");
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
 	while (42)
