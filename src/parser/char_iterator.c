@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 06:15:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 06:15:57 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 17:53:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char char_iterator_peek(char_iterator *it)
 {
-    return (**it);
+	return (**it);
 }
 
 char char_iterator_next(char_iterator *it)
 {
-    return (*(++*it));
+	return (*(++*it));
 }

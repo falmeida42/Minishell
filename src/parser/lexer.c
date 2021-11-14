@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 02:15:09 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 17:46:27 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/14 17:52:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,57 +17,57 @@
 // get the next token
 t_token *token_next(char **cursor)
 {
-    char c;
+	char c;
 
-    c = char_iterator_peek(cursor);
-    while (c && c == ' ') // skip spaces
-        c = char_iterator_next(cursor);
-    if (c == '\0')
-        return NULL;
-    if (ft_contains(c, ";|&><)("))
-        return (take_symbol(cursor));
-    if (c == '"')
-        return (take_dquoted(cursor));
-    if (c == '\'')
-        return (take_quoted(cursor));
-    return (take_text(cursor));
+	c = char_iterator_peek(cursor);
+	while (c && c == ' ') // skip spaces
+		c = char_iterator_next(cursor);
+	if (c == '\0')
+		return NULL;
+	if (ft_contains(c, ";|&><)("))
+		return (take_symbol(cursor));
+	if (c == '"')
+		return (take_dquoted(cursor));
+	if (c == '\'')
+		return (take_quoted(cursor));
+	return (take_text(cursor));
 }
 
 t_token_list *lex(char *input)
 {
-    t_token *token;
-    t_token_list *token_list;
+	t_token *token;
+	t_token_list *token_list;
 
-    token_list = NULL;
-    while (1)
-    {
-        token = token_next(&input);
-        if (!token)
-            break ;
-        ft_lstpush_back(&token_list, token);
-    }
-    return (token_list);
+	token_list = NULL;
+	while (1)
+	{
+		token = token_next(&input);
+		if (!token)
+			break ;
+		ft_lstpush_back(&token_list, token);
+	}
+	return (token_list);
 }
 
 int main(int argc, char **argv)
 {
-    t_token_list *token_list;
-    t_token_list *token_it;
-    t_token *token;
+	t_token_list *token_list;
+	t_token_list *token_it;
+	t_token *token;
 
-    if (argc != 2)
-    {
-        printf("usage: ./lexer <input>\n");
-        return (1);
-    }
-    token_list = lex(argv[1]);
-    token_it = token_list;
-    while (token_it)
-    {
-        token = token_it->content;
-        printf("%d: %s\n", token->type, token->value);
-        token_it = token_it->next;
-    }
-    ft_lstclear(&token_list, token_free);
-    return (0);
+	if (argc != 2)
+	{
+		printf("usage: ./lexer <input>\n");
+		return (1);
+	}
+	token_list = lex(argv[1]);
+	token_it = token_list;
+	while (token_it)
+	{
+		token = token_it->content;
+		printf("%d: %s\n", token->type, token->value);
+		token_it = token_it->next;
+	}
+	ft_lstclear(&token_list, token_free);
+	return (0);
 }
