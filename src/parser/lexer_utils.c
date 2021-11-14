@@ -55,9 +55,9 @@ t_token *take_symbol(char_iterator *cursor)
     else if (c == '<')
         type = TOKEN_LESS;
     else if (c == '(')
-        type = TOKEN_LEFT_PAREN;
+        type = TOKEN_LPAREN;
     else if (c == ')')
-        type = TOKEN_RIGHT_PAREN;
+        type = TOKEN_RPAREN;
     char_iterator_next(cursor);
     token = token_new(type, NULL);
     return (token);
@@ -81,7 +81,7 @@ t_token *take_dquoted(char **cursor)
     }
     end = *cursor;
     char_iterator_next(cursor);
-    return (token_new(TOKEN_DQUOTED_TEXT, ft_substr(start, 0, end - start)));
+    return (token_new(TOKEN_DQUOTED, ft_substr(start, 0, end - start)));
 }
 
 t_token *take_quoted(char **cursor)
@@ -102,7 +102,7 @@ t_token *take_quoted(char **cursor)
     }
     end = *cursor;
     char_iterator_next(cursor);
-    return (token_new(TOKEN_QUOTED_TEXT, ft_substr(start, 0, end - start)));
+    return (token_new(TOKEN_QUOTED, ft_substr(start, 0, end - start)));
 }
 
 t_token *take_text(char **cursor)

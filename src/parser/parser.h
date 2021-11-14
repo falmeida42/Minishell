@@ -24,8 +24,8 @@ typedef enum e_token_type
 {
     TOKEN_NULL,
     TOKEN_TEXT,         // text
-    TOKEN_QUOTED_TEXT,  // 'text'
-    TOKEN_DQUOTED_TEXT, // "text"
+    TOKEN_QUOTED,       // 'text'
+    TOKEN_DQUOTED,      // "text"
     TOKEN_SEMICOLON,    // ;
     TOKEN_PIPE,         // |
     TOKEN_AMPERSAND,    // &
@@ -35,8 +35,8 @@ typedef enum e_token_type
     TOKEN_LESS,         // <
     TOKEN_DGREATER,     // >>
     TOKEN_DLESS,        // <<
-    TOKEN_LEFT_PAREN,   // (
-    TOKEN_RIGHT_PAREN,  // )
+    TOKEN_LPAREN,       // (
+    TOKEN_RPAREN,   // )
 }   t_token_type;
 
 typedef struct s_token
