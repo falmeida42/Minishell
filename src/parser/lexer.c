@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 02:15:09 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 04:22:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 06:06:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,17 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)(s1[x]) - (unsigned char)(s2[x]));
 }
 
-t_token *token_symbol_twochar_next(char **cursor)
+char char_iterator_peek(char_iterator *it)
+{
+    return (**it);
+}
+
+char char_iterator_next(char_iterator *it)
+{
+    return (*(++*it));
+}
+
+t_token *token_symbol_twochar_next(char_iterator *cursor)
 {
     t_token_type type;
 
@@ -74,69 +84,88 @@ t_token *token_symbol_twochar_next(char **cursor)
         type = TOKEN_DLESS;
     if (type == TOKEN_NULL)
         return (NULL);
-    *cursor += 2;
+    char_iterator_next(cursor);
+    char_iterator_next(cursor);
     return (token_new(type, NULL));
 }
 
-t_token *token_symbol_next(char **cursor)
+t_token *token_symbol_next(char_iterator *cursor)
 {
     t_token_type type;
     t_token *token;
+    char c;
     
     token = token_symbol_twochar_next(cursor);
     if (token)
         return (token);
-    if (**cursor == ';')
+    c = char_iterator_peek(cursor);
+    if (c == ';')
         type = TOKEN_SEMICOLON;
-    else if (**cursor == '|')
+    else if (c == '|')
         type = TOKEN_PIPE;
-    else if (**cursor == '&')
+    else if (c == '&')
         type = TOKEN_AMPERSAND;
-    else if (**cursor == '>')
+    else if (c == '>')
         type = TOKEN_GREATER;
-    else if (**cursor == '<')
+    else if (c == '<')
         type = TOKEN_LESS;
-    ++*cursor;
+    char_iterator_next(cursor);
     token = token_new(type, NULL);
     return (token);
 }
 
 t_token *token_dquoted_next(char **cursor)
 {
+    char c;
+    char prev_char;
     char *start;
     char *end;
 
-    ++*cursor;
+    char_iterator_next(cursor);
     start = *cursor;
-    while (**cursor && (**cursor != '"' || *(*cursor - 1) == '\\'))
-        ++*cursor;
+    prev_char = 0;
+    c = char_iterator_peek(cursor);
+    while (c && (c != '"' || prev_char == '\\'))
+    {
+        prev_char = c;
+        c = char_iterator_next(cursor);
+    }
     end = *cursor;
-    ++*cursor;
+    char_iterator_next(cursor);
     return (token_new(TOKEN_DQUOTED_TEXT, ft_substr(start, 0, end - start)));
 }
 
 t_token *token_quoted_next(char **cursor)
 {
+    char c;
+    char prev_char;
     char *start;
     char *end;
 
-    ++*cursor;
-    while (**cursor && (**cursor != '\'' || *(*cursor - 1) == '\\'))
-        ++*cursor;
+    char_iterator_next(cursor);
+    start = *cursor;
+    prev_char = 0;
+    c = char_iterator_peek(cursor);
+    while (c && (c != '\'' || prev_char == '\\'))
+    {
+        prev_char = c;
+        c = char_iterator_next(cursor);
+    }
     end = *cursor;
-    ++*cursor;
+    char_iterator_next(cursor);
     return (token_new(TOKEN_QUOTED_TEXT, ft_substr(start, 0, end - start)));
 }
 
 t_token *token_text_next(char **cursor)
 {
+    char c;
     char *start;
     char *end;
     
     start = *cursor;
-    while (**cursor && **cursor != ' ' && **cursor != ';' && **cursor != '|' &&
-            **cursor != '&' && **cursor != '>' && **cursor != '<')
-        ++*cursor;
+    c = char_iterator_peek(cursor);
+    while (c && !ft_contains(" ;|&><", c))
+        c = char_iterator_next(cursor);
     end = *cursor;
     return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));    
 }
@@ -144,15 +173,18 @@ t_token *token_text_next(char **cursor)
 // get the next token
 t_token *token_next(char **cursor)
 {
-    while (**cursor && **cursor == ' ') // skip spaces
-        ++*cursor;
-    if (**cursor == '\0')
+    char c;
+
+    c = char_iterator_peek(cursor);
+    while (c && c == ' ') // skip spaces
+        c = char_iterator_next(cursor);
+    if (c == '\0')
         return NULL;
-    if (ft_contains(";|&><", **cursor))
+    if (ft_contains(";|&><", c))
         return (token_symbol_next(cursor));
-    if (**cursor == '"')
+    if (c == '"')
         return (token_dquoted_next(cursor));
-    if (**cursor == '\'')
+    if (c == '\'')
         return (token_quoted_next(cursor));
     return (token_text_next(cursor));
 }

@@ -6,12 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 03:36:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 04:20:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 05:46:20 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+typedef char* char_iterator;
 
 typedef enum e_token_type
 {
