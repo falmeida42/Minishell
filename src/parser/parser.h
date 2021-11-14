@@ -6,12 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 03:36:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 06:34:05 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 17:45:19 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "libft.h"
 
 typedef char* char_iterator;
 
@@ -43,17 +45,11 @@ typedef struct s_token
     char            *value;
 }   t_token;
 
-typedef struct s_token_list t_token_list;
-
-typedef struct s_token_list
-{
-    t_token         *token;
-    t_token_list    *next;
-}   t_token_list;
+typedef t_list t_token_list;
 
 // tokenizer
 t_token *token_new(t_token_type type, char *value);
-void token_free(t_token *token);
+void token_free(void *ptr);
 t_token_list *token_list_new(t_token *token);
 void token_list_free(t_token_list *list);
 t_token_list *token_list_pushback(t_token_list **list, t_token *token);
