@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 03:36:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 05:46:20 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 06:16:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PARSER_H
 
 typedef char* char_iterator;
+
+char char_iterator_peek(char_iterator *it);
+char char_iterator_next(char_iterator *it);
 
 typedef enum e_token_type
 {
@@ -46,12 +49,19 @@ typedef struct s_token_list
     t_token_list    *next;
 }   t_token_list;
 
-
+// tokenizer
 t_token *token_new(t_token_type type, char *value);
 void token_free(t_token *token);
 t_token_list *token_list_new(t_token *token);
 void token_list_free(t_token_list *list);
 t_token_list *token_list_pushback(t_token_list **list, t_token *token);
 int token_list_size(t_token_list *list);
+
+// lexer_utils
+t_token *take_twochar_symbol(char_iterator *cursor);
+t_token *take_symbol(char_iterator *cursor);
+t_token *take_dquoted(char **cursor);
+t_token *take_quoted(char **cursor);
+t_token *take_text(char **cursor);
 
 #endif
