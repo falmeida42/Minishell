@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 02:15:09 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 06:17:50 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 06:35:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token *token_next(char **cursor)
         c = char_iterator_next(cursor);
     if (c == '\0')
         return NULL;
-    if (ft_contains(";|&><", c))
+    if (ft_contains(";|&><)(", c))
         return (take_symbol(cursor));
     if (c == '"')
         return (take_dquoted(cursor));

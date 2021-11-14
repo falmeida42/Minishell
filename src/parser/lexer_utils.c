@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 06:14:30 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 06:18:07 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 06:36:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ t_token *take_symbol(char_iterator *cursor)
         type = TOKEN_GREATER;
     else if (c == '<')
         type = TOKEN_LESS;
+    else if (c == '(')
+        type = TOKEN_LEFT_PAREN;
+    else if (c == ')')
+        type = TOKEN_RIGHT_PAREN;
     char_iterator_next(cursor);
     token = token_new(type, NULL);
     return (token);
@@ -141,7 +145,7 @@ t_token *take_text(char **cursor)
     
     start = *cursor;
     c = char_iterator_peek(cursor);
-    while (c && !ft_contains(" ;|&><", c))
+    while (c && !ft_contains(" ;|&><)(", c))
         c = char_iterator_next(cursor);
     end = *cursor;
     return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));    

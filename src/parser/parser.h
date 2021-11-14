@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 03:36:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 06:16:14 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/14 06:34:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef enum e_token_type
     TOKEN_LESS,         // <
     TOKEN_DGREATER,     // >>
     TOKEN_DLESS,        // <<
+    TOKEN_LEFT_PAREN,   // (
+    TOKEN_RIGHT_PAREN,  // )
 }   t_token_type;
 
 typedef struct s_token
