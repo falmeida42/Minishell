@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 18:24:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/15 19:43:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 # include <string.h>
 # include <stdio.h>
 
-typedef struct s_list t_list;
+typedef struct s_env t_env;
 
-typedef struct s_list
+typedef struct s_env
 {
 	void	*content;
 	void	*name;
-	t_list	*prev;
-	t_list	*next;
-}	t_list;
+	t_env	*prev;
+	t_env	*next;
+}	t_env;
 
 void		*ft_memset(void *str, int c, size_t len);
 void		ft_bzero(void *str, size_t n);
@@ -68,22 +68,22 @@ void		ft_putnbr_fd(int n, int fd);
 char		**ft_split(char const *s, char c);
 
 // Lists
-t_list		*ft_lstnew(void *content);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-t_list		*ft_lstnew(void *content);
-t_list		*ft_lstdup_2p(t_list *lst);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-int			ft_lstsize(t_list *lst);
-t_list		*ft_lstlast(t_list *lst);
-t_list		*ft_lsthead_2p(t_list *lst);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_back_2p(t_list **lst, t_list *new);
-void		ft_lstdelone(t_list *lst, void (*del)(void*));
-void		ft_lstclear(t_list **lst, void (*del)(void*));
-void		ft_lstiter(t_list *lst, void (*f)(void*));
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void*),
+t_env		*ft_envnew(void *content);
+void		ft_envadd_front(t_env **lst, t_env *new);
+t_env		*ft_envnew(void *content);
+t_env		*ft_envdup_2p(t_env *lst);
+void		ft_envadd_front(t_env **lst, t_env *new);
+int			ft_envsize(t_env *lst);
+t_env		*ft_envlast(t_env *lst);
+t_env		*ft_envhead_2p(t_env *lst);
+void		ft_envadd_back(t_env **lst, t_env *new);
+void		ft_envadd_back_2p(t_env **lst, t_env *new);
+void		ft_envdelone(t_env *lst, void (*del)(void*));
+void		ft_envclear(t_env **lst, void (*del)(void*));
+void		ft_enviter(t_env *lst, void (*f)(void*));
+t_env		*ft_envmap(t_env *lst, void *(*f)(void*),
 				void (*del)(void*));
-void		ft_lstprint(t_list *lst, char type);
-void		ft_lstnode_print_2p(t_list *lst);
+void		ft_envprint(t_env *lst, char type);
+void		ft_envnode_print_2p(t_env *lst);
 
 #endif
