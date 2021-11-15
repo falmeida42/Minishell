@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:29:21 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 11:36:36 by fferreir         ###   ########.fr       */
+/*   Created: 2021/03/12 18:19:11 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/15 19:39:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_env	*ft_envnew(void *content)
 {
-	if (!lst)
+	t_env	*new;
+
+	new = (t_env *)malloc(sizeof(*new));
+	if (!new)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

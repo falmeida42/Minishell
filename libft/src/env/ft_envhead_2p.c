@@ -1,6 +1,6 @@
 #include "libft.h"
 
-t_list	*ft_lsthead_2p(t_list *lst)
+t_env	*ft_envhead_2p(t_env *lst)
 {
 	if (!lst)
 		return(NULL);

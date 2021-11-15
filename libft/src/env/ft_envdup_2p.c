@@ -1,10 +1,10 @@
 #include "libft.h"
 
-t_list	*ft_lstdup_2p(t_list *lst)
+t_env	*ft_envdup_2p(t_env *lst)
 {
-	t_list *new;
+	t_env *new;
 
-	new = (t_list*)malloc(sizeof(t_list));
+	new = (t_env*)malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
 	new->name = lst->name;

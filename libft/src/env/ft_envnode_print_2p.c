@@ -1,6 +1,6 @@
 #include "libft.h"
 
-void	ft_lstnode_print_2p(t_list *lst)
+void	ft_envnode_print_2p(t_env *lst)
 {
 	if (lst->prev != NULL && lst->next !=NULL)
 		printf("C= |%s - %p| , P= |%s - %p| , N= |%s - %p|\n",

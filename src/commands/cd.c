@@ -6,13 +6,13 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/15 18:19:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/15 20:07:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*find_name(t_list *lst, char *str)
+t_env	*find_name(t_env *lst, char *str)
 {
 	while (lst)
 	{

@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:15:42 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:57:09 by fferreir         ###   ########.fr       */
+/*   Created: 2021/03/15 13:29:21 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/15 19:38:19 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+t_env	*ft_envlast(t_env *lst)
 {
-	size_t	size;
-
-	size = 0;
-	while (lst)
-	{
-		size++;
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
 		lst = lst->next;
-	}
-	return (size);
+	return (lst);
 }

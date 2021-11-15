@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:18:02 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:09:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int find_char(char *s1, char c)
 
 bool	check_env_names(char *name, char *content)
 {
-	t_list	*head;
+	t_env	*head;
 
 	head = mini.env;
 	while(1)
@@ -46,8 +46,8 @@ bool	check_env_names(char *name, char *content)
 
 int	ft_export()
 {
-	t_list	*head;
-	t_list	*temp;
+	t_env	*head;
+	t_env	*temp;
 	char	*name;
 	char	*content;
 	char	*arg;
@@ -61,9 +61,9 @@ int	ft_export()
 	content = ft_substr(arg, find_char(arg,'=') + 1, ft_strlen(arg));
 	if (!check_env_names(name, content))
 	{
-		temp = ft_lstnew(content);
+		temp = ft_envnew(content);
 		temp->name = name;
-		ft_lstadd_back(&mini.env, temp);
+		ft_envadd_back(&mini.env, temp);
 	}
 	mini.env = head;
 	return(1);

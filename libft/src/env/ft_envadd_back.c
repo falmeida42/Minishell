@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:05:23 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:55:50 by fferreir         ###   ########.fr       */
+/*   Created: 2021/03/15 13:36:15 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/15 19:36:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_envadd_back(t_env **lst, t_env *new)
 {
-	t_list	*temp;
-
-	if (!lst || !del)
+	if (!new || !lst)
 		return ;
-	while (*lst)
+	if (!*lst)
 	{
-		temp = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = temp;
+		*lst = new;
+		return ;
 	}
+	else
+		(ft_envlast(*lst))->next = new;
 }
