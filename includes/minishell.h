@@ -5,11 +5,12 @@
 #include <limits.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
 #include <signal.h>
 #include <stdbool.h>
+#include "libft.h"
 
 typedef struct	s_cd {
 
