@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:16:11 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:49:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env_content(t_list *lst, char *name)
+void	print_env_content(t_env *lst, char *name)
 {
 	char *content;
 
@@ -25,7 +25,7 @@ void	print_env_content(t_list *lst, char *name)
 	free(name);
 }
 
-char	*return_env_content(t_list *lst, char *name)
+char	*return_env_content(t_env *lst, char *name)
 {
 	while (lst)
 	{

@@ -1,16 +1,25 @@
 NAME		= minishell
 
-LIB_DIRS	= libft
+FT_DIR		= libft
+
 SRCS_DIRS	= src
 OBJS_DIRS   = obj
-INCL_DIRS	= includes
+INCL_DIRS	= includes $(FT_DIR)
+
 SRC			= $(shell find $(SRCS_DIRS) -type f -name "*.c")
 OBJS 		= $(SRC:$(SRCS_DIRS)/%.c=$(OBJS_DIRS)/%.o)
-INCLUDE		= $(addprefix -I, $(INCL_DIRS))
-LIB			= $(shell find $(LIB_DIRS) -type f -name "*.a")
+
+INC_FLAGS	= $(addprefix -I, $(INCL_DIRS))
+WARN_FLAGS	= -Wall -Wextra -Werror
+DEBUG_FLAGS = -g -fsanitize=address
+LIBS_FLAGS	= -L$(FT_DIR) -lft -lreadline 
+
+CFLAGS		= $(WARN_FLAGS) $(INC_FLAGS)
+LDFLAGS		= $(WARN_FLAGS) $(LIBS_FLAGS)
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+RM			= rm -f
+
 RED			= \033[0;31m
 GREEN		= \033[0;32m
 ORANGE		= \033[0;33m
@@ -20,11 +29,9 @@ NC			= \033[0m
 
 all: 		libft $(NAME)
 
-bonus:		libft $(BONUS)
-
 libft:
 			@echo "\n$(GREEN)Compiling libft:$(NC)"
-			@$(MAKE) -C libft/
+			@$(MAKE) -C libft
 
 .c.o:
 			@echo "Creating object: $@"
@@ -32,21 +39,24 @@ libft:
 
 $(OBJS_DIRS)/%.o: $(SRCS_DIRS)/%.c 
 		@mkdir -p $(dir $@)
-		$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+		$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJS)
-			@$(CC) -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(FLAGS) $(INCLUDE) $(LIB) $(OBJS)
+			@$(CC) $^ -o $(NAME) $(LDFLAGS)
 
 clean:
-			@rm -f -rf $(OBJS_DIRS)
+			@$(RM) -rf $(OBJS_DIRS)
 			@$(MAKE) -C libft/ clean && echo "$(GREEN)libft objects removed!$(NC)"
 
 fclean: 	clean
 			@rm -f $(OBJS)
 			@rm -f $(NAME)
-			@rm -f $(BONUS)
 			@$(MAKE) -C libft/ fclean
 
 re:			fclean all
+
+debug:		CFLAGS += $(DEBUG_FLAGS)
+debug:		LDFLAGS += $(DEBUG_FLAGS) -lasan 
+debug:		re
 
 .PHONY:		all clean fclean re libft

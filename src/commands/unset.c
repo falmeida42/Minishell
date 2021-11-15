@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 18:03:41 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:08:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ bool	str_cmp_both_len(char *s1, char *s2)
 	return (false);
 }
 
-bool	lst_str_check(t_list *lst, char *str)
+bool	lst_str_check(t_env *lst, char *str)
 {
-	t_list	*head;
+	t_env	*head;
 	char	*name;
 
 	head = lst;
@@ -63,9 +63,9 @@ bool	lst_str_check(t_list *lst, char *str)
 
 void	ft_unset(t_mini *mini)
 {
-	t_list	*head;
-	t_list	*temp;
-	t_list	*temp2;
+	t_env	*head;
+	t_env	*temp;
+	t_env	*temp2;
 
 	head = mini->env;
 	temp = NULL;

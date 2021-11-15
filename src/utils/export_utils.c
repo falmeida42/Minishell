@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void	swap(t_list *A, t_list *B, t_list *C)
+void	swap(t_env *A, t_env *B, t_env *C)
 {
-	t_list *D;
+	t_env *D;
 
 	D = C->next;
 	if (A != NULL)
@@ -15,7 +15,7 @@ void	swap(t_list *A, t_list *B, t_list *C)
 		D->prev = B;
 }
 
-void	sorter(t_list *lst)
+void	sorter(t_env *lst)
 {
 	int ret;
 
@@ -33,7 +33,7 @@ void	sorter(t_list *lst)
 
 }
 
-bool	checker(t_list *lst)
+bool	checker(t_env *lst)
 {
 	int ret;
 	while (lst->next != NULL)
@@ -46,16 +46,16 @@ bool	checker(t_list *lst)
 	return(true);
 }
 
-t_list *duplicate_list(t_list *lst)
+t_env *duplicate_env(t_env *lst)
 {
-	t_list *temp;
-	t_list *dup_lst;
+	t_env *temp;
+	t_env *dup_lst;
 
 	dup_lst = NULL;
 	while (lst)
 	{
-		temp = ft_lstdup_2p(lst);
-		ft_lstadd_back_2p(&dup_lst, temp);
+		temp = ft_envdup_2p(lst);
+		ft_envadd_back_2p(&dup_lst, temp);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
@@ -65,16 +65,16 @@ t_list *duplicate_list(t_list *lst)
 
 int	env_sorted()
 {
-	t_list	*lst;
+	t_env	*lst;
 
-	lst = duplicate_list(mini.env);
+	lst = duplicate_env(mini.env);
 	while (!checker(lst))
 	{
 		sorter(lst);
-		lst = ft_lsthead_2p(lst);
+		lst = ft_envhead_2p(lst);
 	}
-	ft_lstprint(lst, 'a');
+	ft_envprint(lst, 'a');
 	if (lst)
-		free_dp_list(lst);
+		free_dp_env(lst);
 	return(1);
 }

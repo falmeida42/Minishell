@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:13:38 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:13:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_dp_list(t_list *lst)
+void	free_dp_env(t_env *lst)
 {
-	t_list *temp;
+	t_env *temp;
 
 	if (!lst)
 		return ;
@@ -44,7 +44,7 @@ void	free_argv()
 	free(mini.argv);
 }
 
-void	free_lst(t_list *lst)
+void	free_env(t_env *lst)
 {
 	if (lst == NULL)
 	{
@@ -54,7 +54,7 @@ void	free_lst(t_list *lst)
 	}
 	while(1)
 	{
-		printf("%s %p\n",lst->content,lst->content);
+		printf("%s %p\n", (char *)lst->content, (char *)lst->content);
 		free(lst->content);
 		lst->content = NULL;
 		free(lst->name);
@@ -71,6 +71,7 @@ void	free_lst(t_list *lst)
 
 void	free_struct(char *input)
 {
+	(void)input;
 	free(mini.env);
 	mini.env = NULL;
 //	free(input);

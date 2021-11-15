@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:17:04 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:49:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*ft_lstnew_pp(char **content)
+t_env	*ft_envnew_pp(char **content)
 {
-	t_list	*new;
+	t_env	*new;
 
-	new = (t_list *)malloc(sizeof(t_list));
+	new = (t_env *)malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
 	new->name = content[0];
@@ -25,16 +25,18 @@ t_list	*ft_lstnew_pp(char **content)
 	return (new);
 }
 
-void	ft_lstnode_print(t_list *lst, char *name)
+void	ft_envnode_print(t_env *lst, char *name)
 {
-	t_list	*head;
+	t_env	*head;
 
 	head = lst;
 	while (1)
 	{
 		if (str_cmp_both_len(lst->name, name))
 			printf("Content=|%s|, Name=|%s|, PREV=|%p| ADD=|%p| Next=|%p|\n",
-				lst->content,lst->name, lst->prev, lst, lst->next);
+				(char *)lst->content,
+				(char *)lst->name,
+				lst->prev, lst, lst->next);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
@@ -51,15 +53,17 @@ char	*get_name(char *str, char c)
 	if (!str)
 		return(NULL);
 	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
+	if (name == NULL)
+		return (NULL);
 	while (str[++x] && str[x] != c)
 		name[x] = str[x];
 	name[x] = '\0';
-	return(name);
+	return (name);
 }
 
-void	env_add_names(t_list *lst)
+void	env_add_names(t_env *lst)
 {
-	t_list	*head;
+	t_env	*head;
 
 	head = lst;
 	while (lst)
@@ -72,22 +76,22 @@ void	env_add_names(t_list *lst)
 	lst = head;
 }
 
-t_list	*get_env(char **env)
+t_env	*get_env(char **env)
 {
-	t_list	*temp;
+	t_env	*temp;
 	int x;
 
 	x = -1;
 	mini.env = NULL;
 	while (env[++x] != NULL)
 	{
-		temp = ft_lstnew_pp(ft_split(env[x], '='));
-		ft_lstadd_back(&mini.env,temp);
+		temp = ft_envnew_pp(ft_split(env[x], '='));
+		ft_envadd_back(&mini.env, temp);
 	}
 	return(mini.env);
 }
 
 void	ft_env()
 {
-	ft_lstprint(mini.env, 'a');
+	ft_envprint(mini.env, 'a');
 }

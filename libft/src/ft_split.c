@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 12:57:48 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 12:50:05 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:45:36 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ static int	sub_l(char *s, char c, int x)
 
 char	**fill_str(t_quote *q, char *s, char **split, char c)
 {
-	int	quotes;
-
-	quotes = 0;
 	q->first = find_quote(s, q->x);
 	q->next = find_quote(s, find_quote(s, q->x + 1));
 	while (s[q->x] && s[q->x] != c)
@@ -124,7 +121,7 @@ char	**ft_split(const char *s, char c)
 	char	*str;
 	int		splits;
 
-	if (!s || c < 0 || c > 127)
+	if (!s || c < 0)
 		return (NULL);
 	if (!ft_strrchr(s, c))
 	{

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 15:30:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:57:39 by fferreir         ###   ########.fr       */
+/*   Created: 2021/03/15 13:15:42 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/15 19:40:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+int	ft_envsize(t_env *lst)
 {
-	size_t	x;
+	size_t	size;
 
-	x = 0;
-	while (x < n)
+	size = 0;
+	while (lst)
 	{
-		((char *)dst)[x] = ((char *)src)[x];
-		if (((unsigned char *)src)[x] == (unsigned char)c)
-			return ((void *)&dst[x + 1]);
-		x++;
+		size++;
+		lst = lst->next;
 	}
-	return (NULL);
+	return (size);
 }

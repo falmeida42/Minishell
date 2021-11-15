@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:08:29 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:11:08 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
+#include "libft.h"
 
 void	screening(char *input)
 {
@@ -39,7 +38,7 @@ void	screening(char *input)
 		else if(str_cmp_both_len(mini.argv[0], "node"))
 		{
 			if (ft_strlen(mini.argv[1]) > 0)
-				ft_lstnode_print(mini.env, mini.argv[1]);
+				ft_envnode_print(mini.env, mini.argv[1]);
 		}
 		else if (str_cmp_both_len(mini.argv[0], "unset"))
 		{
@@ -60,7 +59,7 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	mini.head = malloc(sizeof(t_list));
+	mini.head = malloc(sizeof(t_env));
 	mini.pid = getpid();
 	mini.env = get_env(env);
 	mini.exit = false;
@@ -82,7 +81,7 @@ int main(int argc, char **argv, char **env)
 		if (mini.exit == true)
 		{
 			free_struct(input);
-			free_lst(mini.env);
+			free_env(mini.env);
 			exit(0);
 		}
 	}
