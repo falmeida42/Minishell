@@ -2,12 +2,13 @@ NAME		= minishell
 
 LIB_DIRS	= libft
 SRCS_DIRS	= src
+OBJS_DIRS   = obj
 INCL_DIRS	= includes
 SRC			= $(shell find $(SRCS_DIRS) -type f -name "*.c")
+OBJS 		= $(SRC:$(SRCS_DIRS)/%.c=$(OBJS_DIRS)/%.o)
 INCLUDE		= $(addprefix -I, $(INCL_DIRS))
 LIB			= $(shell find $(LIB_DIRS) -type f -name "*.a")
 
-OBJS		= $(SRC:.c=.o)
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 RED			= \033[0;31m
@@ -29,11 +30,15 @@ libft:
 			@echo "Creating object: $@"
 			@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
+$(OBJS_DIRS)/%.o: $(SRCS_DIRS)/%.c 
+		@mkdir -p $(dir $@)
+		$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+
 $(NAME):	$(OBJS)
 			@$(CC) -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(FLAGS) $(INCLUDE) $(LIB) $(OBJS)
 
 clean:
-			@rm -f $(OBJS)
+			@rm -f -rf $(OBJS_DIRS)
 			@$(MAKE) -C libft/ clean && echo "$(GREEN)libft objects removed!$(NC)"
 
 fclean: 	clean
