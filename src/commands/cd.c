@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:14:25 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:19:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_cd_back(t_cd *cd)
 	else
 	{
 		if (!(chdir(cd->tmp->content)))
-			printf("cd: no such file or directory: %s\n", cd->tmp->content);
+			printf("cd: no such file or directory: %s\n", (char *)cd->tmp->content);
 	}
 	mini.env = mini.head;
 }
@@ -97,14 +97,12 @@ void	ft_cd()
 	t_cd	cd;
 	char	*str;
 	char	*home;
-	int		i;
 
 	home = NULL;
 	str = NULL;
 	mini.head = mini.env;
 	cd.tmp = mini.env;
 	home = getcwd(home, PATH_MAX);
-	i = 0;
 	if (!mini.argv[1])
 	{
 		str = return_env_content(mini.env, "HOME");
