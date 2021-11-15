@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 17:52:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/15 17:41:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ t_token_list *lex(char *input)
 	while (1)
 	{
 		token = token_next(&input);
-		if (!token)
+		if (token == NULL)
 			break ;
 		ft_lstpush_back(&token_list, token);
 	}
 	return (token_list);
 }
 
+/*
 int main(int argc, char **argv)
 {
 	t_token_list *token_list;
@@ -71,3 +72,4 @@ int main(int argc, char **argv)
 	ft_lstclear(&token_list, token_free);
 	return (0);
 }
+*/

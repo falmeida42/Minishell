@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 03:36:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 17:45:19 by jpceia           ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   parser.h										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: jpceia <joao.p.ceia@gmail.com>			 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2021/11/14 03:36:52 by jpceia			#+#	#+#			 */
+/*   Updated: 2021/11/14 17:45:19 by jpceia		   ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -52,10 +52,11 @@ t_token			*token_new(t_token_type type, char *value);
 void			token_free(void *ptr);
 
 // lexer_utils
-t_token *take_twochar_symbol(char_iterator *cursor);
-t_token *take_symbol(char_iterator *cursor);
-t_token *take_dquoted(char **cursor);
-t_token *take_quoted(char **cursor);
-t_token *take_text(char **cursor);
+t_token			*take_twochar_symbol(char_iterator *cursor);
+t_token			*take_symbol(char_iterator *cursor);
+t_token			*take_dquoted(char **cursor);
+t_token			*take_quoted(char **cursor);
+t_token			*take_text(char **cursor);
+
 
 #endif
