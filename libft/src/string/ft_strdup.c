@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 16:54:45 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 17:47:36 by jpceia           ###   ########.fr       */
+/*   Created: 2020/12/05 03:20:23 by jceia             #+#    #+#             */
+/*   Updated: 2021/11/15 21:33:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strdup(const char *src)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	unsigned int	index;
+	char			*dest;
+
+	index = 0;
+	while (src[index])
+		index++;
+	dest = malloc(index + 1);
+	if (!dest)
+		return (NULL);
+	index = 0;
+	while (src[index])
+	{
+		dest[index] = src[index];
+		index++;
+	}
+	dest[index] = '\0';
+	return (dest);
 }

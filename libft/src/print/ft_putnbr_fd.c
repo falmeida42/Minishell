@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 17:16:51 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:59:26 by fferreir         ###   ########.fr       */
+/*   Created: 2021/02/08 21:39:48 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/15 21:39:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,17 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	int	nbr;
-
-	nbr = n;
-	if (n == -2147483647 - 1)
+	if (n >= 0)
 	{
-		ft_putstr_fd("-2147483648", fd);
-		return ;
+		if (n > 9)
+			ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd('0' + (n % 10), fd);
 	}
-	if (n < 0 && n != -2147483648)
+	else if (n < 0)
 	{
-		nbr = -n;
 		ft_putchar_fd('-', fd);
+		if (n < -9)
+			ft_putnbr_fd(0 - (n / 10), fd);
+		ft_putchar_fd('0' - (n % 10), fd);
 	}
-	if (nbr > 9)
-	{
-		ft_putnbr_fd((nbr / 10), fd);
-		ft_putnbr_fd((nbr % 10), fd);
-	}
-	else
-		ft_putchar_fd((nbr + '0'), fd);
 }

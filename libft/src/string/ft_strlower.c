@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strlower.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 19:01:08 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:03:35 by fferreir         ###   ########.fr       */
+/*   Created: 2021/09/01 19:04:26 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/01 19:04:36 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	ft_chartolower(char c)
 {
-	char	*dst;
-	int		len;
-	int		x;
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
+}
 
-	len = ft_strlen(s1);
-	dst = (char *)malloc(sizeof(char) * (len + 1));
-	if (dst == NULL)
-		return (NULL);
-	x = 0;
-	while (x < len)
-	{
-		dst[x] = (char)s1[x];
-		x++;
-	}
-	dst[len] = '\0';
-	return (dst);
+char	*ft_strlower(char const *s)
+{
+	return (ft_strmap(s, ft_chartolower));
 }

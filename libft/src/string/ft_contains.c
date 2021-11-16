@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_contains.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 17:01:42 by fferreir          #+#    #+#             */
-/*   Updated: 2021/03/03 17:13:51 by fferreir         ###   ########.fr       */
+/*   Created: 2021/04/04 09:32:11 by jpceia            #+#    #+#             */
+/*   Updated: 2021/08/27 17:08:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putendl_fd(char *s, int fd)
+int	ft_contains(char c, char const *charset)
 {
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	while (*charset)
+		if (c == *charset++)
+			return (1);
+	return (0);
 }

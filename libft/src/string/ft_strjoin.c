@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 15:03:51 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:04:40 by fferreir         ###   ########.fr       */
+/*   Created: 2020/12/05 03:42:08 by jceia             #+#    #+#             */
+/*   Updated: 2021/11/15 21:32:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,16 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*s3;
-	int		len;
-	int		x;
-	int		y;
+	int		size;
+	char	*res;
 
-	if (!s2 || !s1)
+	size = ft_strlen(s1);
+	size += ft_strlen(s2);
+	res = malloc(size + 1);
+	if (!res)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	s3 = (char *)malloc(sizeof(*s1) * (len + 1));
-	if (!s3)
-		return (NULL);
-	x = 0;
-	y = 0;
-	while (s1[x])
-	{
-		s3[x] = s1[x];
-		x++;
-	}
-	while (s2[y])
-	{
-		s3[x + y] = s2[y];
-		y++;
-	}
-	s3[x + y] = '\0';
-	return (s3);
+	res[0] = '\0';
+	ft_strcat(res, s1);
+	ft_strcat(res, s2);
+	return (res);
 }

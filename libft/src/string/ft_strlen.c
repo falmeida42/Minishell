@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envmap.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:19:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 01:03:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/02/17 15:27:31 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/15 21:31:46 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_env	*ft_envmap(t_env *lst, void *(*f)(void*), void (*del)(void*))
+size_t	ft_strlen(const char *str)
 {
-	t_env	*new;
-	t_env	*temp;
+	size_t	len;
 
-	if (!lst || !f || !del)
-		return (NULL);
-	new = ft_envnew(f(lst->content));
-	if (!new)
-		return (NULL);
-	temp = new;
-	lst = lst->next;
-	while (lst)
-	{
-		temp->next = ft_envnew(f(lst->content));
-		if (!temp->next)
-		{
-			ft_envclear(&new, del);
-			return (NULL);
-		}
-		temp = temp->next;
-		lst = lst->next;
-	}
-	return (new);
+	if (!str)
+		return(0);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
