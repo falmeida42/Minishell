@@ -14,11 +14,16 @@
 # define PARSER_H
 
 # include "libft.h"
+# include <stdbool.h>
+
+// Char Iterator
 
 typedef char*	t_char_iterator;
 
 char			char_iterator_peek(t_char_iterator *it);
 char			char_iterator_next(t_char_iterator *it);
+
+// Tokens
 
 typedef enum e_token_type
 {
@@ -45,15 +50,43 @@ typedef struct s_token
 
 typedef t_list	t_token_list;
 
-// tokenizer
+typedef t_token_list* \
+				t_token_iterator;
+
 t_token			*token_new(t_token_type type, char *value);
 void			token_free(void *ptr);
+t_token			*token_iterator_next(t_token_iterator *it);
+bool			is_word_token(t_token *token);
+bool			is_redirection_token(t_token *token);
+bool			is_simple_cmd_token(t_token *token);
 
-// lexer_utils
+// Lexer functions (Aka tokenizer)
+t_token_list	*lex(char *input);
+
 t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
 t_token			*take_text(char **cursor);
+
+// Command table
+
+typedef struct s_simple_cmd
+{
+	t_list	*argv;
+	char	*infile;
+	char	*outfile;
+	bool	here_doc;
+	bool	append;
+}	t_simple_cmd;
+
+typedef t_list	t_command;
+
+void			simple_cmd_print(t_simple_cmd *cmd);
+void			command_print(t_command *command);
+
+// Parsing
+t_simple_cmd	*simple_cmd_parse(t_token_iterator *it);
+t_command		*command_parse(t_token_iterator *it);
 
 #endif
