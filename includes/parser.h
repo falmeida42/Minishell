@@ -69,4 +69,24 @@ t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
 t_token			*take_text(char **cursor);
 
+// Command table
+
+typedef struct s_simple_cmd
+{
+	t_list	*argv;
+	char	*infile;
+	char	*outfile;
+	bool	here_doc;
+	bool	append;
+}	t_simple_cmd;
+
+typedef t_list	t_command;
+
+void			simple_cmd_print(t_simple_cmd *cmd);
+void			command_print(t_command *command);
+
+// Parsing
+t_simple_cmd	*simple_cmd_parse(t_token_iterator *it);
+t_command		*command_parse(t_token_iterator *it);
+
 #endif
