@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 14:15:49 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 14:35:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#include "parser.h"
 
 // Checks if a token is a word ( simple text, quoted text, double quoted text )
 bool	is_word_token(t_token *token)
