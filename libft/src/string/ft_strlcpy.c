@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envmap.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:19:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 01:03:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/02/09 16:07:57 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/15 21:32:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_env	*ft_envmap(t_env *lst, void *(*f)(void*), void (*del)(void*))
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	t_env	*new;
-	t_env	*temp;
+	size_t	index;
 
-	if (!lst || !f || !del)
-		return (NULL);
-	new = ft_envnew(f(lst->content));
-	if (!new)
-		return (NULL);
-	temp = new;
-	lst = lst->next;
-	while (lst)
+	index = 0;
+	while (src[index] && index + 1 < size)
 	{
-		temp->next = ft_envnew(f(lst->content));
-		if (!temp->next)
-		{
-			ft_envclear(&new, del);
-			return (NULL);
-		}
-		temp = temp->next;
-		lst = lst->next;
+		dest[index] = src[index];
+		index++;
 	}
-	return (new);
+	if (index < size)
+		dest[index] = '\0';
+	return (ft_strlen(src));
 }

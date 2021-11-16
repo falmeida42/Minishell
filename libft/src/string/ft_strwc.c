@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strwc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:05:22 by fferreir         ###   ########.fr       */
+/*   Created: 2021/08/27 18:18:51 by jceia             #+#    #+#             */
+/*   Updated: 2021/08/27 18:29:38 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+/*
+ * Word-Count function
+ */
+int	ft_strwc(char const *s, char c)
 {
-	size_t	x;
+	int	count;
+	int	prev_space;
 
-	x = 0;
-	if (!dst)
-		return (0);
-	if (dstsize > 0)
+	count = 0;
+	prev_space = 1;
+	while (*s)
 	{
-		while (src[x] && x < (dstsize - 1))
+		if (*s == c)
+			prev_space = 1;
+		else if (prev_space)
 		{
-			dst[x] = src[x];
-			x++;
+			count++;
+			prev_space = 0;
 		}
-		dst[x] = '\0';
+		s++;
 	}
-	while (src[x])
-		x++;
-	return (x);
+	return (count);
 }
