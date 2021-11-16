@@ -41,29 +41,9 @@ void	token_free(void *ptr)
 // goes and returns the next token in a token list
 t_token	*token_iterator_next(t_token_list *it)
 {
-	it = it->next;
-	return (it->content);
+	*it = (*it)->next;
+	if (*it == NULL)
+		return (NULL);
+	return ((*it)->content);
 }
 
-// Checks if a token is a word ( simple text, quoted text, double quoted text )
-bool	is_word_token(t_token *token)
-{
-	t_token_type	type;
-
-	type = token->type;
-	return (type == TOKEN_TEXT
-		|| type == TOKEN_QUOTED
-		|| type == TOKEN_DQUOTED);
-}
-
-// Checks if a token is a redirection token ( > , >> , < , << )
-bool	is_redirection_token(t_token *token)
-{
-	t_token_type	type;
-
-	type = token->type;
-	return (type == TOKEN_GREATER
-		|| type == TOKEN_DGREATER
-		|| type == TOKEN_LESS
-		|| type == TOKEN_DLESS);
-}

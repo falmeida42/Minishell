@@ -55,6 +55,7 @@ void			token_free(void *ptr);
 t_token			*token_iterator_next(t_token_list *it);
 bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
+bool			is_simple_cmd_token(t_token *token);
 
 // Lexer functions (Aka tokenizer)
 t_token			*take_twochar_symbol(t_char_iterator *cursor);
