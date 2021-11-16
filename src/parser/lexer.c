@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/15 17:41:25 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 01:44:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 #include <stdio.h>
 
 // get the next token
-t_token *token_next(char **cursor)
+t_token	*token_next(char **cursor)
 {
-	char c;
+	char	c;
 
 	c = char_iterator_peek(cursor);
-	while (c && c == ' ') // skip spaces
+	while (c && c == ' ')
 		c = char_iterator_next(cursor);
 	if (c == '\0')
-		return NULL;
+		return (NULL);
 	if (ft_contains(c, ";|&><)("))
 		return (take_symbol(cursor));
 	if (c == '"')
@@ -33,10 +33,10 @@ t_token *token_next(char **cursor)
 	return (take_text(cursor));
 }
 
-t_token_list *lex(char *input)
+t_token_list	*lex(char *input)
 {
-	t_token *token;
-	t_token_list *token_list;
+	t_token			*token;
+	t_token_list	*token_list;
 
 	token_list = NULL;
 	while (1)
