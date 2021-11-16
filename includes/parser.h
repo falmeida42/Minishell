@@ -61,6 +61,8 @@ bool			is_redirection_token(t_token *token);
 bool			is_simple_cmd_token(t_token *token);
 
 // Lexer functions (Aka tokenizer)
+t_token_list	*lex(char *input);
+
 t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
