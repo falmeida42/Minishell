@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:53:50 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 09:33:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 14:18:20 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	token_free(void *ptr)
 }
 
 // goes and returns the next token in a token list
-t_token	*token_iterator_next(t_token_list *it)
+t_token	*token_iterator_next(t_token_iterator *it)
 {
 	*it = (*it)->next;
 	if (*it == NULL)
 		return (NULL);
 	return ((*it)->content);
 }
-
