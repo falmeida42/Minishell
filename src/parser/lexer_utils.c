@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 01:43:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 02:17:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,8 @@ t_token	*take_symbol(t_char_iterator *cursor)
 	if (token)
 		return (token);
 	c = char_iterator_peek(cursor);
-	if (c == ';')
-		type = TOKEN_SEMICOLON;
-	else if (c == '|')
+	if (c == '|')
 		type = TOKEN_PIPE;
-	else if (c == '&')
-		type = TOKEN_AMPERSAND;
 	else if (c == '>')
 		type = TOKEN_GREATER;
 	else if (c == '<')
@@ -112,7 +108,7 @@ t_token	*take_text(char **cursor)
 
 	start = *cursor;
 	c = char_iterator_peek(cursor);
-	while (c && !ft_contains(c, " ;|&><)("))
+	while (c && !ft_contains(c, " |&><)("))
 		c = char_iterator_next(cursor);
 	end = *cursor;
 	return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));
