@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstpush_back.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 16:35:49 by fferreir          #+#    #+#             */
-/*   Updated: 2021/03/03 17:00:18 by fferreir         ###   ########.fr       */
+/*   Created: 2021/09/09 03:44:30 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/09 03:52:13 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+t_list	*ft_lstpush_back(t_list **lst, void *content)
 {
-	write(fd, &c, 1);
+	t_list	*node;
+
+	node = ft_lstnew(content);
+	if (!node)
+		return (NULL);
+	ft_lstadd_back(lst, node);
+	return (*lst);
 }

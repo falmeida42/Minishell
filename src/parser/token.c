@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envmap.c                                        :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:19:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 01:03:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/14 17:53:50 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/14 17:53:53 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parser.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-t_env	*ft_envmap(t_env *lst, void *(*f)(void*), void (*del)(void*))
+// allocates a new token
+t_token *token_new(t_token_type type, char *value)
 {
-	t_env	*new;
-	t_env	*temp;
+	t_token *token;
+	
+	token = malloc(sizeof(t_token));
+	if (token == NULL)
+		return (NULL);
+	token->type = type;
+	token->value = value;
+	return (token);
+}
 
-	if (!lst || !f || !del)
-		return (NULL);
-	new = ft_envnew(f(lst->content));
-	if (!new)
-		return (NULL);
-	temp = new;
-	lst = lst->next;
-	while (lst)
-	{
-		temp->next = ft_envnew(f(lst->content));
-		if (!temp->next)
-		{
-			ft_envclear(&new, del);
-			return (NULL);
-		}
-		temp = temp->next;
-		lst = lst->next;
-	}
-	return (new);
+// free a token
+void token_free(void *ptr)
+{
+	t_token *token;
+
+	token = (t_token *)ptr;
+	free(token->value);
+	free(token);
 }

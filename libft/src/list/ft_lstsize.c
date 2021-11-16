@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/20 13:20:52 by fferreir         ###   ########.fr       */
+/*   Created: 2021/02/08 21:46:54 by jpceia            #+#    #+#             */
+/*   Updated: 2021/08/27 17:49:14 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcpy(char *src, char *dst)
+int	ft_lstsize(t_list *lst)
 {
-	int	x;
+	int		size;
 
-	x = 0;
-	while (src[x])
+	size = 0;
+	while (lst)
 	{
-		dst[x] = src[x];
-		x++;
+		size++;
+		lst = lst->next;
 	}
-	dst[x] = '\0';
-	return(dst);
+	return (size);
 }
