@@ -14,11 +14,16 @@
 # define PARSER_H
 
 # include "libft.h"
+# include <stdbool.h>
+
+// Char Iterator
 
 typedef char*	t_char_iterator;
 
 char			char_iterator_peek(t_char_iterator *it);
 char			char_iterator_next(t_char_iterator *it);
+
+// Tokens
 
 typedef enum e_token_type
 {
@@ -45,11 +50,13 @@ typedef struct s_token
 
 typedef t_list	t_token_list;
 
-// tokenizer
 t_token			*token_new(t_token_type type, char *value);
 void			token_free(void *ptr);
+t_token			*token_iterator_next(t_token_list *it);
+bool			is_word_token(t_token *token);
+bool			is_redirection_token(t_token *token);
 
-// lexer_utils
+// Lexer functions (Aka tokenizer)
 t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
