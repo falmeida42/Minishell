@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 18:51:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 01:46:08 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include <dirent.h>
 
 // checks if a string matches with a another string with wildcard '*'
-int str_match_star(char *s, char *s_star)
+int	str_match_star(char *s, char *s_star)
 {
-	int i = 0; 
-	int j = 0;
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
 	while (s[i] != '\0')
 	{
 		if (s_star[j] == '*')
@@ -39,12 +41,12 @@ int str_match_star(char *s, char *s_star)
 }
 
 // checks which files in a directory match with a string with wildcard '*'
-t_list *match_files(char *to_match, char *dir)
+t_list	*match_files(char *to_match, char *dir)
 {
-	DIR *d;
-	struct dirent *dir_entry;
-	char *file_name;
-	t_list *files;
+	DIR				*d;
+	struct dirent	*dir_entry;
+	char			*file_name;
+	t_list			*files;
 
 	d = opendir(dir);
 	files = NULL;
@@ -64,10 +66,10 @@ t_list *match_files(char *to_match, char *dir)
 }
 
 // checks if a text token starts with a tilde '~' and expands it
-char *expand_tilde(t_token *token)
+char	*expand_tilde(t_token *token)
 {
-	char *home_dir;
-	char *expanded_str;
+	char	*home_dir;
+	char	*expanded_str;
 
 	if (token->type != TOKEN_TEXT)
 		return (token->value);
@@ -83,31 +85,23 @@ char *expand_tilde(t_token *token)
 t_list	*expand_star(t_token *token)
 {
 	t_list	*matches;
-	
+
 	if (token->type == TOKEN_TEXT)
 	{
 		matches = match_files(token->value, ".");
 		if (matches == NULL)
-		{
-			// if there are no matches the shell returns the initial text
 			return (ft_lstnew(token->value));
-		}
 		return (matches);
 	}
 	return (ft_lstnew(token->value));
 }
 
-char *expand_dollar(t_token *token)
+// WIP
+char	*expand_dollar(t_token *token)
 {
 	if (token->type == TOKEN_TEXT)
-	{
-		// replace $ by env var
 		return (token->value);
-	}
 	if (token->type == TOKEN_DQUOTED)
-	{
-		// replace $ by env var
 		return (token->value);
-	}
 	return (token->value);
 }

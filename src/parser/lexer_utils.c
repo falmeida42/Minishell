@@ -6,18 +6,16 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/14 17:52:50 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/16 02:17:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "parser.h"
 #include <stdlib.h>
 
-t_token *take_twochar_symbol(char_iterator *cursor)
+t_token	*take_twochar_symbol(t_char_iterator *cursor)
 {
-	t_token_type type;
+	t_token_type	type;
 
 	type = TOKEN_NULL;
 	if (!ft_strncmp(*cursor, "||", 2))
@@ -35,22 +33,18 @@ t_token *take_twochar_symbol(char_iterator *cursor)
 	return (token_new(type, NULL));
 }
 
-t_token *take_symbol(char_iterator *cursor)
+t_token	*take_symbol(t_char_iterator *cursor)
 {
-	t_token_type type;
-	t_token *token;
-	char c;
-	
+	t_token_type	type;
+	t_token			*token;
+	char			c;
+
 	token = take_twochar_symbol(cursor);
 	if (token)
 		return (token);
 	c = char_iterator_peek(cursor);
-	if (c == ';')
-		type = TOKEN_SEMICOLON;
-	else if (c == '|')
+	if (c == '|')
 		type = TOKEN_PIPE;
-	else if (c == '&')
-		type = TOKEN_AMPERSAND;
 	else if (c == '>')
 		type = TOKEN_GREATER;
 	else if (c == '<')
@@ -64,12 +58,12 @@ t_token *take_symbol(char_iterator *cursor)
 	return (token);
 }
 
-t_token *take_dquoted(char **cursor)
+t_token	*take_dquoted(char **cursor)
 {
-	char c;
-	char prev_char;
-	char *start;
-	char *end;
+	char	c;
+	char	prev_char;
+	char	*start;
+	char	*end;
 
 	char_iterator_next(cursor);
 	start = *cursor;
@@ -85,12 +79,12 @@ t_token *take_dquoted(char **cursor)
 	return (token_new(TOKEN_DQUOTED, ft_substr(start, 0, end - start)));
 }
 
-t_token *take_quoted(char **cursor)
+t_token	*take_quoted(char **cursor)
 {
-	char c;
-	char prev_char;
-	char *start;
-	char *end;
+	char	c;
+	char	prev_char;
+	char	*start;
+	char	*end;
 
 	char_iterator_next(cursor);
 	start = *cursor;
@@ -106,16 +100,16 @@ t_token *take_quoted(char **cursor)
 	return (token_new(TOKEN_QUOTED, ft_substr(start, 0, end - start)));
 }
 
-t_token *take_text(char **cursor)
+t_token	*take_text(char **cursor)
 {
-	char c;
-	char *start;
-	char *end;
-	
+	char	c;
+	char	*start;
+	char	*end;
+
 	start = *cursor;
 	c = char_iterator_peek(cursor);
-	while (c && !ft_contains(c, " ;|&><)("))
+	while (c && !ft_contains(c, " |&><)("))
 		c = char_iterator_next(cursor);
 	end = *cursor;
-	return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));	
+	return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));
 }

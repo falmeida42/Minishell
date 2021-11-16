@@ -15,48 +15,45 @@
 
 # include "libft.h"
 
-typedef char*	char_iterator;
+typedef char*	t_char_iterator;
 
-char			char_iterator_peek(char_iterator *it);
-char			char_iterator_next(char_iterator *it);
+char			char_iterator_peek(t_char_iterator *it);
+char			char_iterator_next(t_char_iterator *it);
 
 typedef enum e_token_type
 {
 	TOKEN_NULL,
-	TOKEN_TEXT,			// text
-	TOKEN_QUOTED,		// 'text'
-	TOKEN_DQUOTED,		// "text"
-	TOKEN_SEMICOLON,	// ;
-	TOKEN_PIPE,			// |
-	TOKEN_AMPERSAND,	// &
-	TOKEN_AND,			// &&
-	TOKEN_OR,			// ||
-	TOKEN_GREATER,		// >
-	TOKEN_LESS,			// <
-	TOKEN_DGREATER,		// >>
-	TOKEN_DLESS,		// <<
-	TOKEN_LPAREN,		// (
-	TOKEN_RPAREN,		// )
-}   t_token_type;
+	TOKEN_TEXT,
+	TOKEN_QUOTED,
+	TOKEN_DQUOTED,
+	TOKEN_PIPE,
+	TOKEN_AND,
+	TOKEN_OR,
+	TOKEN_GREATER,
+	TOKEN_LESS,
+	TOKEN_DGREATER,
+	TOKEN_DLESS,
+	TOKEN_LPAREN,
+	TOKEN_RPAREN,
+}	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-}   t_token;
+}	t_token;
 
-typedef t_list t_token_list;
+typedef t_list	t_token_list;
 
 // tokenizer
 t_token			*token_new(t_token_type type, char *value);
 void			token_free(void *ptr);
 
 // lexer_utils
-t_token			*take_twochar_symbol(char_iterator *cursor);
-t_token			*take_symbol(char_iterator *cursor);
+t_token			*take_twochar_symbol(t_char_iterator *cursor);
+t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
 t_token			*take_text(char **cursor);
-
 
 #endif
