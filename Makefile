@@ -1,16 +1,51 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/16 01:25:25 by jpceia            #+#    #+#              #
+#    Updated: 2021/11/16 01:38:31 by jpceia           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		= minishell
 
-LIB_DIRS	= libft
-SRCS_DIRS	= src
-OBJS_DIRS   = obj
-INCL_DIRS	= includes
-SRC			= $(shell find $(SRCS_DIRS) -type f -name "*.c")
-OBJS 		= $(SRC:$(SRCS_DIRS)/%.c=$(OBJS_DIRS)/%.o)
-INCLUDE		= $(addprefix -I, $(INCL_DIRS))
-LIB			= $(shell find $(LIB_DIRS) -type f -name "*.a")
+OS 			= $(shell uname)
+
+FT_DIR		= libft
+
+SRC_DIR		= src
+OBJ_DIR   	= obj
+INC_DIRS	= includes $(FT_DIR)
+
+# Adds the readline include directory to the includes
+# (MacOS only)
+ifeq ($(OS), Darwin)
+	INC_DIRS += $(HOME)/.brew/opt/readline/include
+endif
+
+SRCS		= $(shell find $(SRC_DIR) -type f -name "*.c")
+OBJS 		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+INC_FLAGS	= $(addprefix -I, $(INC_DIRS))
+WARN_FLAGS	= -Wall -Wextra -Werror
+DEBUG_FLAGS = -g -fsanitize=address -DDEBUG
+LIBS_FLAGS	= -L$(FT_DIR) -lft -lreadline
+
+# Adds the readline lib directory to the libs flags
+# (MacOS only)
+ifeq ($(OS), Darwin)
+	LIBS_FLAGS += -L$(HOME)/.brew/opt/readline/lib
+endif
+
+CFLAGS		= $(WARN_FLAGS) $(INC_FLAGS)
+LDFLAGS		= $(WARN_FLAGS) $(LIBS_FLAGS)
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+RM			= rm -f
+
 RED			= \033[0;31m
 GREEN		= \033[0;32m
 ORANGE		= \033[0;33m
@@ -20,33 +55,38 @@ NC			= \033[0m
 
 all: 		libft $(NAME)
 
-bonus:		libft $(BONUS)
-
 libft:
 			@echo "\n$(GREEN)Compiling libft:$(NC)"
-			@$(MAKE) -C libft/
+			@$(MAKE) -C $(FT_DIR)
 
-.c.o:
+# Compilation
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c 
+			@mkdir -p $(dir $@)
 			@echo "Creating object: $@"
-			@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_DIRS)/%.o: $(SRCS_DIRS)/%.c 
-		@mkdir -p $(dir $@)
-		$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
-
+# Linking
 $(NAME):	$(OBJS)
-			@$(CC) -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(FLAGS) $(INCLUDE) $(LIB) $(OBJS)
+			@echo "Creating binary: $@"
+			@$(CC) $^ -o $(NAME) $(LDFLAGS)
 
+#Cleaning
 clean:
-			@rm -f -rf $(OBJS_DIRS)
-			@$(MAKE) -C libft/ clean && echo "$(GREEN)libft objects removed!$(NC)"
+			@$(RM) -rf $(OBJ_DIR)
+			@$(MAKE) -C $(FT_DIR) clean
+			@echo "$(GREEN)libft objects removed!$(NC)"
 
-fclean: 	clean
+fclean: clean
 			@rm -f $(OBJS)
 			@rm -f $(NAME)
-			@rm -f $(BONUS)
-			@$(MAKE) -C libft/ fclean
+			@$(MAKE) -C $(FT_DIR) fclean
 
+# Rebuild
 re:			fclean all
 
-.PHONY:		all clean fclean re libft
+# Debugging build
+debug:		CFLAGS += $(DEBUG_FLAGS)
+debug:		LDFLAGS += $(DEBUG_FLAGS) -lasan 
+debug:		re
+
+.PHONY:		all clean fclean re libft debug

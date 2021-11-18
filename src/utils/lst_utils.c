@@ -3,77 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:13:38 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/18 10:47:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_dp_list(t_list *lst)
+void	free_argv(void)
 {
-	t_list *temp;
-
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		temp = lst->next;
-		free(lst);
-		lst = NULL;
-		lst = temp;
-	}
-}
-
-void	free_argv()
-{
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
-	while (mini.argv[x] != NULL)
+	while (g_mini.argv[x] != NULL)
 		x++;
 	y = -1;
 	while (++y < x)
 	{
-		free(mini.argv[y]);
-		mini.argv[y] = NULL;
+		free(g_mini.argv[y]);
+		g_mini.argv[y] = NULL;
 	}
-	free(mini.argv);
-}
-
-void	free_lst(t_list *lst)
-{
-	if (lst == NULL)
-	{
-		free(lst);
-		lst = NULL;
-		return ;
-	}
-	while(1)
-	{
-		printf("%s %p\n",lst->content,lst->content);
-		free(lst->content);
-		lst->content = NULL;
-		free(lst->name);
-		lst->name = NULL;
-		if (lst->next == NULL)
-		{
-			free(lst);
-			lst = NULL;
-			break ;
-		}
-		lst = lst->next;
-	}
+	free(g_mini.argv);
 }
 
 void	free_struct(char *input)
 {
-	free(mini.env);
-	mini.env = NULL;
+	(void)input;
+	ft_lstclear(&g_mini.env, pair_clear);
 //	free(input);
 	input = NULL;
-//	free_argv(mini);
+//	free_argv(g_mini);
 }

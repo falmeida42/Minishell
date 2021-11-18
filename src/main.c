@@ -6,64 +6,50 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/11 16:19:57 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:36:24 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
+#include "libft.h"
 
 void	screening(char *input)
 {
-	int x = 0;
+	char	*cmd;
 
-	// while (mini->argv[++x])
-	// 	;
-	if (mini.argv)
+	if (g_mini.argv)
 	{
-		if (str_cmp_both_len(mini.argv[0], "pwd"))
+		cmd = *g_mini.argv;
+		if (!ft_strcmp(cmd, "pwd"))
 			ft_pwd();
-		else if (str_cmp_both_len(mini.argv[0], "exit"))
+		else if (!ft_strcmp(cmd, "exit"))
 			ft_exit(input);
-		else if (str_cmp_both_len(mini.argv[0], "echo"))
+		else if (!ft_strcmp(cmd, "echo"))
 			ft_echo();
-		else if (str_cmp_both_len(mini.argv[0], "cd"))
+		else if (!ft_strcmp(cmd, "cd"))
 			ft_cd();
-		else if (str_cmp_both_len(mini.argv[0], " "))
-			printf("\n");
-		else if(str_cmp_both_len(mini.argv[0], "env"))
+		else if (!ft_strcmp(cmd, " "))
+			ft_putchar('\n');
+		else if(!ft_strcmp(cmd, "env"))
 				ft_env();
-		else if(str_cmp_both_len(mini.argv[0], "export"))
+		else if(!ft_strcmp(cmd, "export"))
 			ft_export();
-		else if(str_cmp_both_len(mini.argv[0], "node"))
-		{
-			if (ft_strlen(mini.argv[1]) > 0)
-				ft_lstnode_print(mini.env, mini.argv[1]);
-		}
-		else if (str_cmp_both_len(mini.argv[0], "unset"))
-		{
-			if (x > 1)
-				ft_unset();
-		}
+		else if (!ft_strcmp(cmd, "unset"))
+			ft_unset();
 		else
-			ft_ls();
+			ft_exec();
 	}
-	else
-		return ;
 }
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **envp)
 {
-
 	char	*input;
 
 	(void) argc;
 	(void) argv;
-	mini.head = malloc(sizeof(t_list));
-	mini.pid = getpid();
-	mini.env = get_env(env);
-	mini.exit = false;
+	g_mini.pid = getpid();
+	g_mini.env = map_from_str_array(envp, '=');
+	g_mini.exit = false;
 
 	printf("Hello World\n");
 	//signal(SIGINT , get_signal);
@@ -74,18 +60,14 @@ int main(int argc, char **argv, char **env)
 		if (input && ft_strlen(input) != 0)
 		{
 			add_history(input);
-			mini.argv = ft_split(input, ' ');
+			g_mini.argv = ft_split(input, ' ');
 			screening(input);
 			free_argv();
 			free(input);
-			input = NULL;
 		}
-		if (mini.exit == true)
-		{
-			free_struct(input);
-			free_lst(mini.env);
-			exit(0);
-		}
+		if (g_mini.exit)
+			break ;
 	}
-	return (0);
+	free_struct(input);
+	return (EXIT_SUCCESS);
 }
