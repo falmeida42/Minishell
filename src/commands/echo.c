@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:06:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:36:53 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ char	*env_flag_check(int i)
 
 	j = 0;
 	env_name = NULL;
-	while (mini.argv[i][j])
+	while (g_mini.argv[i][j])
 		j++;
-	if (j > 0 && mini.argv[i][0] == '$')
+	if (j > 0 && g_mini.argv[i][0] == '$')
 	{
-		env_name = ft_substr(mini.argv[i], 1, j);
+		env_name = ft_substr(g_mini.argv[i], 1, j);
 		return (env_name);
 	}
 	return (NULL);
@@ -66,20 +66,20 @@ void	echo_n_flag(void)
 	int	index;
 
 	index = 1;
-	if (mini.argv[index] == NULL)
+	if (g_mini.argv[index] == NULL)
 		return ;
-	while (mini.argv[index + 1])
+	while (g_mini.argv[index + 1])
 	{
-		ft_putstr(mini.argv[index]);
+		ft_putstr(g_mini.argv[index]);
 		ft_putchar(' ');
 		++index;
 	}
-	ft_putstr(mini.argv[index]);
+	ft_putstr(g_mini.argv[index]);
 }
 
 void	ft_echo()
 {
-	if (mini.argv[1] && ft_strcmp(mini.argv[1], "-n") == 0)
+	if (g_mini.argv[1] && ft_strcmp(g_mini.argv[1], "-n") == 0)
 		echo_n_flag();
 	else
 	{

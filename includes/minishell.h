@@ -22,7 +22,7 @@ typedef struct	s_mini {
 	t_map	*env;
 } t_mini;
 
-t_mini	mini;
+t_mini	g_mini;
 
 //error management
 void	error_output(char type);

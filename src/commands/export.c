@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/18 02:24:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:37:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 
 /**
  * Reimplementation of the builtin export
- * Adds or edits an environment variable, stored at mini.env
+ * Adds or edits an environment variable, stored at g_mini.env
  */
 int	ft_export(void)
 {
 	char	*arg;
 	t_pair	*p;
 
-	arg = mini.argv[1];
+	arg = g_mini.argv[1];
 	if (arg == NULL)
 		return (1);
 	p = pair_from_str(arg, '=');

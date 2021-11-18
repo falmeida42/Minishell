@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/18 02:05:33 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:36:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
  */
 void	ft_env(void)
 {
-	map_print(mini.env, '=');
+	map_print(g_mini.env, '=');
 	// return 0
 }

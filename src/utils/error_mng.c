@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_mng.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 14:00:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:19:43 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/18 02:37:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	error_output(char type)
 {
 	if (type == 'c')
-		printf("minishell: command not found: %s\n", mini.argv[0]);
+		printf("minishell: command not found: %s\n", g_mini.argv[0]);
 }
 

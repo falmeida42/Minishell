@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 17:29:33 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:37:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@ void	free_argv()
 	int y;
 
 	x = 0;
-	while (mini.argv[x] != NULL)
+	while (g_mini.argv[x] != NULL)
 		x++;
 	y = -1;
 	while (++y < x)
 	{
-		free(mini.argv[y]);
-		mini.argv[y] = NULL;
+		free(g_mini.argv[y]);
+		g_mini.argv[y] = NULL;
 	}
-	free(mini.argv);
+	free(g_mini.argv);
 }
 
 void	free_struct(char *input)
 {
 	(void)input;
-	free(mini.env);
-	mini.env = NULL;
+	free(g_mini.env);
+	g_mini.env = NULL;
 //	free(input);
 	input = NULL;
-//	free_argv(mini);
+//	free_argv(g_mini);
 }

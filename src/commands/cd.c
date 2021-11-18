@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:21:54 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:36:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ char	*get_path(t_cd *cd)
 	int		i;
 
 	i = 1;
-	path = ft_strjoin("/", mini.argv[i]);
-	while (mini.argv[i + 1] != NULL)
+	path = ft_strjoin("/", g_mini.argv[i]);
+	while (g_mini.argv[i + 1] != NULL)
 	{
 		path = ft_strjoin(path , " ");
-		path = ft_strjoin(path , mini.argv[i + 1]);
+		path = ft_strjoin(path , g_mini.argv[i + 1]);
 		i++;
 	}
 	path = ft_strjoin(cd->pwd , path);
@@ -59,12 +59,12 @@ void	change_path(t_cd *cd)
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
-	cd->tmp = mini.env;				// ???
+	cd->tmp = g_mini.env;				// ???
 	cd->pwd = ft_strdup(str);
 	cd->path1 = get_path(cd);
 	chdir(cd->path1);
-	map_set(&mini.env, ft_strdup("PWD"), cd->path1);
-	map_set(&mini.env, ft_strdup("OLDPWD"), cd->pwd);
+	map_set(&g_mini.env, ft_strdup("PWD"), cd->path1);
+	map_set(&g_mini.env, ft_strdup("OLDPWD"), cd->pwd);
 }
 */
 
@@ -87,7 +87,7 @@ void	ft_cd(void)
 
 	// check number of arguments
 	// if > 1, print error message: "cd: too many arguments"
-	dir = mini.argv[1];
+	dir = g_mini.argv[1];
 	if (!dir)
 	{
 		dir = env_get("HOME");
