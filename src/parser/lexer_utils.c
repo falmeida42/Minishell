@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 02:17:25 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:14:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 #include <stdlib.h>
 
 t_token	*take_twochar_symbol(t_char_iterator *cursor)

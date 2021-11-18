@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 14:35:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:13:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 // Checks if a token is a word ( simple text, quoted text, double quoted text )
 bool	is_word_token(t_token *token)
@@ -36,7 +36,7 @@ bool	is_redirection_token(t_token *token)
 }
 
 // Checks if a token appears in a simple command (word or redirects)
-bool	is_simple_cmd_token(t_token *token)
+bool	is_simple_command_token(t_token *token)
 {
 	return (is_word_token(token) || is_redirection_token(token));
 }
