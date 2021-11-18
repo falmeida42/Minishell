@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:18:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:35:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,16 @@ void		free_struct(char *input);
 void		free_argv();
 
 //commands.c
-void		ft_pwd(void);
-void		ft_exit(char *input);
-void		ft_echo(void);
-void		ft_cd(void);
-void		ft_exec(void);
-void		ft_env(void);
+int			ft_pwd(void);
+int			ft_echo(void);
+int			ft_cd(void);
+int			ft_exec(void);
+int			ft_env(void);
 int			ft_export(void);
-void		ft_unset(void);
+int			ft_unset(void);
 //commands.c
 
 void		get_signal(int signal);
-
-//main.c
-char		*pwd(void);
-//main.c
 
 // env variable
 int			env_unset(char *key);

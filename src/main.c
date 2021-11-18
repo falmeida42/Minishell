@@ -6,39 +6,38 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 10:50:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:40:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-void	screening(char *input)
+int	screening(char **argv)
 {
 	char	*cmd;
 	
-	if (g_mini.argv)
+	cmd = *argv;
+	if (!cmd)
+		return (1);
+	if (!ft_strcmp(cmd, "exit"))
 	{
-		cmd = *g_mini.argv;
-		if (!ft_strcmp(cmd, "pwd"))
-			ft_pwd();
-		else if (!ft_strcmp(cmd, "exit"))
-			ft_exit(input);
-		else if (!ft_strcmp(cmd, "echo"))
-			ft_echo();
-		else if (!ft_strcmp(cmd, "cd"))
-			ft_cd();
-		else if (!ft_strcmp(cmd, " "))
-			ft_putchar('\n');
-		else if(!ft_strcmp(cmd, "env"))
-				ft_env();
-		else if(!ft_strcmp(cmd, "export"))
-			ft_export();
-		else if (!ft_strcmp(cmd, "unset"))
-			ft_unset();
-		else
-			ft_exec();
+		g_mini.exit = true;
+		return (0);
 	}
+	if (!ft_strcmp(cmd, "pwd"))
+		return (ft_pwd());
+	if (!ft_strcmp(cmd, "echo"))
+		return (ft_echo());
+	if (!ft_strcmp(cmd, "cd"))
+		return (ft_cd());
+	if(!ft_strcmp(cmd, "env"))
+		return (ft_env());
+	if(!ft_strcmp(cmd, "export"))
+		return (ft_export());
+	if (!ft_strcmp(cmd, "unset"))
+		return (ft_unset());
+	return (ft_exec());
 }
 
 int main(int argc, char **argv, char **envp)
@@ -56,16 +55,19 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		input = readline("minishell: ");
-		if (input && ft_strlen(input) != 0)
+		if (input && ft_strwc(input, ' ') > 0)
 		{
 			add_history(input);
 			g_mini.argv = ft_split(input, ' ');
-			screening(input);
+			screening(g_mini.argv);
 			free_argv();
 			free(input);
 		}
 		if (g_mini.exit)
+		{
+			ft_putstr("exit\n");
 			break ;
+		}
 	}
 	free_struct(input);
 	return (EXIT_SUCCESS);

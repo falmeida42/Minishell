@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/18 02:36:54 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:30:36 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
  * Reimplementation of the builtin env
  * Prints all the current environment variables
  */
-void	ft_env(void)
+int	ft_env(void)
 {
 	map_print(g_mini.env, '=');
-	// return 0
+	return (0);
 }

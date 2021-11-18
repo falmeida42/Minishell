@@ -68,7 +68,7 @@ void	change_path(t_cd *cd)
 }
 */
 
-void	change_directory(char *dir)
+int	change_directory(char *dir)
 {
 	if (chdir(dir) < 0)
 	{
@@ -77,10 +77,10 @@ void	change_directory(char *dir)
 	}
 	env_set("OLDPWD", ft_strdup(env_get("PWD")));
 	env_set("PWD", getcwd(NULL, 0));
-	// return 0;
+	return (0);
 }
 
-void	ft_cd(void)
+int	ft_cd(void)
 {
 	char	*dir;
 
@@ -93,7 +93,7 @@ void	ft_cd(void)
 		if (!dir)
 		{
 			ft_putendl_error("cd: HOME not set");
-			return ; // 1
+			return (1);
 		}
 	}
 	else if (strcmp(dir, "-") == 0)
@@ -102,9 +102,8 @@ void	ft_cd(void)
 		if (!dir)
 		{
 			ft_putendl_error("cd: OLDPWD not set");
-			return ; // 1
+			return (1);
 		}
 	}
-	change_directory(dir);
-	// return
+	return (change_directory(dir));
 }
