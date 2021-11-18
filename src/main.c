@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:36:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 03:07:01 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,26 @@
 
 void	screening(char *input)
 {
+	char	*cmd;
+	
 	if (g_mini.argv)
 	{
-		if (!ft_strcmp(g_mini.argv[0], "pwd"))
+		cmd = *g_mini.argv;
+		if (!ft_strcmp(cmd, "pwd"))
 			ft_pwd();
-		else if (!ft_strcmp(g_mini.argv[0], "exit"))
+		else if (!ft_strcmp(cmd, "exit"))
 			ft_exit(input);
-		else if (!ft_strcmp(g_mini.argv[0], "echo"))
+		else if (!ft_strcmp(cmd, "echo"))
 			ft_echo();
-		else if (!ft_strcmp(g_mini.argv[0], "cd"))
+		else if (!ft_strcmp(cmd, "cd"))
 			ft_cd();
-		else if (!ft_strcmp(g_mini.argv[0], " "))
+		else if (!ft_strcmp(cmd, " "))
 			ft_putchar('\n');
-		else if(!ft_strcmp(g_mini.argv[0], "env"))
+		else if(!ft_strcmp(cmd, "env"))
 				ft_env();
-		else if(!ft_strcmp(g_mini.argv[0], "export"))
+		else if(!ft_strcmp(cmd, "export"))
 			ft_export();
-		else if (!ft_strcmp(g_mini.argv[0], "unset"))
+		else if (!ft_strcmp(cmd, "unset"))
 			ft_unset();
 		else
 			ft_exec();
@@ -40,7 +43,6 @@ void	screening(char *input)
 
 int main(int argc, char **argv, char **envp)
 {
-
 	char	*input;
 
 	(void) argc;
@@ -63,7 +65,7 @@ int main(int argc, char **argv, char **envp)
 			free(input);
 			input = NULL;
 		}
-		if (g_mini.exit == true)
+		if (g_mini.exit)
 		{
 			free_struct(input);
 			ft_lstclear(&g_mini.env, pair_clear);

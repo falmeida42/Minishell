@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:36:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 03:08:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	change_directory(char *dir)
 	env_set("PWD", getcwd(NULL, 0));
 	// return 0;
 }
-
 
 void	ft_cd(void)
 {

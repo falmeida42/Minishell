@@ -20,7 +20,7 @@
 
 char	*pwd(void)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
