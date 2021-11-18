@@ -71,22 +71,22 @@ t_token			*take_text(char **cursor);
 
 // Command table
 
-typedef struct s_simple_cmd
+typedef struct s_simple_command
 {
 	t_list	*argv;
 	char	*infile;
 	char	*outfile;
 	bool	here_doc;
 	bool	append;
-}	t_simple_cmd;
+}	t_simple_command;
 
 typedef t_list	t_command;
 
-void			simple_cmd_print(t_simple_cmd *cmd);
+void			simple_cmd_print(t_simple_command *cmd);
 void			command_print(t_command *command);
 
 // Parsing
-t_simple_cmd	*simple_cmd_parse(t_token_iterator *it);
+t_simple_command	*simple_cmd_parse(t_token_iterator *it);
 t_command		*command_parse(t_token_iterator *it);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/17 01:29:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:37:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 char	*pwd(void)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
@@ -35,7 +35,7 @@ void	ft_pwd(void)
 void	ft_exit(char *input)
 {
 	free_struct(input);
-	mini.exit = true;
+	g_mini.exit = true;
 	write(1, "exit\n", 4);
-	kill(mini.pid, SIGINT);
+	kill(g_mini.pid, SIGINT);
 }

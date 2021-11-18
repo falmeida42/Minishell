@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:19:55 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 03:09:48 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	ft_exec(void)
 {
-	mini.str = NULL;
-	char *path = "/bin/";
-	char *command = mini.argv[0];
-	char *total;
-	char* argv[3];
+	char	*path;
+	char	*command;
+	char	*total;
+	char	*argv[3];
 
-	if (!mini.argv[0])
+	path = "/bin/";
+	command = g_mini.argv[0];
+	g_mini.str = NULL;
+	if (!g_mini.argv[0])
 		return ;
-	argv[0] = mini.argv[0];
-	argv[1] = mini.argv[1];
+	argv[0] = g_mini.argv[0];
+	argv[1] = g_mini.argv[1];
 	argv[2] = NULL;
 
-	if (ft_strcmp(mini.argv[0], "ls") == 0)
-		argv[1] = getcwd(mini.str, PATH_MAX);
+	if (ft_strcmp(g_mini.argv[0], "ls") == 0)
+		argv[1] = getcwd(g_mini.str, PATH_MAX);
 	total = ft_strjoin(path, command);
 	if (fork() == 0)
 	{

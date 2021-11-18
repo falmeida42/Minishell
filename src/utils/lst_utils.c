@@ -6,35 +6,34 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 17:29:33 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 10:47:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_argv()
+void	free_argv(void)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
-	while (mini.argv[x] != NULL)
+	while (g_mini.argv[x] != NULL)
 		x++;
 	y = -1;
 	while (++y < x)
 	{
-		free(mini.argv[y]);
-		mini.argv[y] = NULL;
+		free(g_mini.argv[y]);
+		g_mini.argv[y] = NULL;
 	}
-	free(mini.argv);
+	free(g_mini.argv);
 }
 
 void	free_struct(char *input)
 {
 	(void)input;
-	free(mini.env);
-	mini.env = NULL;
+	ft_lstclear(&g_mini.env, pair_clear);
 //	free(input);
 	input = NULL;
-//	free_argv(mini);
+//	free_argv(g_mini);
 }

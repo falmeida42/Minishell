@@ -6,14 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 15:19:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 03:05:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 void	simple_cmd_parse_redirection_token(
-	t_simple_cmd *cmd, t_token_iterator *it)
+	t_simple_command *cmd, t_token_iterator *it)
 {
 	t_token			*token;
 	t_token_type	type;
@@ -39,10 +39,10 @@ void	simple_cmd_parse_redirection_token(
 	}
 }
 
-t_simple_cmd	*simple_cmd_parse(t_token_iterator *it)
+t_simple_command	*simple_cmd_parse(t_token_iterator *it)
 {
-	t_simple_cmd	*cmd;
-	t_token			*token;
+	t_simple_command	*cmd;
+	t_token				*token;
 
 	cmd = ft_calloc(1, sizeof(*cmd));
 	while (*it)

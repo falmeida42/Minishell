@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:08:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 10:50:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,26 @@
 
 void	screening(char *input)
 {
-	if (mini.argv)
+	char	*cmd;
+	
+	if (g_mini.argv)
 	{
-		if (!ft_strcmp(mini.argv[0], "pwd"))
+		cmd = *g_mini.argv;
+		if (!ft_strcmp(cmd, "pwd"))
 			ft_pwd();
-		else if (!ft_strcmp(mini.argv[0], "exit"))
+		else if (!ft_strcmp(cmd, "exit"))
 			ft_exit(input);
-		else if (!ft_strcmp(mini.argv[0], "echo"))
+		else if (!ft_strcmp(cmd, "echo"))
 			ft_echo();
-		else if (!ft_strcmp(mini.argv[0], "cd"))
+		else if (!ft_strcmp(cmd, "cd"))
 			ft_cd();
-		else if (!ft_strcmp(mini.argv[0], " "))
+		else if (!ft_strcmp(cmd, " "))
 			ft_putchar('\n');
-		else if(!ft_strcmp(mini.argv[0], "env"))
+		else if(!ft_strcmp(cmd, "env"))
 				ft_env();
-		else if(!ft_strcmp(mini.argv[0], "export"))
+		else if(!ft_strcmp(cmd, "export"))
 			ft_export();
-		else if (!ft_strcmp(mini.argv[0], "unset"))
+		else if (!ft_strcmp(cmd, "unset"))
 			ft_unset();
 		else
 			ft_exec();
@@ -40,14 +43,13 @@ void	screening(char *input)
 
 int main(int argc, char **argv, char **envp)
 {
-
 	char	*input;
 
 	(void) argc;
 	(void) argv;
-	mini.pid = getpid();
-	mini.env = map_from_str_array(envp, '=');
-	mini.exit = false;
+	g_mini.pid = getpid();
+	g_mini.env = map_from_str_array(envp, '=');
+	g_mini.exit = false;
 
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
@@ -57,18 +59,14 @@ int main(int argc, char **argv, char **envp)
 		if (input && ft_strlen(input) != 0)
 		{
 			add_history(input);
-			mini.argv = ft_split(input, ' ');
+			g_mini.argv = ft_split(input, ' ');
 			screening(input);
 			free_argv();
 			free(input);
-			input = NULL;
 		}
-		if (mini.exit == true)
-		{
-			free_struct(input);
-			ft_lstclear(&mini.env, pair_clear);
-			exit(EXIT_SUCCESS);
-		}
+		if (g_mini.exit)
+			break ;
 	}
+	free_struct(input);
 	return (EXIT_SUCCESS);
 }
