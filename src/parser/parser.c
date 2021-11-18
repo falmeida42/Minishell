@@ -6,75 +6,98 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 03:05:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:47:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
-void	simple_cmd_parse_redirection_token(
-	t_simple_command *cmd, t_token_iterator *it)
+/*
+ * Parses a group of commands within parentheses.
+ */
+t_commands_group	*commands_group_unwrap_parse(t_token_iterator *it)
 {
-	t_token			*token;
-	t_token_type	type;
+	t_token				*token;
+	t_commands_group	*ast;
+
+	token_iterator_next(it);
+	ast = commands_group_parse(it);
+	if (!ast)
+		return (NULL);
+	token = (*it)->content;
+	if (!*it || token->type != TOKEN_RPAREN)
+	{
+		btree_apply_suffix(ast, ast_node_free);
+		ft_putstr_error("syntax error: unclosed parenthesis\n");
+		return (NULL);
+	}
+	token_iterator_next(it);
+	return (ast);
+}
+
+/*
+ * Parses a group of commands (within parenthesis or a piped command)
+ */
+t_commands_group	*commands_group_node_parse(t_token_iterator *it)
+{
+	t_token				*token;
+	t_ast_node			*node;
+
+	if (!it || !*it)
+		return (NULL);
+	token = (*it)->content;
+	if (token->type == TOKEN_LPAREN)
+		return (commands_group_unwrap_parse(it));
+	node = ast_node_new(AST_CMD);
+	if (!node)
+		return (NULL);
+	node->command = command_parse(it);
+	return (btree_create_node(node));
+}
+
+/*
+ * Parses a group of commands from the right part of a && or || operator.
+ * the left part is already parsed and passed as argument (left_ast)
+ */
+t_commands_group	*commands_group_right_parse(t_token_iterator *it,
+						t_commands_group *left_ast)
+{
+	t_token				*token;
+	t_commands_group	*ast;
+	t_commands_group	*right_ast;
 
 	token = (*it)->content;
-	type = token->type;
-	token = token_iterator_next(it);
-	if (token == NULL)
-		return ;
-	if (type == TOKEN_GREATER)
-		cmd->outfile = token->value;
-	else if (type == TOKEN_DGREATER)
+	if (token->type == TOKEN_AND)
+		ast = btree_create_node(ast_node_new(AST_AND));
+	else if (token->type == TOKEN_OR)
+		ast = btree_create_node(ast_node_new(AST_OR));
+	else
+		return (left_ast);
+	token_iterator_next(it);
+	right_ast = commands_group_parse(it);
+	if (!right_ast)
 	{
-		cmd->outfile = token->value;
-		cmd->append = true;
+		btree_apply_suffix(left_ast, ast_node_free);
+		return (NULL);
 	}
-	else if (type == TOKEN_LESS)
-		cmd->infile = token->value;
-	else if (type == TOKEN_DLESS)
-	{
-		cmd->infile = token->value;
-		cmd->here_doc = true;
-	}
+	ast->left = left_ast;
+	ast->right = right_ast;
+	return (ast);
 }
 
-t_simple_command	*simple_cmd_parse(t_token_iterator *it)
+/*
+ * Parses a group of commands (with parenthesis or && or || separators)
+ */
+t_commands_group	*commands_group_parse(t_token_iterator *it)
 {
-	t_simple_command	*cmd;
-	t_token				*token;
+	t_commands_group	*left_ast;
 
-	cmd = ft_calloc(1, sizeof(*cmd));
-	while (*it)
-	{
-		token = (*it)->content;
-		if (is_word_token(token))
-			ft_lstpush_back(&cmd->argv, token->value);
-		else if (is_redirection_token(token))
-			simple_cmd_parse_redirection_token(cmd, it);
-		else
-			break ;
-		token_iterator_next(it);
-	}
-	return (cmd);
-}
-
-// TODO: check if there are consecutive pipes
-t_command	*command_parse(t_token_iterator *it)
-{
-	t_token		*token;
-	t_command	*command;
-
-	command = NULL;
-	while (*it)
-	{
-		token = (*it)->content;
-		if (is_simple_cmd_token(token))
-			ft_lstpush_back(&command, simple_cmd_parse(it));
-		else if (token->type == TOKEN_PIPE)
-			token_iterator_next(it);
-		else
-			break ;
-	}
-	return (command);
+	if (!it || !*it)
+		return (NULL);
+	left_ast = commands_group_node_parse(it);
+	if (!left_ast)
+		return (NULL);
+	if (!*it)
+		return (left_ast);
+	return (commands_group_right_parse(it, left_ast));
 }
