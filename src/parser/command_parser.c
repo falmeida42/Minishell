@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:35:15 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:13:10 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:46:42 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,35 +59,42 @@ t_simple_command	*simple_command_parse(t_token_iterator *it)
 	return (cmd);
 }
 
+bool	command_parse_step(t_token_iterator *it, t_command **command)
+{
+	t_token		*token;
+	static bool	prev_pipe = true;
+
+	token = (*it)->content;
+	if (is_simple_command_token(token))
+	{
+		ft_lstpush_back(command, simple_command_parse(it));
+		prev_pipe = false;
+		return (true);
+	}
+	else if (token->type == TOKEN_PIPE)
+	{
+		if (prev_pipe)
+		{
+			command_free(*command);
+			*command = NULL;
+			ft_putstr_error("syntax error near unexpected token '|'\n");
+			return (false);
+		}
+		token_iterator_next(it);
+		prev_pipe = true;
+		return (true);
+	}
+	return (false);
+}
+
 t_command	*command_parse(t_token_iterator *it)
 {
-	t_token			*token;
 	t_command		*command;
-	bool			prev_pipe;
+	bool			do_continue;
 
 	command = NULL;
-	prev_pipe = true;
-	while (*it)
-	{
-		token = (*it)->content;
-		if (is_simple_command_token(token))
-		{
-			ft_lstpush_back(&command, simple_command_parse(it));
-			prev_pipe = false;
-		}
-		else if (token->type == TOKEN_PIPE)
-		{
-			if (prev_pipe)
-			{
-				command_free(command);
-				ft_putstr_error("syntax error near unexpected token '|'\n");
-				return (NULL);
-			}
-			token_iterator_next(it);
-			prev_pipe = true;
-		}
-		else
-			break ;
-	}
+	do_continue = true;
+	while (*it && do_continue)
+		do_continue = command_parse_step(it, &command);
 	return (command);
 }
