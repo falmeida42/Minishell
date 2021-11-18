@@ -6,12 +6,19 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/15 19:49:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:06:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * Output the args, separated by spaces, followed by a newline.
+ * If -n is specified, the trailing newline is suppressed.
+ * The return status is 0 unless a write error occurs. 
+ */
+
+/*
 void	print_env_content(t_env *lst, char *name)
 {
 	char *content;
@@ -52,53 +59,32 @@ char	*env_flag_check(int i)
 	}
 	return (NULL);
 }
+*/
 
-void	echo_no_flag(int i, int j)
+void	echo_n_flag(void)
 {
-	if (i > 1)
-	{
-		j = 1;
-		while (i > j)
-		{
-			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j));
-			else
-				printf("%s", mini.argv[j]);
-			if (i > 1 + j++)
-				printf(" ");
-		}
-		printf("\n");
-	}
-}
+	int	index;
 
-void	echo_n_flag(int i, int j)
-{
-	if (i > 2)
+	index = 1;
+	if (mini.argv[index] == NULL)
+		return ;
+	while (mini.argv[index + 1])
 	{
-		j = 2;
-		while (i > j)
-		{
-			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j));
-			else
-				printf("%s", mini.argv[j]);
-			if (i > 1 + j++)
-				printf(" ");
-		}
+		ft_putstr(mini.argv[index]);
+		ft_putchar(' ');
+		++index;
 	}
+	ft_putstr(mini.argv[index]);
 }
 
 void	ft_echo()
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (mini.argv[i])
-		i++;
-	if (i >= 2 && str_cmp_both_len(mini.argv[1], "-n"))
-		echo_n_flag(i, j);
+	if (mini.argv[1] && ft_strcmp(mini.argv[1], "-n") == 0)
+		echo_n_flag();
 	else
-		echo_no_flag(i, j);
+	{
+		echo_n_flag();
+		ft_putchar('\n');
+	}
+	// return 0
 }

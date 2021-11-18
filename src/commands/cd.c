@@ -6,23 +6,36 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/15 20:07:35 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:21:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*find_name(t_env *lst, char *str)
-{
-	while (lst)
-	{
-		if (str_cmp_both_len(lst->name, str))
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
+/**
+ * Change  the current directory to dir.
+ * If dir is not supplied, the value of the HOME shell variable is the default.
+ * Any additional arguments following dir are  ignored.
+ * 
+ * The variable  CDPATH defines the search path for the directory containing
+ * dir: each directory name in CDPATH is searched for dir.
+ * Alternative directory names in CDPATH are  separated  by  a colon (:).
+ * A null directory name in CDPATH is the same as the current directory, i.e.,
+ * ``.''.
+ * 
+ * If dir begins with a slash (/), then CDPATH is  not used.
+ * If  .. appears in dir, it is processed by removing the immediately previous
+ * pathname component from dir, back to a slash or the beginning of dir.
+ *
+ * An argument of - is converted  to  $OLDPWD  before the  directory  change
+ * is  attempted.  If a non-empty directory name from CDPATH is used, or if -
+ * is the first argument, and the directory change is successful, the absolute
+ * pathname of the new working directory is written to the standard output.
+ * The return value is true if the directory was successfully changed;
+ * false otherwise.
+ */
 
+/**
 char	*get_path(t_cd *cd)
 {
 	char	*path;
@@ -46,75 +59,53 @@ void	change_path(t_cd *cd)
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
-	cd->tmp = mini.env;
+	cd->tmp = mini.env;				// ???
 	cd->pwd = ft_strdup(str);
 	cd->path1 = get_path(cd);
 	chdir(cd->path1);
-	check_env_names("PWD", cd->path1);
-	check_env_names("OLDPWD", cd->pwd);
-	mini.env = mini.head;
+	map_set(&mini.env, ft_strdup("PWD"), cd->path1);
+	map_set(&mini.env, ft_strdup("OLDPWD"), cd->pwd);
+}
+*/
+
+void	change_directory(char *dir)
+{
+	if (chdir(dir) < 0)
+	{
+		ft_putendl_error("cd: no such file or directory: ");
+		return ; // 1
+	}
+	env_set("OLDPWD", ft_strdup(env_get("PWD")));
+	env_set("PWD", getcwd(NULL, 0));
+	// return 0;
 }
 
-int	len_char_back(char *str, char c)
+
+void	ft_cd(void)
 {
-	int	i;
+	char	*dir;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	while ((str[i] != c))
-		i--;
-	return (i);
-}
-
-void	ft_cd_back(t_cd *cd)
-{
-	char	*str;
-	char	*old_pwd;
-	str = NULL;
-	mini.head = mini.env;
-
-	cd->backup = return_env_content(cd->tmp, "OLDPWD");
-	str = getcwd(str, PATH_MAX);
-	old_pwd = str;
-	if (!ft_strncmp(str, cd->backup, str_cmp_both_len(str, cd->backup)))
+	// check number of arguments
+	// if > 1, print error message: "cd: too many arguments"
+	dir = mini.argv[1];
+	if (!dir)
 	{
-		cd->path1 = ft_substr(str, 0, len_char_back(str, '/'));
-		chdir(cd->path1);
-		check_env_names("PWD", cd->path1);
-		check_env_names("OLDPWD", old_pwd);
+		dir = env_get("HOME");
+		if (!dir)
+		{
+			ft_putendl_error("cd: HOME not set");
+			return ; // 1
+		}
 	}
-	else
+	else if (strcmp(dir, "-") == 0)
 	{
-		if (!(chdir(cd->tmp->content)))
-			printf("cd: no such file or directory: %s\n", (char *)cd->tmp->content);
+		dir = env_get("OLDPWD");
+		if (!dir)
+		{
+			ft_putendl_error("cd: OLDPWD not set");
+			return ; // 1
+		}
 	}
-	mini.env = mini.head;
-}
-
-void	ft_cd()
-{
-	t_cd	cd;
-	char	*str;
-	char	*home;
-
-	home = NULL;
-	str = NULL;
-	mini.head = mini.env;
-	cd.tmp = mini.env;
-	home = getcwd(home, PATH_MAX);
-	if (!mini.argv[1])
-	{
-		str = return_env_content(mini.env, "HOME");
-		chdir(str);
-		check_env_names("PWD", str);
-		mini.env = mini.head;
-		check_env_names("OLDPWD", home);
-		mini.env = mini.head;
-
-	}
-	else if (str_cmp_both_len(mini.argv[1], ".."))
-		ft_cd_back(&cd);
-	else
-		change_path(&cd);
+	change_directory(dir);
+	// return
 }

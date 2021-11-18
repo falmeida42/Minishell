@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls.c                                               :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/15 18:18:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:19:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_ls()
+void	ft_exec(void)
 {
 	mini.str = NULL;
 	char *path = "/bin/";
@@ -26,7 +26,7 @@ void	ft_ls()
 	argv[1] = mini.argv[1];
 	argv[2] = NULL;
 
-	if (str_cmp_both_len(mini.argv[0], "ls"))
+	if (ft_strcmp(mini.argv[0], "ls") == 0)
 		argv[1] = getcwd(mini.str, PATH_MAX);
 	total = ft_strjoin(path, command);
 	if (fork() == 0)

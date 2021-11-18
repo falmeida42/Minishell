@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   map_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/12 18:19:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:39:09 by jpceia           ###   ########.fr       */
+/*   Created: 2021/10/31 02:48:24 by jceia             #+#    #+#             */
+/*   Updated: 2021/11/16 16:48:24 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "map.h"
+#include <stdio.h>
 
-t_env	*ft_envnew(void *content)
+// Prints the map to the console.
+void	map_print(t_map *map, char sep)
 {
-	t_env	*new;
+	t_pair	*p;
 
-	new = (t_env *)malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	while (map)
+	{
+		p = (t_pair *)map->content;
+		ft_putstr(p->key);
+		ft_putchar(sep);
+		ft_putendl(p->value);
+		map = map->next;
+	}
 }

@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprint.c                                      :+:      :+:    :+:   */
+/*   btree_apply_suffix.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 11:31:53 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:40:28 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/15 23:25:52 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/17 20:17:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_envprint(t_env *lst, char type)
+/**
+ * @brief	applies the function given as argument to the item of each node,
+ *			using suffix traversal to search the tree.
+ * 
+ * @param	root	the root of the tree.
+ * @param	applyf	the function to apply to each node.
+ */
+void	btree_apply_suffix(t_btree *root, void (*applyf)(void *))
 {
-	t_env	*head;
-
-	head = lst;
-	while (lst)
-	{
-		if (type == 'n' || type == 'a')
-			printf("%s", (char *)lst->name);
-		if (type == 'a')
-			printf("=");
-		if (type == 'c' || type == 'a')
-			printf("%s\n", (char *)lst->content);
-		if (type == 'd')
-			ft_envnode_print_2p(lst);
-		lst = lst->next;
-	}
-	lst = head;
+	if (!root)
+		return ;
+	btree_apply_suffix(root->left, applyf);
+	btree_apply_suffix(root->right, applyf);
+	applyf(root->item);
 }

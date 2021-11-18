@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   btree_apply_prefix.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:36:15 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:36:03 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/15 23:16:34 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/17 20:17:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_envadd_back(t_env **lst, t_env *new)
+/**
+ * @brief Applies the function given as argument to the item of each node,
+ * using prefix traversal to search the tree.
+ * 
+ * @param root		the root of the tree.
+ * @param applyf	the function to apply to each node.
+ */
+void	btree_apply_prefix(t_btree *root, void (*applyf)(void *))
 {
-	if (!new || !lst)
+	if (!root)
 		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	else
-		(ft_envlast(*lst))->next = new;
+	applyf(root->item);
+	btree_apply_prefix(root->left, applyf);
+	btree_apply_prefix(root->right, applyf);
 }

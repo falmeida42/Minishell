@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:15:42 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:40:37 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/04 11:29:46 by jceia             #+#    #+#             */
+/*   Updated: 2021/11/17 01:18:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_envsize(t_env *lst)
+/*
+ * Functions to manipulate the global environment variable
+ */
+
+int	env_unset(char *key)
 {
-	size_t	size;
+	return (map_del(&mini.env, key));
+}
 
-	size = 0;
-	while (lst)
-	{
-		size++;
-		lst = lst->next;
-	}
-	return (size);
+t_map	*env_set(char *key, char *value)
+{
+	return (map_set(&mini.env, ft_strdup(key), value));
+}
+
+char	*env_get(char *key)
+{
+	return (map_get_value(mini.env, key));
 }

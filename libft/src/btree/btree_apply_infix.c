@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   btree_apply_infix.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:13:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:38:06 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/15 23:24:33 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/17 20:17:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_enviter(t_env *lst, void (*f)(void*))
+/**
+ * @brief applies the function given as argument to the item of each node,
+ * using infix traversal to search the tree.
+ * 
+ * @param root		the root of the tree.
+ * @param applyf	the function to apply to each node.
+ */
+void	btree_apply_infix(t_btree *root, void (*applyf)(void *))
 {
-	if (!lst || !f)
+	if (!root)
 		return ;
-	while (lst)
-	{
-		f(lst->content);
-		lst = lst->next;
-	}
+	btree_apply_infix(root->left, applyf);
+	applyf(root->item);
+	btree_apply_infix(root->right, applyf);
 }

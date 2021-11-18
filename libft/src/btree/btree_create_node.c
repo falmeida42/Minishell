@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envmap.c                                        :+:      :+:    :+:   */
+/*   btree_create_node.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:19:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 01:03:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/15 23:10:28 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/17 20:17:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-t_env	*ft_envmap(t_env *lst, void *(*f)(void*), void (*del)(void*))
+/**
+ * @brief	Allocates a new element.
+ *			It should initialise its item to the argument’s value, and all
+ *			other elements to 0.
+ * 
+ * @param	item		The item to be inserted.
+ * @return	t_btree*	The new tree node.
+ */
+t_btree	*btree_create_node(void *item)
 {
-	t_env	*new;
-	t_env	*temp;
+	t_btree	*node;
 
-	if (!lst || !f || !del)
+	node = (t_btree *)malloc(sizeof(*node));
+	if (!node)
 		return (NULL);
-	new = ft_envnew(f(lst->content));
-	if (!new)
-		return (NULL);
-	temp = new;
-	lst = lst->next;
-	while (lst)
-	{
-		temp->next = ft_envnew(f(lst->content));
-		if (!temp->next)
-		{
-			ft_envclear(&new, del);
-			return (NULL);
-		}
-		temp = temp->next;
-		lst = lst->next;
-	}
-	return (new);
+	node->item = item;
+	node->left = NULL;
+	node->right = NULL;
+	return (node);
 }

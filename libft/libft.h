@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 01:03:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:31:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,39 +96,6 @@ char	*ft_straddc(char *s, char c);
 char	*ft_empty_string(void);
 void	ft_str_array_clear(char **str_arr, int len);
 
-/**
- * Double Linked Lists
- */
-
-typedef struct s_env t_env;
-
-typedef struct s_env
-{
-	void	*content;
-	void	*name;
-	t_env	*prev;
-	t_env	*next;
-}	t_env;
-
-t_env	*ft_envnew(void *content);
-void	ft_envadd_front(t_env **lst, t_env *new);
-t_env	*ft_envnew(void *content);
-t_env	*ft_envdup_2p(t_env *lst);
-void	ft_envadd_front(t_env **lst, t_env *new);
-int		ft_envsize(t_env *lst);
-t_env	*ft_envlast(t_env *lst);
-t_env	*ft_envhead_2p(t_env *lst);
-void	ft_envadd_back(t_env **lst, t_env *new);
-void	ft_envadd_back_2p(t_env **lst, t_env *new);
-void	ft_envdelone(t_env *lst, void (*del)(void*));
-void	ft_envclear(t_env **lst, void (*del)(void*));
-void	ft_enviter(t_env *lst, void (*f)(void*));
-t_env	*ft_envmap(t_env *lst, void *(*f)(void*),
-			void (*del)(void*));
-void	ft_envprint(t_env *lst, char type);
-void	ft_envnode_print_2p(t_env *lst);
-
-
 /*
  * Linked-List related functions
  */
@@ -152,5 +119,32 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+
+/*
+ * Binary Tree
+ */
+
+typedef struct s_btree
+{
+	struct s_btree	*left;
+	struct s_btree	*right;
+	void			*item;
+}	t_btree;
+
+t_btree	*btree_create_node(void *item);
+void	btree_clear(t_btree *root, void (*del)(void *));
+
+void	btree_apply_prefix(t_btree *root, void (*applyf)(void *));
+void	btree_apply_infix(t_btree *root, void (*applyf)(void *));
+void	btree_apply_suffix(t_btree *root, void (*applyf)(void *));
+void	btree_apply_by_level(t_btree *root,
+			void (*applyf)(void *item, int current_level, int is_first_elem));
+
+void	btree_insert_data(t_btree **root, void *item,
+			int (*cmpf)(void *, void *));
+int		btree_level_count(t_btree *root);
+void	*btree_search_item(t_btree *root, void *data_ref,
+			int (*cmpf)(void *, void *));
 
 #endif
