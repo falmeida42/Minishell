@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:20:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:43:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,6 @@ t_token_list	*lex(char *input)
 		ft_lstpush_back(&token_list, token);
 	}
 	return (token_list);
-}
-
-void	print_ast_nodes(void *ptr)
-{
-	t_ast_node	*node;
-
-	node = (t_ast_node *)ptr;
-	if (node == NULL)
-		return ;
-	if (node->type == AST_AND)
-		ft_putstr("AST_AND\n");
-	else if (node->type == AST_OR)
-		ft_putstr("AST_OR\n");
-	else if (node->type == AST_CMD)
-	{
-		ft_putstr("AST_CMD\n");
-		command_print(node->command);
-	}
 }
 
 /*
