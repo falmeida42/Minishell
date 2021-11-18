@@ -6,21 +6,21 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 15:11:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 03:03:40 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	simple_cmd_free(void *ptr)
+void	simple_command_free(void *ptr)
 {
-	t_simple_cmd	*cmd;
+	t_simple_command	*cmd;
 
-	cmd = (t_simple_cmd *)ptr;
+	cmd = (t_simple_command *)ptr;
 	ft_lstclear(&cmd->argv, NULL);
 }
 
-void	simple_cmd_print(t_simple_cmd *cmd)
+void	simple_cmd_print(t_simple_command *cmd)
 {
 	t_list	*av;
 
