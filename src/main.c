@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 03:07:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 10:50:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,10 @@ int main(int argc, char **argv, char **envp)
 			screening(input);
 			free_argv();
 			free(input);
-			input = NULL;
 		}
 		if (g_mini.exit)
-		{
-			free_struct(input);
-			ft_lstclear(&g_mini.env, pair_clear);
-			exit(EXIT_SUCCESS);
-		}
+			break ;
 	}
+	free_struct(input);
 	return (EXIT_SUCCESS);
 }
