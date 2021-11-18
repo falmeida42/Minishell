@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/15 20:11:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 02:08:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,38 @@
 
 void	screening(char *input)
 {
-	int x = 0;
-
-	// while (mini->argv[++x])
-	// 	;
 	if (mini.argv)
 	{
-		if (str_cmp_both_len(mini.argv[0], "pwd"))
+		if (!ft_strcmp(mini.argv[0], "pwd"))
 			ft_pwd();
-		else if (str_cmp_both_len(mini.argv[0], "exit"))
+		else if (!ft_strcmp(mini.argv[0], "exit"))
 			ft_exit(input);
-		else if (str_cmp_both_len(mini.argv[0], "echo"))
+		else if (!ft_strcmp(mini.argv[0], "echo"))
 			ft_echo();
-		else if (str_cmp_both_len(mini.argv[0], "cd"))
+		else if (!ft_strcmp(mini.argv[0], "cd"))
 			ft_cd();
-		else if (str_cmp_both_len(mini.argv[0], " "))
-			printf("\n");
-		else if(str_cmp_both_len(mini.argv[0], "env"))
+		else if (!ft_strcmp(mini.argv[0], " "))
+			ft_putchar('\n');
+		else if(!ft_strcmp(mini.argv[0], "env"))
 				ft_env();
-		else if(str_cmp_both_len(mini.argv[0], "export"))
+		else if(!ft_strcmp(mini.argv[0], "export"))
 			ft_export();
-		else if(str_cmp_both_len(mini.argv[0], "node"))
-		{
-			if (ft_strlen(mini.argv[1]) > 0)
-				ft_envnode_print(mini.env, mini.argv[1]);
-		}
-		else if (str_cmp_both_len(mini.argv[0], "unset"))
-		{
-			if (x > 1)
-				ft_unset();
-		}
+		else if (!ft_strcmp(mini.argv[0], "unset"))
+			ft_unset();
 		else
-			ft_ls();
+			ft_exec();
 	}
-	else
-		return ;
 }
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **envp)
 {
 
 	char	*input;
 
 	(void) argc;
 	(void) argv;
-	mini.head = malloc(sizeof(t_env));
 	mini.pid = getpid();
-	mini.env = get_env(env);
+	mini.env = map_from_str_array(envp, '=');
 	mini.exit = false;
 
 	//signal(SIGINT , get_signal);
@@ -81,9 +66,9 @@ int main(int argc, char **argv, char **env)
 		if (mini.exit == true)
 		{
 			free_struct(input);
-			free_env(mini.env);
-			exit(0);
+			ft_lstclear(&mini.env, pair_clear);
+			exit(EXIT_SUCCESS);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

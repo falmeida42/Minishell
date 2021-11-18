@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:36:15 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/15 19:36:03 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/04 11:29:46 by jceia             #+#    #+#             */
+/*   Updated: 2021/11/17 01:18:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_envadd_back(t_env **lst, t_env *new)
+/*
+ * Functions to manipulate the global environment variable
+ */
+
+int	env_unset(char *key)
 {
-	if (!new || !lst)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	else
-		(ft_envlast(*lst))->next = new;
+	return (map_del(&mini.env, key));
+}
+
+t_map	*env_set(char *key, char *value)
+{
+	return (map_set(&mini.env, ft_strdup(key), value));
+}
+
+char	*env_get(char *key)
+{
+	return (map_get_value(mini.env, key));
 }
