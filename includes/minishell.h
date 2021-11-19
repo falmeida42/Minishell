@@ -29,6 +29,7 @@ typedef struct	s_mini {
 	char	**argv;
 	char	*str;
 	int		pid;
+	int		status;
 	bool	exit;
 	t_map	*env;
 } t_mini;

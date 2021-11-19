@@ -59,7 +59,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			g_mini.argv = ft_split(input, ' ');
-			screening(g_mini.argv);
+			g_mini.status = screening(g_mini.argv);
 			free_argv();
 			free(input);
 		}
