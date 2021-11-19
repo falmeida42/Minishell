@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/19 16:13:08 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/19 16:21:03 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ t_token	*take_symbol(t_char_iterator *cursor)
 		type = TOKEN_LESS;
 	else if (c == '(')
 		type = TOKEN_LPAREN;
-	else if (c == ')')
-		type = TOKEN_RPAREN;
 	else
-		return (NULL);
+		type = TOKEN_RPAREN;
 	char_iterator_next(cursor);
 	token = token_new(type, NULL);
 	return (token);
@@ -66,18 +64,28 @@ t_token	*take_dquoted(char **cursor)
 	char	prev_char;
 	char	*start;
 	char	*end;
+	int		len;
 
-	char_iterator_next(cursor);
 	start = *cursor;
-	prev_char = 0;
+	char_iterator_next(cursor);
 	c = char_iterator_peek(cursor);
-	while (c && (c != '"' || prev_char == '\\'))
+	len = 1;
+	while (c)
 	{
+		if (c == '"' && prev_char != '\\')
+			len++;
+		if (len % 2 == 0)
+		{
+			if (*(*cursor + 1) == ' ')
+			{
+				char_iterator_next(cursor);
+				break;
+			}
+		}
 		prev_char = c;
 		c = char_iterator_next(cursor);
 	}
 	end = *cursor;
-	char_iterator_next(cursor);
 	return (token_new(TOKEN_DQUOTED, ft_substr(start, 0, end - start)));
 }
 
