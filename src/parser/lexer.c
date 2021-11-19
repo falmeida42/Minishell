@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 02:16:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:43:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -69,7 +69,13 @@ int main(int argc, char **argv)
 		printf("%d: %s\n", token->type, token->value);
 		token_it = token_it->next;
 	}
-	ft_lstclear(&token_list, token_free);
+
+	token_it = token_list;
+	t_commands_group *group = commands_group_parse(&token_it);
+
+	btree_apply_infix(group, print_ast_nodes);
+	//command_table_free(table);
+	//ft_lstclear(&token_list, token_free);
 	return (0);
 }
 */

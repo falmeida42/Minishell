@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 11:00:41 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:33:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@
  * current directory or an invalid option is supplied.
  */
 
-char	*pwd(void)
+int	ft_pwd(void)
 {
 	char	*str;
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
-	return (str);
-}
-
-void	ft_pwd(void)
-{
-	printf("%s\n", pwd());
+	ft_putendl(str);
+	return (0);
 }

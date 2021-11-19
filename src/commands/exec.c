@@ -6,13 +6,13 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 03:09:48 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:41:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exec(void)
+int	ft_exec(void)
 {
 	char	*path;
 	char	*command;
@@ -23,7 +23,7 @@ void	ft_exec(void)
 	command = g_mini.argv[0];
 	g_mini.str = NULL;
 	if (!g_mini.argv[0])
-		return ;
+		return (1);
 	argv[0] = g_mini.argv[0];
 	argv[1] = g_mini.argv[1];
 	argv[2] = NULL;
@@ -40,4 +40,5 @@ void	ft_exec(void)
 	else
 		wait(NULL);
 	free(total);
+	return (0);
 }

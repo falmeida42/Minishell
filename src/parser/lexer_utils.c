@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/16 02:17:25 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/19 16:13:08 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 #include <stdlib.h>
 
 t_token	*take_twochar_symbol(t_char_iterator *cursor)
@@ -53,6 +53,8 @@ t_token	*take_symbol(t_char_iterator *cursor)
 		type = TOKEN_LPAREN;
 	else if (c == ')')
 		type = TOKEN_RPAREN;
+	else
+		return (NULL);
 	char_iterator_next(cursor);
 	token = token_new(type, NULL);
 	return (token);

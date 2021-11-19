@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 03:03:40 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 20:55:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 void	simple_command_free(void *ptr)
 {
@@ -20,7 +20,15 @@ void	simple_command_free(void *ptr)
 	ft_lstclear(&cmd->argv, NULL);
 }
 
-void	simple_cmd_print(t_simple_command *cmd)
+void	command_free(void *ptr)
+{
+	t_command	*command;
+
+	command = (t_command *)ptr;
+	ft_lstclear(&command, simple_command_free);
+}
+
+void	simple_command_print(t_simple_command *cmd)
 {
 	t_list	*av;
 
@@ -53,7 +61,7 @@ void	command_print(t_command *command)
 		ft_putstr("COMMAND ");
 		ft_putnbr(++index);
 		ft_putchar('\n');
-		simple_cmd_print(command->content);
+		simple_command_print(command->content);
 		command = command->next;
 	}
 }

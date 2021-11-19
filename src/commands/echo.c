@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 02:36:53 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:41:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	echo_n_flag(void)
 	ft_putstr(g_mini.argv[index]);
 }
 
-void	ft_echo()
+int	ft_echo()
 {
 	if (g_mini.argv[1] && ft_strcmp(g_mini.argv[1], "-n") == 0)
 		echo_n_flag();
@@ -86,5 +86,5 @@ void	ft_echo()
 		echo_n_flag();
 		ft_putchar('\n');
 	}
-	// return 0
+	return (0);
 }
