@@ -72,8 +72,10 @@ int	change_directory(char *dir)
 {
 	if (chdir(dir) < 0)
 	{
-		ft_putendl_error("cd: no such file or directory: ");
-		return ; // 1
+		ft_putstr_error("cd: ");
+		ft_putstr_error(dir);
+		ft_putstr_error(": no such file or directory: ");
+		return (1);
 	}
 	env_set("OLDPWD", ft_strdup(env_get("PWD")));
 	env_set("PWD", getcwd(NULL, 0));
