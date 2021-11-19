@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 23:40:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/19 00:03:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	screening(char **argv)
 int main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	bool	input_empty;
 
 	(void) argc;
 	(void) argv;
@@ -55,20 +56,22 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		input = readline("minishell: ");
-		if (input && ft_strwc(input, ' ') > 0)
+		input_empty = ft_strwc(input, ' ') == 0;
+		if (input && !input_empty)
 		{
 			add_history(input);
 			g_mini.argv = ft_split(input, ' ');
 			g_mini.status = screening(g_mini.argv);
 			free_argv();
-			free(input);
 		}
+		if (input)
+			free(input);
 		if (g_mini.exit)
 		{
 			ft_putstr("exit\n");
 			break ;
 		}
 	}
-	free_struct(input);
+	free_struct();
 	return (EXIT_SUCCESS);
 }

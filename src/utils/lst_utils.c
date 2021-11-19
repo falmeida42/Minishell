@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/18 10:47:09 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/19 00:05:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ void	free_argv(void)
 	free(g_mini.argv);
 }
 
-void	free_struct(char *input)
+void	free_struct(void)
 {
-	(void)input;
 	ft_lstclear(&g_mini.env, pair_clear);
-//	free(input);
-	input = NULL;
-//	free_argv(g_mini);
 }

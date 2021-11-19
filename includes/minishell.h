@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 23:35:17 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/19 00:03:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		error_output(char type);
 //error management
 
 //free utility
-void		free_struct(char *input);
+void		free_struct();
 void		free_argv();
 
 //commands.c
