@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 03:08:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:59:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ void	change_path(t_cd *cd)
 
 int	change_directory(char *dir)
 {
+	char	*pwd;
+	
+	pwd = env_get("PWD");
+	if (!pwd)
+		pwd = getcwd(NULL, PATH_MAX);
 	if (chdir(dir) < 0)
 	{
 		ft_putstr_error("cd: ");
@@ -77,7 +82,7 @@ int	change_directory(char *dir)
 		ft_putstr_error(": no such file or directory: ");
 		return (1);
 	}
-	env_set("OLDPWD", ft_strdup(env_get("PWD")));
+	env_set("OLDPWD", ft_strdup(pwd));
 	env_set("PWD", getcwd(NULL, 0));
 	return (0);
 }
