@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 03:08:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:59:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,26 @@ void	change_path(t_cd *cd)
 }
 */
 
-void	change_directory(char *dir)
+int	change_directory(char *dir)
 {
+	char	*pwd;
+	
+	pwd = env_get("PWD");
+	if (!pwd)
+		pwd = getcwd(NULL, PATH_MAX);
 	if (chdir(dir) < 0)
 	{
-		ft_putendl_error("cd: no such file or directory: ");
-		return ; // 1
+		ft_putstr_error("cd: ");
+		ft_putstr_error(dir);
+		ft_putstr_error(": no such file or directory: ");
+		return (1);
 	}
-	env_set("OLDPWD", ft_strdup(env_get("PWD")));
+	env_set("OLDPWD", ft_strdup(pwd));
 	env_set("PWD", getcwd(NULL, 0));
-	// return 0;
+	return (0);
 }
 
-void	ft_cd(void)
+int	ft_cd(void)
 {
 	char	*dir;
 
@@ -93,7 +100,7 @@ void	ft_cd(void)
 		if (!dir)
 		{
 			ft_putendl_error("cd: HOME not set");
-			return ; // 1
+			return (1);
 		}
 	}
 	else if (strcmp(dir, "-") == 0)
@@ -102,9 +109,8 @@ void	ft_cd(void)
 		if (!dir)
 		{
 			ft_putendl_error("cd: OLDPWD not set");
-			return ; // 1
+			return (1);
 		}
 	}
-	change_directory(dir);
-	// return
+	return (change_directory(dir));
 }
