@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:47:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/20 13:19:53 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_commands_group	*commands_group_node_parse(t_token_iterator *it)
 	node = ast_node_new(AST_CMD);
 	if (!node)
 		return (NULL);
-	node->command = command_parse(it);
+	node->command = piped_command_parse(it);
 	return (btree_create_node(node));
 }
 

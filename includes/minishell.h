@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/19 00:03:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/24 22:49:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ typedef struct s_simple_command
 	bool	append;
 }	t_simple_command;
 
-typedef t_list	t_command;
+typedef t_list	t_piped_command;
 
 void			simple_command_print(t_simple_command *cmd);
-void			command_print(t_command *command);
+void			piped_command_print(t_piped_command *command);
 void			simple_command_free(void *ptr);
-void			command_free(void *ptr);
+void			piped_command_free(void *ptr);
 
 // Abstract Syntax Tree
 // https://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators
@@ -63,11 +63,11 @@ typedef enum e_ast_node_type
 	AST_CMD,
 }	t_ast_node_type;
 
-// command is not NULL only when type == AST_CMD
+// command is NULL except when type == AST_CMD
 typedef struct s_ast_node
 {
 	t_ast_node_type	type;
-	t_command		*command;
+	t_piped_command	*command;
 }	t_ast_node;
 
 t_ast_node	*ast_node_new(t_ast_node_type type);
@@ -158,7 +158,7 @@ t_token			*take_text(char **cursor);
 // Parsing
 t_simple_command\
 				*simple_command_parse(t_token_iterator *it);
-t_command		*command_parse(t_token_iterator *it);
+t_piped_command	*piped_command_parse(t_token_iterator *it);
 t_commands_group\
 				*commands_group_parse(t_token_iterator *it);
 
