@@ -17,11 +17,11 @@
 int main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	char	**args;
 	bool	input_empty;
 
 	(void) argc;
 	(void) argv;
-	g_mini.pid = getpid();
 	g_mini.env = map_from_str_array(envp, '=');
 	g_mini.exit = false;
 
@@ -34,12 +34,12 @@ int main(int argc, char **argv, char **envp)
 		if (input && !input_empty)
 		{
 			add_history(input);
-			g_mini.argv = ft_split(input, ' ');
-			if (is_builtin(g_mini.argv[0]))
-				g_mini.status = builtin_execute(g_mini.argv);
+			args = ft_split(input, ' ');
+			if (is_builtin(args[0]))
+				g_mini.status = builtin_execute(args);
 			else
-				g_mini.status = ft_exec();
-			free_argv();
+				g_mini.status = ft_exec(args);
+			ft_str_array_clear(args, 0);
 		}
 		if (input)
 			free(input);

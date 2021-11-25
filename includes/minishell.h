@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/25 06:26:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 07:02:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 #include "map.h"
 
 typedef struct	s_mini {
-	char	**argv;
-	char	*str;
-	int		pid;
 	int		status;
 	bool	exit;
 	t_map	*env;
@@ -77,13 +74,8 @@ void		ast_node_free(void *ptr);
 // btree where each node is t_ast_node
 typedef t_btree	t_commands_group;
 
-//error management
-void		error_output(char type);
-//error management
-
 //free utility
 void		free_struct(void);
-void		free_argv(void);
 
 //commands.c
 int			ft_pwd(char **argv);
@@ -93,7 +85,7 @@ int			ft_env(char **argv);
 int			ft_export(char **argv);
 int			ft_unset(char **argv);
 
-int			ft_exec(void);
+int			ft_exec(char **argv);
 
 bool	is_builtin(char *name);
 int	builtin_execute(char **argv);
