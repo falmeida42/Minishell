@@ -26,17 +26,17 @@ int	screening(char **argv)
 		return (0);
 	}
 	if (!ft_strcmp(cmd, "pwd"))
-		return (ft_pwd());
+		return (ft_pwd(argv));
 	if (!ft_strcmp(cmd, "echo"))
-		return (ft_echo());
+		return (ft_echo(argv));
 	if (!ft_strcmp(cmd, "cd"))
-		return (ft_cd());
+		return (ft_cd(argv));
 	if(!ft_strcmp(cmd, "env"))
-		return (ft_env());
+		return (ft_env(argv));
 	if(!ft_strcmp(cmd, "export"))
-		return (ft_export());
+		return (ft_export(argv));
 	if (!ft_strcmp(cmd, "unset"))
-		return (ft_unset());
+		return (ft_unset(argv));
 	return (ft_exec());
 }
 

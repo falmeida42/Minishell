@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 23:41:54 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 02:31:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,29 @@ char	*env_flag_check(int i)
 }
 */
 
-void	echo_n_flag(void)
+void	echo_n_flag(char **argv)
 {
 	int	index;
 
 	index = 1;
-	if (g_mini.argv[index] == NULL)
+	if (argv[index] == NULL)
 		return ;
-	while (g_mini.argv[index + 1])
+	while (argv[index + 1])
 	{
-		ft_putstr(g_mini.argv[index]);
+		ft_putstr(argv[index]);
 		ft_putchar(' ');
 		++index;
 	}
-	ft_putstr(g_mini.argv[index]);
+	ft_putstr(argv[index]);
 }
 
-int	ft_echo()
+int	ft_echo(char **argv)
 {
-	if (g_mini.argv[1] && ft_strcmp(g_mini.argv[1], "-n") == 0)
-		echo_n_flag();
+	if (argv[1] && ft_strcmp(argv[1], "-n") == 0)
+		echo_n_flag(argv);
 	else
 	{
-		echo_n_flag();
+		echo_n_flag(argv);
 		ft_putchar('\n');
 	}
 	return (0);
