@@ -3,42 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/19 16:11:13 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/11/25 06:26:26 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-int	screening(char **argv)
-{
-	char	*cmd;
-
-	cmd = *argv;
-	if (!cmd)
-		return (1);
-	if (!ft_strcmp(cmd, "exit"))
-	{
-		g_mini.exit = true;
-		return (0);
-	}
-	if (!ft_strcmp(cmd, "pwd"))
-		return (ft_pwd(argv));
-	if (!ft_strcmp(cmd, "echo"))
-		return (ft_echo(argv));
-	if (!ft_strcmp(cmd, "cd"))
-		return (ft_cd(argv));
-	if(!ft_strcmp(cmd, "env"))
-		return (ft_env(argv));
-	if(!ft_strcmp(cmd, "export"))
-		return (ft_export(argv));
-	if (!ft_strcmp(cmd, "unset"))
-		return (ft_unset(argv));
-	return (ft_exec());
-}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -51,7 +25,6 @@ int main(int argc, char **argv, char **envp)
 	g_mini.env = map_from_str_array(envp, '=');
 	g_mini.exit = false;
 
-	printf("Hello World\n");
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
 	while (42)
@@ -62,7 +35,10 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			g_mini.argv = ft_split(input, ' ');
-			g_mini.status = screening(g_mini.argv);
+			if (is_builtin(g_mini.argv[0]))
+				g_mini.status = builtin_execute(g_mini.argv);
+			else
+				g_mini.status = ft_exec();
 			free_argv();
 		}
 		if (input)
