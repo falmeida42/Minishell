@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/25 04:00:56 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 05:31:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	commands_group_free(void *ptr)
 	t_commands_group *group;
 
 	group = (t_commands_group *)ptr;
-	btree_apply_suffix(group, ast_node_free);
+	btree_clear(group, ast_node_free);
 }
 
 void	simple_command_print(t_simple_command *cmd)
