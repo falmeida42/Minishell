@@ -82,18 +82,24 @@ void		error_output(char type);
 //error management
 
 //free utility
-void		free_struct();
-void		free_argv();
+void		free_struct(void);
+void		free_argv(void);
 
 //commands.c
-int			ft_pwd(void);
-int			ft_echo(void);
-int			ft_cd(void);
+int			ft_pwd(char **argv);
+int			ft_echo(char **argv);
+int			ft_cd(char **argv);
+int			ft_env(char **argv);
+int			ft_export(char **argv);
+int			ft_unset(char **argv);
+
 int			ft_exec(void);
-int			ft_env(void);
-int			ft_export(void);
-int			ft_unset(void);
-//commands.c
+
+
+
+
+
+
 
 void		get_signal(int signal);
 
