@@ -28,8 +28,11 @@ void	piped_command_free(void *ptr)
 	ft_lstclear(&command, simple_command_free);
 }
 
-void	commands_group_free(t_commands_group *group)
+void	commands_group_free(void *ptr)
 {
+	t_commands_group *group;
+
+	group = (t_commands_group *)ptr;
 	btree_apply_suffix(group, ast_node_free);
 }
 

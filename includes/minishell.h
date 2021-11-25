@@ -53,7 +53,7 @@ void			simple_command_print(t_simple_command *cmd);
 void			piped_command_print(t_piped_command *command);
 void			simple_command_free(void *ptr);
 void			piped_command_free(void *ptr);
-void			commands_group_free(t_commands_group *group);
+void			commands_group_free(void *ptr);
 
 // Abstract Syntax Tree
 // https://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators
