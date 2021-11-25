@@ -111,6 +111,7 @@ t_list	*ft_lstnew(void *content);
 
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
+char	**ft_lst_to_arr(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *node);
 void	ft_lstadd_front(t_list **lst, t_list *node);
 t_list	*ft_lstpush_back(t_list **lst, void *content);
