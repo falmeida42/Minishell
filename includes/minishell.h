@@ -96,6 +96,10 @@ int			ft_unset(void);
 
 void		get_signal(int signal);
 
+// Utils
+char	*lookup_full_path(char *path);
+char	*normalize_path(char *path);
+
 // env variable
 int			env_unset(char *key);
 t_map		*env_set(char *key, char *value);
