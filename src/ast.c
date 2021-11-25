@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:36:00 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:44:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/24 22:49:24 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ast_node_free(void *ptr)
 	if (!node)
 		return ;
 	if (node->type == AST_CMD)
-		command_free(node->command);
+		piped_command_free(node->command);
 	free(node);
 }
 
@@ -49,6 +49,6 @@ void	ast_node_print(void *ptr)
 	else if (node->type == AST_CMD)
 	{
 		ft_putstr("AST_CMD\n");
-		command_print(node->command);
+		piped_command_print(node->command);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 23:59:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 02:30:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ int	change_directory(char *dir)
 	return (0);
 }
 
-int	ft_cd(void)
+int	ft_cd(char **argv)
 {
 	char	*dir;
 
 	// check number of arguments
 	// if > 1, print error message: "cd: too many arguments"
-	dir = g_mini.argv[1];
+	dir = argv[1];
 	if (!dir)
 	{
 		dir = env_get("HOME");

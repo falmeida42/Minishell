@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   ft_lst_to_arr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/18 23:34:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/11/24 23:04:15 by jpceia            #+#    #+#             */
+/*   Updated: 2021/11/25 02:41:08 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/**
- * For each name, remove the corresponding environment variable.
- * The exit status is true unless a name is readonly.
- */
-
-int	ft_unset(void)
+char	**ft_lst_to_arr(t_list *lst)
 {
-	if (g_mini.argv[1])
-		env_unset(g_mini.argv[1]);
-	return (0);
+	char	**arr;
+	int		size;
+	int		index;
+
+	size = ft_lstsize(lst);
+	arr = (char **)malloc(sizeof(*arr) * (size + 1));
+	index = 0;
+	while (lst)
+	{
+		arr[index] = lst->content;
+		index++;
+		lst = lst->next;
+	}
+	arr[size] = NULL;
+	return (arr);
 }

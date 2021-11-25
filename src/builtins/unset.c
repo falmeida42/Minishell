@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/18 23:33:28 by jpceia           ###   ########.fr       */
+/*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
+/*   Updated: 2021/11/25 02:29:41 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Print the absolute  pathname of the current working directory. 
- * The return status is 0 unless an error occurs while reading the name of the
- * current directory or an invalid option is supplied.
+ * For each name, remove the corresponding environment variable.
+ * The exit status is true unless a name is readonly.
  */
 
-int	ft_pwd(void)
+int	ft_unset(char **argv)
 {
-	char	*str;
-
-	str = NULL;
-	str = getcwd(str, PATH_MAX);
-	ft_putendl(str);
+	if (argv[1])
+		env_unset(argv[1]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:35:15 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:46:42 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 03:37:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	simple_command_parse_redirection_token(
 	if (token == NULL)
 		return ;
 	if (type == TOKEN_GREATER)
-		cmd->outfile = token->value;
+		cmd->outfile = ft_strdup(token->value);
 	else if (type == TOKEN_DGREATER)
 	{
-		cmd->outfile = token->value;
+		cmd->outfile = ft_strdup(token->value);
 		cmd->append = true;
 	}
 	else if (type == TOKEN_LESS)
-		cmd->infile = token->value;
+		cmd->infile = ft_strdup(token->value);
 	else if (type == TOKEN_DLESS)
 	{
-		cmd->infile = token->value;
+		cmd->infile = ft_strdup(token->value);
 		cmd->here_doc = true;
 	}
 }
@@ -49,7 +49,7 @@ t_simple_command	*simple_command_parse(t_token_iterator *it)
 	{
 		token = (*it)->content;
 		if (is_word_token(token))
-			ft_lstpush_back(&cmd->argv, token->value);
+			ft_lstpush_back(&cmd->argv, ft_strdup(token->value));
 		else if (is_redirection_token(token))
 			simple_command_parse_redirection_token(cmd, it);
 		else
@@ -59,7 +59,7 @@ t_simple_command	*simple_command_parse(t_token_iterator *it)
 	return (cmd);
 }
 
-bool	command_parse_step(t_token_iterator *it, t_command **command)
+bool	piped_command_parse_step(t_token_iterator *it, t_piped_command **command)
 {
 	t_token		*token;
 	static bool	prev_pipe = true;
@@ -75,7 +75,7 @@ bool	command_parse_step(t_token_iterator *it, t_command **command)
 	{
 		if (prev_pipe)
 		{
-			command_free(*command);
+			piped_command_free(*command);
 			*command = NULL;
 			ft_putstr_error("syntax error near unexpected token '|'\n");
 			return (false);
@@ -87,14 +87,14 @@ bool	command_parse_step(t_token_iterator *it, t_command **command)
 	return (false);
 }
 
-t_command	*command_parse(t_token_iterator *it)
+t_piped_command	*piped_command_parse(t_token_iterator *it)
 {
-	t_command		*command;
+	t_piped_command	*command;
 	bool			do_continue;
 
 	command = NULL;
 	do_continue = true;
 	while (*it && do_continue)
-		do_continue = command_parse_step(it, &command);
+		do_continue = piped_command_parse_step(it, &command);
 	return (command);
 }

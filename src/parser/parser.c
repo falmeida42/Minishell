@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:47:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 04:01:57 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_commands_group	*commands_group_node_parse(t_token_iterator *it)
 	node = ast_node_new(AST_CMD);
 	if (!node)
 		return (NULL);
-	node->command = command_parse(it);
+	node->command = piped_command_parse(it);
 	return (btree_create_node(node));
 }
 
@@ -100,4 +100,18 @@ t_commands_group	*commands_group_parse(t_token_iterator *it)
 	if (!*it)
 		return (left_ast);
 	return (commands_group_right_parse(it, left_ast));
+}
+
+t_commands_group	*parser(char *input)
+{
+	t_token_list	*token_list;
+	t_token_list	*token_it;
+	t_commands_group	*ast;
+	
+	token_list = lex(input);
+	// apply expander
+	token_it = token_list;
+	ast = commands_group_parse(&token_it);
+	ft_lstclear(&token_list, token_free);
+	return (ast);
 }
