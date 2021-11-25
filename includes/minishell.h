@@ -167,5 +167,6 @@ t_piped_command	*piped_command_parse(t_token_iterator *it);
 t_commands_group\
 				*commands_group_parse(t_token_iterator *it);
 
+t_commands_group	*parser(char *input);
 
 #endif
