@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/20 13:18:41 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 03:38:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	simple_command_free(void *ptr)
 	t_simple_command	*cmd;
 
 	cmd = (t_simple_command *)ptr;
-	ft_lstclear(&cmd->argv, NULL);
+	ft_lstclear(&cmd->argv, free);
 }
 
 void	piped_command_free(void *ptr)

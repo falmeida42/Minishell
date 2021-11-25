@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:35:15 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/24 22:48:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/25 03:37:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	simple_command_parse_redirection_token(
 	if (token == NULL)
 		return ;
 	if (type == TOKEN_GREATER)
-		cmd->outfile = token->value;
+		cmd->outfile = ft_strdup(token->value);
 	else if (type == TOKEN_DGREATER)
 	{
-		cmd->outfile = token->value;
+		cmd->outfile = ft_strdup(token->value);
 		cmd->append = true;
 	}
 	else if (type == TOKEN_LESS)
-		cmd->infile = token->value;
+		cmd->infile = ft_strdup(token->value);
 	else if (type == TOKEN_DLESS)
 	{
-		cmd->infile = token->value;
+		cmd->infile = ft_strdup(token->value);
 		cmd->here_doc = true;
 	}
 }
@@ -49,7 +49,7 @@ t_simple_command	*simple_command_parse(t_token_iterator *it)
 	{
 		token = (*it)->content;
 		if (is_word_token(token))
-			ft_lstpush_back(&cmd->argv, token->value);
+			ft_lstpush_back(&cmd->argv, ft_strdup(token->value));
 		else if (is_redirection_token(token))
 			simple_command_parse_redirection_token(cmd, it);
 		else
