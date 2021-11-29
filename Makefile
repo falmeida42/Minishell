@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+         #
+#    By: jceia <jceia@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 01:25:25 by jpceia            #+#    #+#              #
-#    Updated: 2021/11/16 01:38:31 by jpceia           ###   ########.fr        #
+#    Updated: 2021/11/29 11:25:58 by jceia            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ re:			fclean all
 
 # Debugging build
 debug:		CFLAGS += $(DEBUG_FLAGS)
-debug:		LDFLAGS += $(DEBUG_FLAGS) -lasan 
+debug:		LDFLAGS += $(DEBUG_FLAGS)
 debug:		re
 
 .PHONY:		all clean fclean re libft debug
