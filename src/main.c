@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/25 06:26:26 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/29 11:45:37 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv, char **envp)
 		if (input && !input_empty)
 		{
 			add_history(input);
-			args = ft_split(input, ' ');
+			args = lex_and_expand(input);
 			if (is_builtin(args[0]))
 				g_mini.status = builtin_execute(args);
 			else
