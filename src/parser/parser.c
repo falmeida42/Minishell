@@ -102,13 +102,28 @@ t_commands_group	*commands_group_parse(t_token_iterator *it)
 	return (commands_group_right_parse(it, left_ast));
 }
 
+int	find_char(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	*expand_operation(void *content)
 {
 	t_token	*token;
 	token = (t_token *)content;
-	ft_expander(token->value);
-	//expander
 
+	if (find_char(token->value, '$'))
+		token->value = ft_expander(token->value);
+	//expander
 	return (token);
 }
 

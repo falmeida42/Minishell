@@ -166,6 +166,6 @@ t_commands_group	*parser(char *input);
 char				**lex_and_expand(char *input);
 
 // Expander
-int	ft_expander(char *str);
+char	*ft_expander(char *str);
 
 #endif

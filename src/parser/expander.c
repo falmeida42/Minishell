@@ -16,7 +16,6 @@
 char	*cmp_env(char *value)
 {
 	char	*expanded;
-
 	if (env_get(value) == NULL)
 	{
 		free(value);
@@ -38,7 +37,7 @@ char	*join_dollar(char *str, char *expand, int size)
 	int	x;
 	char	*result;
 
-	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand) + 1000));
+	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand)));
 	i = 0;
 	j = 0;
 	z = 0;
@@ -47,8 +46,12 @@ char	*join_dollar(char *str, char *expand, int size)
 	{
 		if (str[i] == '$')
 		{
-			while (str[i] != ' ' && str[i] != '\0')
+			while (str[i] != '\0')
+			{
+				if (str[i] == ' ')
+					break ;
 				i++;
+			}
 			while (expand[z] != '\0')
 			{
 				result[j] = expand[z];
@@ -64,7 +67,6 @@ char	*join_dollar(char *str, char *expand, int size)
 		x--;
 	}
 	result[j] = '\0';
-	free(expand);
 	return (result);
 }
 
@@ -83,22 +85,27 @@ char	*check_dollar(char *str, int i)
 		j++;
 	}
 	dollar_size = j - i;
-	value = ft_substr(str, i + 1, j);
+	value = ft_substr(str, i + 1, j - (i + 1));
 	expand = cmp_env(value);
+	if (expand == NULL)
+		return (NULL);
 	return (join_dollar(str, expand, dollar_size));
 }
 
-int	ft_expander(char *str)
+char	*ft_expander(char *str)
 {
 	char	*result;
 	int	i;
 	i = 0;
+	result = NULL;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
+		{
 			result = check_dollar(str, i);
+			break ;
+		}
 		i++;
 	}
-	printf("Result -> %s\n", result);
-	return (0);
+	return (result);
 }

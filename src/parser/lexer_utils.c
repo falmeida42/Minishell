@@ -58,6 +58,58 @@ t_token	*take_symbol(t_char_iterator *cursor)
 	return (token);
 }
 
+
+int		cont_quotes(char *str)
+{
+	int	i;
+	int	len;
+	
+	len = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '"')
+		{
+			if (!(str[i - 1] == '\\'))
+				len++;
+		}
+		i++;
+	}
+	return (len);
+}
+
+char	*remove_quotes(char *str)
+{
+	char *str2;
+	int	len;
+	int i;
+	int	j;
+	len = ft_strlen(str);
+	str2 = malloc(sizeof(char) * len - cont_quotes(str));
+
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		while (str[i] == '"')
+		{
+			if (str[i - 1] == '\\')
+			{
+				str2[j] = str[i];
+				i++;
+				j++;
+			}
+			i++;
+		}
+		str2[j] = str[i];
+
+		i++;
+		j++;
+	}
+	str2[j] = '\0';
+	return (str2);
+}
+
 t_token	*take_dquoted(char **cursor)
 {
 	char	c;
@@ -86,7 +138,8 @@ t_token	*take_dquoted(char **cursor)
 		c = char_iterator_next(cursor);
 	}
 	end = *cursor;
-	return (token_new(TOKEN_DQUOTED, ft_substr(start, 0, end - start)));
+	
+	return (token_new(TOKEN_DQUOTED, remove_quotes(start)));
 }
 
 t_token	*take_quoted(char **cursor)
