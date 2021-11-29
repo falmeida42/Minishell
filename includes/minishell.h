@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 16:47:49 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/01 16:55:17 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token);
 
 t_command_tree	*parser(char *input);
 
-// EXECUTOR
-int simple_command_execute(t_simple_command *cmd);
+char			**lex_and_expand(char *input);
 
 #endif
