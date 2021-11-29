@@ -14,94 +14,88 @@
 #include "libft.h"
 #include <dirent.h>
 
-// checks if a string matches with a another string with wildcard '*'
-int	str_match_star(char *s, char *s_star)
+char	*cmp_env(char *value)
+{
+	char	*expanded;
+	
+	if (env_get(value) == NULL)
+	{
+		free(value);
+		return(NULL);
+	}
+	else
+	{
+		expanded = env_get(value);
+		free(value);
+		return (expanded);
+	}
+}
+
+char	*join_dollar(char *str, char *expand, int size)
 {
 	int	i;
 	int	j;
+	int	z;
+	char	*result;
 
+	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand)));
 	i = 0;
 	j = 0;
-	while (s[i] != '\0')
+	z = 0;
+	while (str[i] != '\0')
 	{
-		if (s_star[j] == '*')
+		if (str[i] == '$')
 		{
-			if (s_star[j + 1] == '\0')
-				return (1);
-			while (s[i] != '\0' && s[i] != s_star[j + 1])
+			while (str[i] != ' ' || str != '\0')
 				i++;
-			j++;
+			while (expand[z] != '\0')
+			{
+				result[j] = expand[z];
+				j++;
+				z++;
+			}
 		}
-		else if (s[i] != s_star[j])
-			return (0);
+		result[j] = str[i];
 		i++;
 		j++;
 	}
-	return (1);
+	result[j] = '\0';
+	free(expand);
+	return (result);
 }
 
-// checks which files in a directory match with a string with wildcard '*'
-t_list	*match_files(char *to_match, char *dir)
+char	*check_dollar(char *str, int i)
 {
-	DIR				*d;
-	struct dirent	*dir_entry;
-	char			*file_name;
-	t_list			*files;
+	char	*value;
+	char	*expand;
+	int	j;
+	int	dollar_size;
 
-	d = opendir(dir);
-	files = NULL;
-	if (d == NULL)
-		return (NULL);
-	while (1)
+	j = i;
+	while (str[j] != '\0')
 	{
-		dir_entry = readdir(d);
-		if (dir_entry == NULL)
+		if (str[j] == ' ')
 			break ;
-		file_name = dir_entry->d_name;
-		if (str_match_star(file_name, to_match))
-			ft_lstpush_back(&files, file_name);
+		i++;
 	}
-	closedir(d);
-	return (files);
+	dollar_size = j - i;
+	value = ft_substr(str, i, j);
+	expand = cmp_env(value);
+	return (join_dollar(str, expand, dollar_size));
 }
 
-// checks if a text token starts with a tilde '~' and expands it
-char	*expand_tilde(t_token *token)
+int	ft_expander(char *str)
 {
-	char	*home_dir;
-	char	*expanded_str;
+	char	*result;
+	int	i;
 
-	if (token->type != TOKEN_TEXT)
-		return (token->value);
-	if (token->value[0] != '~')
-		return (token->value);
-	home_dir = getenv("HOME");
-	if (home_dir == NULL)
-		return (token->value);
-	expanded_str = ft_strjoin(home_dir, token->value + 1);
-	return (expanded_str);
-}
-
-t_list	*expand_star(t_token *token)
-{
-	t_list	*matches;
-
-	if (token->type == TOKEN_TEXT)
+	i = 0;
+	while (str[i] != '\0')
 	{
-		matches = match_files(token->value, ".");
-		if (matches == NULL)
-			return (ft_lstnew(token->value));
-		return (matches);
+		if (str[i] == '$')
+			check_dollar(str, i);
+		i++;
 	}
-	return (ft_lstnew(token->value));
-}
-
-// WIP
-char	*expand_dollar(t_token *token)
-{
-	if (token->type == TOKEN_TEXT)
-		return (token->value);
-	if (token->type == TOKEN_DQUOTED)
-		return (token->value);
-	return (token->value);
+	printf("%s\n", result);
+	return (0);
 }
