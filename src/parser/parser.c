@@ -105,8 +105,10 @@ t_commands_group	*commands_group_parse(t_token_iterator *it)
 void	*expand_operation(void *content)
 {
 	t_token	*token;
-
 	token = (t_token *)content;
+	ft_expander(token->value);
+	//expander
+
 	return (token);
 }
 
