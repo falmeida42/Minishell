@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/25 07:02:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/29 12:13:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,16 @@ typedef struct s_simple_command
 	bool	append;
 }	t_simple_command;
 
-typedef t_list	t_piped_command;
-
 void			simple_command_print(t_simple_command *cmd);
-void			piped_command_print(t_piped_command *command);
 void			simple_command_free(void *ptr);
-void			piped_command_free(void *ptr);
-void			commands_group_free(void *ptr);
+void			command_tree_free(void *ptr);
 
 // Abstract Syntax Tree
 // https://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators
 typedef enum e_ast_node_type
 {
 	AST_AND,
+	AST_PIPE,
 	AST_OR,
 	AST_CMD,
 }	t_ast_node_type;
@@ -64,15 +61,15 @@ typedef enum e_ast_node_type
 // command is NULL except when type == AST_CMD
 typedef struct s_ast_node
 {
-	t_ast_node_type	type;
-	t_piped_command	*command;
+	t_ast_node_type		type;
+	t_simple_command	*cmd;
 }	t_ast_node;
 
 t_ast_node	*ast_node_new(t_ast_node_type type);
 void		ast_node_free(void *ptr);
 
 // btree where each node is t_ast_node
-typedef t_btree	t_commands_group;
+typedef t_btree	t_command_tree;
 
 //free utility
 void		free_struct(void);
@@ -158,10 +155,11 @@ t_token			*take_text(char **cursor);
 // Parsing
 t_simple_command\
 				*simple_command_parse(t_token_iterator *it);
-t_piped_command	*piped_command_parse(t_token_iterator *it);
-t_commands_group\
-				*commands_group_parse(t_token_iterator *it);
+t_command_tree	*command_tree_parse(t_token_iterator *it);
 
-t_commands_group	*parser(char *input);
+t_command_tree	*parser(char *input);
+
+// EXECUTOR
+int simple_command_execute(t_simple_command *cmd);
 
 #endif

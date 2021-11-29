@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:35:15 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/25 03:37:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/11/29 12:26:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_simple_command	*simple_command_parse(t_token_iterator *it)
 	return (cmd);
 }
 
-bool	piped_command_parse_step(t_token_iterator *it, t_piped_command **command)
+bool	command_tree_parse_step(t_token_iterator *it, t_command_tree **command)
 {
 	t_token		*token;
 	static bool	prev_pipe = true;
@@ -67,7 +67,7 @@ bool	piped_command_parse_step(t_token_iterator *it, t_piped_command **command)
 	token = (*it)->content;
 	if (is_simple_command_token(token))
 	{
-		ft_lstpush_back(command, simple_command_parse(it));
+		// ft_lstpush_back(command, simple_command_parse(it));
 		prev_pipe = false;
 		return (true);
 	}
@@ -75,7 +75,7 @@ bool	piped_command_parse_step(t_token_iterator *it, t_piped_command **command)
 	{
 		if (prev_pipe)
 		{
-			piped_command_free(*command);
+			// piped_command_free(*command);
 			*command = NULL;
 			ft_putstr_error("syntax error near unexpected token '|'\n");
 			return (false);
@@ -87,14 +87,14 @@ bool	piped_command_parse_step(t_token_iterator *it, t_piped_command **command)
 	return (false);
 }
 
-t_piped_command	*piped_command_parse(t_token_iterator *it)
+t_command_tree	*command_tree_parse(t_token_iterator *it)
 {
-	t_piped_command	*command;
+	t_command_tree	*command;
 	bool			do_continue;
 
 	command = NULL;
 	do_continue = true;
 	while (*it && do_continue)
-		do_continue = piped_command_parse_step(it, &command);
+		do_continue = command_tree_parse_step(it, &command);
 	return (command);
 }
