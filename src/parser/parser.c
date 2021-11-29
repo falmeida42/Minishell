@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/29 11:40:18 by jceia            ###   ########.fr       */
+/*   Updated: 2021/11/29 11:58:53 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ char	**lex_and_expand(char *input)
 		token_it = token_it->next;
 		index++;
 	}
+	arr[size] = NULL;
 	ft_lstclear(&token_list, token_free);
 	return (arr);
 }
