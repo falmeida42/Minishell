@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 16:58:17 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/01 18:36:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,16 @@ int			ft_unset(char **argv);
 
 int			ft_exec(char **argv);
 
-bool	is_builtin(char *name);
-int	builtin_execute(char **argv);
+bool		is_builtin(char *name);
+int			builtin_execute(char **argv);
 
 void		get_signal(int signal);
+
+// Executor
+int 		simple_command_execute_io(t_simple_command *cmd, int io[2]);
+int 		command_tree_execute_io(t_command_tree *tree, int fd[2]);
+int 		command_tree_execute(t_command_tree *tree);
+int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int io[2]);
 
 // Utils
 char	*lookup_full_path(char *path);
