@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/29 11:15:26 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/01 16:58:17 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,32 @@ typedef struct s_simple_command
 	bool	append;
 }	t_simple_command;
 
-typedef t_list	t_piped_command;
-
 void			simple_command_print(t_simple_command *cmd);
-void			piped_command_print(t_piped_command *command);
 void			simple_command_free(void *ptr);
-void			piped_command_free(void *ptr);
-void			commands_group_free(void *ptr);
+void			command_tree_free(void *ptr);
 
 // Abstract Syntax Tree
 // https://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators
-typedef enum e_ast_node_type
+typedef enum e_ast_item_type
 {
 	AST_AND,
+	AST_PIPE,
 	AST_OR,
 	AST_CMD,
-}	t_ast_node_type;
+}	t_ast_item_type;
 
 // command is NULL except when type == AST_CMD
-typedef struct s_ast_node
+typedef struct s_ast_item
 {
-	t_ast_node_type	type;
-	t_piped_command	*command;
-}	t_ast_node;
+	t_ast_item_type		type;
+	t_simple_command	*cmd;
+}	t_ast_item;
 
-t_ast_node	*ast_node_new(t_ast_node_type type);
-void		ast_node_free(void *ptr);
+t_ast_item	*ast_item_new(t_ast_item_type type);
+void		ast_item_free(void *ptr);
 
-// btree where each node is t_ast_node
-typedef t_btree	t_commands_group;
+// btree where each node is t_ast_item
+typedef t_btree	t_command_tree;
 
 //free utility
 void		free_struct(void);
@@ -158,12 +155,11 @@ t_token			*take_text(char **cursor);
 // Parsing
 t_simple_command\
 				*simple_command_parse(t_token_iterator *it);
-t_piped_command	*piped_command_parse(t_token_iterator *it);
-t_commands_group\
-				*commands_group_parse(t_token_iterator *it);
+t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token);
 
-t_commands_group	*parser(char *input);
-char				**lex_and_expand(char *input);
+t_command_tree	*parser(char *input);
+
+char			**lex_and_expand(char *input);
 
 // Expander
 char	*ft_expander(char *str);

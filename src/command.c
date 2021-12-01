@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/25 05:31:55 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/01 16:44:41 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,12 @@ void	simple_command_free(void *ptr)
 	ft_lstclear(&cmd->argv, free);
 }
 
-void	piped_command_free(void *ptr)
-{
-	t_piped_command	*command;
-
-	command = (t_piped_command *)ptr;
-	ft_lstclear(&command, simple_command_free);
-}
-
 void	commands_group_free(void *ptr)
 {
-	t_commands_group *group;
+	t_command_tree *ast;
 
-	group = (t_commands_group *)ptr;
-	btree_clear(group, ast_node_free);
+	ast = (t_command_tree *)ptr;
+	btree_clear(ast, ast_item_free);
 }
 
 void	simple_command_print(t_simple_command *cmd)
@@ -48,28 +40,19 @@ void	simple_command_print(t_simple_command *cmd)
 		ft_putchar(' ');
 		av = av->next;
 	}
-	ft_putstr("\nInfile: ");
-	ft_putstr(cmd->infile);
-	ft_putstr("\nHere doc: ");
-	ft_putnbr(cmd->here_doc);
-	ft_putstr("\nOutfile: ");
-	ft_putstr(cmd->outfile);
-	ft_putstr("\nAppend: ");
-	ft_putnbr(cmd->append);
-	ft_putchar('\n');
-}
-
-void	piped_command_print(t_piped_command *command)
-{
-	int	index;
-
-	index = 0;
-	while (command)
+	if (cmd->infile)
 	{
-		ft_putstr("COMMAND ");
-		ft_putnbr(++index);
-		ft_putchar('\n');
-		simple_command_print(command->content);
-		command = command->next;
+		ft_putstr("\nInfile: ");
+		ft_putstr(cmd->infile);
+		ft_putstr("\nHere doc: ");
+		ft_putnbr(cmd->here_doc);
 	}
+	if (cmd->outfile)
+	{
+		ft_putstr("\nOutfile: ");
+		ft_putstr(cmd->outfile);
+		ft_putstr("\nAppend: ");
+		ft_putnbr(cmd->append);
+	}
+	ft_putchar('\n');
 }
