@@ -3,52 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:36:00 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/24 22:49:24 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/01 16:45:37 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast_node	*ast_node_new(t_ast_node_type type)
+t_ast_item	*ast_item_new(t_ast_item_type type)
 {
-	t_ast_node	*node;
+	t_ast_item	*item;
 
-	node = ft_calloc(1, sizeof(*node));
-	if (node == NULL)
+	item = ft_calloc(1, sizeof(*item));
+	if (item == NULL)
 		return (NULL);
-	node->type = type;
-	return (node);
+	item->type = type;
+	return (item);
 }
 
-void	ast_node_free(void *ptr)
+void	ast_item_free(void *ptr)
 {
-	t_ast_node	*node;
+	t_ast_item	*item;
 
-	node = (t_ast_node *)ptr;
-	if (!node)
+	item = (t_ast_item *)ptr;
+	if (!item)
 		return ;
-	if (node->type == AST_CMD)
-		piped_command_free(node->command);
-	free(node);
+	if (item->type == AST_CMD)
+		simple_command_free(item->cmd);
+	free(item);
 }
 
-void	ast_node_print(void *ptr)
+void	ast_item_print(void *ptr)
 {
-	t_ast_node	*node;
+	t_ast_item	*item;
 
-	node = (t_ast_node *)ptr;
-	if (node == NULL)
+	item = (t_ast_item *)ptr;
+	if (item == NULL)
 		return ;
-	if (node->type == AST_AND)
+	if (item->type == AST_PIPE)
+		ft_putstr("PIPE\n");
+	else if (item->type == AST_AND)
 		ft_putstr("AST_AND\n");
-	else if (node->type == AST_OR)
+	else if (item->type == AST_OR)
 		ft_putstr("AST_OR\n");
-	else if (node->type == AST_CMD)
+	else if (item->type == AST_CMD)
 	{
 		ft_putstr("AST_CMD\n");
-		piped_command_print(node->command);
+		simple_command_print(item->cmd);
 	}
 }

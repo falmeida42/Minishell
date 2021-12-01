@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:35:15 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/29 15:54:26 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/01 16:46:38 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ void	simple_command_parse_redirection_token(
 	}
 }
 
-t_simple_command	*simple_command_parse(t_token_list *it)
+t_simple_command	*simple_command_parse(t_token_iterator *it)
 {
 	t_simple_command	*cmd;
 	t_token				*token;
 
 	cmd = ft_calloc(1, sizeof(*cmd));
-	while (it)
+	while (*it)
 	{
-		token = it->content;
+		token = (*it)->content;
 		if (is_word_token(token))
 			ft_lstpush_back(&cmd->argv, ft_strdup(token->value));
 		else if (is_redirection_token(token))
-			simple_command_parse_redirection_token(cmd, &it);
+			simple_command_parse_redirection_token(cmd, it);
 		else
 			break ;
-		it = it->next;
+		token_iterator_next(it);
 	}
 	return (cmd);
 }
