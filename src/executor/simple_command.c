@@ -14,63 +14,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	update_io(t_simple_command *cmd, int *fd_in, int *fd_out)
-{
-	if (cmd->infile)
-	{
-		*fd_in = open(cmd->infile, O_RDONLY);
-		if (*fd_in < 0)
-		{
-			perror(cmd->infile);
-			exit(EXIT_FAILURE);
-		}
-	}
-	if (cmd->outfile)
-	{
-		// replace or append?
-		if (cmd->append)
-			*fd_out = open(cmd->outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
-		else
-			*fd_out = open(cmd->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (*fd_out < 0)
-		{
-			perror(cmd->outfile);
-			exit(EXIT_FAILURE);
-		}
-	}
-}
-
-void set_io(int fd[2])
-{
-	if (dup2(fd[0], STDIN_FILENO) < 0)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(fd[1], STDOUT_FILENO) < 0)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void restore_io(int fd[2])
-{
-	if (dup2(fd[0], STDOUT_FILENO) < 0)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(fd[1], STDIN_FILENO) < 0)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	close(fd[0]);
-	close(fd[1]);
-}	
-
-
 int simple_command_child_process(char **argv)
 {
 	char	*program_name;

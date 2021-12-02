@@ -89,6 +89,11 @@ int			builtin_execute(char **argv);
 
 void		get_signal(int signal);
 
+// Redirects (for executor)
+void		dup2_and_close(int new, int old);
+void		set_fd_out(char *fname, bool append, int *old, int *new);
+void		set_fd_in(char *fname, int *old, int *new);
+
 // Executor
 int 		simple_command_execute_io(t_simple_command *cmd, int io[2]);
 int 		command_tree_execute_io(t_command_tree *tree, int fd[2]);
