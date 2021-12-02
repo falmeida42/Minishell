@@ -67,7 +67,7 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 
 	if (!it || !*it)
 		return (NULL);
-	token = (*it)->content;
+	token = token_iterator_peek(it);
 	if (token->type == TOKEN_AND || token->type == TOKEN_OR || token->type == TOKEN_PIPE)
 		return (NULL); // invalid syntax
 	token = token_list_lookup_logical(*it, end_token);
@@ -76,7 +76,7 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 	token = token_list_lookup_pipe(*it, end_token);
 	if (token)
 		return (command_tree_parse_split_on(it, token, end_token));
-	token = (*it)->content;
+	token = token_iterator_peek(it);
 	if (token->type == TOKEN_LPAREN)
 	{
 		token_iterator_next(it);
@@ -118,11 +118,11 @@ char	**lex_and_expand(char *input)
 	while (token_it)
 	{
 		token = token_it->content;
-		arr[index] = ft_strdup(token->value);
+		if (is_word_token(token))
+			arr[index++] = ft_strdup(token->value);
 		token_it = token_it->next;
-		index++;
 	}
-	arr[size] = NULL;
+	arr[index] = NULL;
 	ft_lstclear(&token_list, token_free);
 	return (arr);
 }
