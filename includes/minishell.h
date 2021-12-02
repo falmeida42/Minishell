@@ -177,4 +177,7 @@ t_command_tree	*parser(char *input);
 
 char			**lex_and_expand(char *input);
 
+// Expander
+char	*ft_expander(char *str);
+
 #endif
