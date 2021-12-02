@@ -57,12 +57,33 @@ t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it)
 	return (btree_create_node(item));
 }
 
+t_command_tree	*command_tree_parse_unwrap_parenthesis(t_token_iterator *it, t_token *end_token)
+{
+	t_command_tree	*ast;
+	t_token_list	*lst;
+	
+	token_iterator_next(it);
+	lst = ft_lstprev(*it, end_token);
+	if (!lst)
+		return (NULL);
+	end_token = lst->content;
+	if (end_token->type != TOKEN_RPAREN)
+		return (NULL);
+	ast = command_tree_parse(it, end_token);
+	if (token_iterator_peek(it) != end_token)
+	{
+		command_tree_free(ast);
+		return (NULL);
+	}
+	token_iterator_next(it);
+	return (ast);
+}
 /*
  * Parses a group of commands (with parenthesis or && or || separators)
  */
 t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 {
-	t_command_tree	*ast;
+
 	t_token			*token;
 
 	if (!it || !*it)
@@ -78,13 +99,7 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 		return (command_tree_parse_split_on(it, token, end_token));
 	token = token_iterator_peek(it);
 	if (token->type == TOKEN_LPAREN)
-	{
-		token_iterator_next(it);
-		ast = command_tree_parse(it, end_token);
-		if (token_iterator_next(it)->type != TOKEN_RPAREN)
-			return (NULL);
-		return (ast);
-	}
+		return (command_tree_parse_unwrap_parenthesis(it, end_token));
 	return (command_tree_parse_simple_command(it));
 }
 
