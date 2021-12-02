@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/19 16:21:03 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:29:36 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ t_token	*take_dquoted(char **cursor)
 	char	c;
 	char	prev_char;
 	char	*start;
-	char	*end;
 	int		len;
 
 	start = *cursor;
@@ -137,8 +136,6 @@ t_token	*take_dquoted(char **cursor)
 		prev_char = c;
 		c = char_iterator_next(cursor);
 	}
-	end = *cursor;
-	
 	return (token_new(TOKEN_DQUOTED, remove_quotes(start)));
 }
 
