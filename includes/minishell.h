@@ -145,6 +145,7 @@ typedef t_token_list* \
 t_token			*token_new(t_token_type type, char *value);
 void			token_free(void *ptr);
 t_token			*token_iterator_next(t_token_iterator *it);
+t_token			*token_iterator_peek(t_token_iterator *it);
 bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
