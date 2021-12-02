@@ -46,3 +46,8 @@ t_token	*token_iterator_next(t_token_iterator *it)
 		return (NULL);
 	return ((*it)->content);
 }
+
+t_token	*token_iterator_peek(t_token_iterator *it)
+{
+	return ((*it)->content);
+}

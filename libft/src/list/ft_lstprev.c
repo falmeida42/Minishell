@@ -1,13 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   ft_lstprev.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/25 09:43:11 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/02 08:57:06 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/02 09:15:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+
+t_list	*ft_lstprev(t_list *lst, void *data)
+{
+	t_list	*prev;
+
+	if (!lst)
+		return (NULL);
+	prev = lst;
+	while (prev && prev->next->content != data)
+		prev = prev->next;
+	return (prev);
+}
