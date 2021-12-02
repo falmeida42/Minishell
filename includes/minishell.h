@@ -150,6 +150,10 @@ bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
 
+// Lookup functions
+t_token			*token_list_lookup_logical(t_token_list *lst, t_token *end_token);
+t_token			*token_list_lookup_pipe(t_token_list *lst, t_token *end_token);
+
 // Lexer functions (Aka tokenizer)
 t_token_list	*lex(char *input);
 

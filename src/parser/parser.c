@@ -46,51 +46,6 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it, t_token *token
 	return (ast);
 }
 
-t_token	*token_list_lookup_logical(t_token_list *lst, t_token *end_token)
-{
-	int		parent_count;
-	t_token	*token;
-
-	parent_count = 0;
-	while (lst)
-	{
-		token = (t_token *)lst->content;
-		if (token == end_token)
-			return (NULL);
-		if (token->type == TOKEN_LPAREN)
-			parent_count++;
-		else if (token->type == TOKEN_RPAREN)
-			parent_count--;
-		else if (token->type == TOKEN_AND || token->type == TOKEN_OR
-			|| parent_count == 0)
-			return (token);
-		lst = lst->next;
-	}
-	return (NULL);
-}
-
-t_token	*token_list_lookup_pipe(t_token_list *lst, t_token *end_token)
-{
-	int		parent_count;
-	t_token	*token;
-
-	parent_count = 0;
-	while (lst)
-	{
-		token = (t_token *)lst->content;
-		if (token == end_token)
-			return (NULL);
-		if (token->type == TOKEN_LPAREN)
-			parent_count++;
-		else if (token->type == TOKEN_RPAREN)
-			parent_count--;
-		else if (token->type == TOKEN_PIPE && parent_count == 0)
-			return (token);
-		lst = lst->next;
-	}
-	return (NULL);
-}
-
 t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it)
 {
 	t_ast_item			*item;
