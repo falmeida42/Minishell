@@ -24,7 +24,6 @@ char	*cmp_env(char *value)
 	else
 	{
 		expanded = env_get(value);
-		free(value);
 		return (expanded);
 	}
 }

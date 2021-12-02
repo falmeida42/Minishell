@@ -109,6 +109,8 @@ void	*expand_operation(void *content)
 
 	if (find_char(token->value, '$'))
 		token->value = ft_expander(token->value);
+	if (find_char(token->value, '~'))
+		token->value = ft_expander_til(token);
 	//expander
 	return (token);
 }
