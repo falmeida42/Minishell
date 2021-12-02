@@ -35,6 +35,7 @@ char	*join_dollar(char *str, char *expand, int size)
 	int	j;
 	int	z;
 	int	x;
+	int	first;
 	char	*result;
 
 	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand)));
@@ -42,10 +43,12 @@ char	*join_dollar(char *str, char *expand, int size)
 	j = 0;
 	z = 0;
 	x = (ft_strlen(str) - size) + (ft_strlen(expand));
+	first = 1;
 	while (x > 0)
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && first == 1)
 		{
+			first++;
 			while (str[i] != '\0')
 			{
 				if (str[i] == ' ')
@@ -98,6 +101,7 @@ char	*ft_expander(char *str)
 	int	i;
 	i = 0;
 	result = NULL;
+
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
@@ -107,5 +111,7 @@ char	*ft_expander(char *str)
 		}
 		i++;
 	}
+	if (ft_contains('$', result))
+		return (ft_expander(result));
 	return (result);
 }
