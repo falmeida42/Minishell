@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 16:58:04 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/02 09:57:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it, t_token *token
 	if (!ast)
 		return (NULL);
 	ast->left = command_tree_parse(it, token);
-	if (!ast->left)
+	if (!ast->left || token_iterator_peek(it) != token)
 	{
 		btree_apply_suffix(ast, ast_item_free);
 		return (NULL);
@@ -40,6 +40,7 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it, t_token *token
 	ast->right = command_tree_parse(it, end_token);
 	if (!ast->right)
 	{
+		command_tree_free(ast->left);
 		btree_apply_suffix(ast, ast_item_free);
 		return (NULL);
 	}
