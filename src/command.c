@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 16:44:41 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/02 08:09:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	simple_command_free(void *ptr)
 	ft_lstclear(&cmd->argv, free);
 }
 
-void	commands_group_free(void *ptr)
+void	command_tree_free(void *ptr)
 {
 	t_command_tree *ast;
 
