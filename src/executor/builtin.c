@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:18:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:41:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,36 @@
 bool	is_builtin(char *name)
 {
 	if (!ft_strcmp(name, "cd"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "echo"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "env"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "export"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "unset"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "pwd"))
-		return true;
+		return (true);
 	if (!ft_strcmp(name, "exit"))
-		return true;
-	return false;
+		return (true);
+	return (false);
 }
 
 int	builtin_execute(char **argv)
 {
 	if (!ft_strcmp(argv[0], "cd"))
-		return ft_cd(argv);
+		return (ft_cd(argv));
 	if (!ft_strcmp(argv[0], "echo"))
-		return ft_echo(argv);
+		return (ft_echo(argv));
 	if (!ft_strcmp(argv[0], "env"))
-		return ft_env(argv);
+		return (ft_env(argv));
 	if (!ft_strcmp(argv[0], "export"))
-		return ft_export(argv);
+		return (ft_export(argv));
 	if (!ft_strcmp(argv[0], "unset"))
-		return ft_unset(argv);
+		return (ft_unset(argv));
 	if (!ft_strcmp(argv[0], "pwd"))
-		return ft_pwd(argv);
+		return (ft_pwd(argv));
 	if (!ft_strcmp(argv[0], "exit"))
 	{
 		g_mini.exit = true;
@@ -53,7 +53,7 @@ int	builtin_execute(char **argv)
 	return (0);
 }
 
-int builtin_execute_fd(t_simple_command *cmd, int fd_out)
+int	builtin_execute_fd(t_simple_command *cmd, int fd_out)
 {
 	int		status;
 	int		bak;
