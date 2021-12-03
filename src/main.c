@@ -49,6 +49,6 @@ int main(int argc, char **argv, char **envp)
 			break ;
 		}
 	}
-	free_struct();
+	mini_final_clear(&g_mini);
 	return (EXIT_SUCCESS);
 }

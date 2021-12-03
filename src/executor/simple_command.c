@@ -51,7 +51,7 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	argv = ft_lst_to_arr(cmd->argv);
 	status = exec_child_process(argv);
 	ft_str_array_clear(argv, 0);
-	free_struct();
+	mini_final_clear(&g_mini);
 	exit(status);
 }
 
