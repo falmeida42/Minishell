@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/02 12:18:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 09:33:40 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv);
+int			builtin_execute_fd(t_simple_command *cmd, int fd_out);
 
 void		get_signal(int signal);
 

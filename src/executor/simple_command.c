@@ -49,24 +49,6 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	exit(status);
 }
 
-int builtin_execute_fd(t_simple_command *cmd, int fd_out)
-{
-	int		status;
-	int		bak;
-	char	**argv;
-
-	set_fd_out(cmd->outfile, cmd->append, &bak, &fd_out);
-	argv = ft_lst_to_arr(cmd->argv);
-	status = builtin_execute(argv);
-	free(argv);
-	if (cmd->outfile)
-	{
-		dup2(bak, STDOUT_FILENO);
-		close(bak);
-	}
-	return (status);
-}
-
 int simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 {
 	int		status;
