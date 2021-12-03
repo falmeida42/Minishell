@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:20:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/02 10:24:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 10:07:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,31 @@ void	dup2_and_close(int new, int old)
 	close(new);
 }
 
-void set_fd_out(char *fname, bool append, int *old, int *new)
+void set_fd_out(char *fname, bool append, int *fd)
 {
 	if (fname)
 	{
-		if (*old)
-			*old = dup(STDOUT_FILENO);
 		if (append)
-			*new = open(fname, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			*fd = open(fname, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		else
-			*new = open(fname, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (*new < 0)
+			*fd = open(fname, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (*fd < 0)
 		{
 			perror(fname);
 			exit(EXIT_FAILURE);
 		}
-		dup2_and_close(*new, STDOUT_FILENO);
 	}
 }
 
-void set_fd_in(char *fname, int *old, int *new)
+void set_fd_in(char *fname, int *fd)
 {
 	if (fname)
 	{
-		if (*old)
-			*old = dup(STDIN_FILENO);
-		*new = open(fname, O_RDONLY);
-		if (*new < 0)
+		*fd = open(fname, O_RDONLY);
+		if (*fd < 0)
 		{
 			perror(fname);
 			exit(EXIT_FAILURE);
 		}
-		dup2_and_close(*new, STDIN_FILENO);
 	}
 }

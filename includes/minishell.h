@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 09:33:40 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 10:05:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void		get_signal(int signal);
 
 // Redirects (for executor)
 void		dup2_and_close(int new, int old);
-void		set_fd_out(char *fname, bool append, int *old, int *new);
-void		set_fd_in(char *fname, int *old, int *new);
+void		set_fd_out(char *fname, bool append, int *fd);
+void		set_fd_in(char *fname, int *fd);
 
 // Executor
 int 		simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out);
