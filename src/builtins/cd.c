@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/25 02:30:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 09:36:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	change_directory(char *dir)
 	{
 		ft_putstr_error("cd: ");
 		ft_putstr_error(dir);
-		ft_putstr_error(": no such file or directory: ");
+		ft_putendl_error(": no such file or directory");
 		return (1);
 	}
 	env_set("OLDPWD", ft_strdup(pwd));

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 18:36:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 10:34:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@
 #include "libft.h"
 #include "map.h"
 
+// btree where each node is t_ast_item
+typedef t_btree	t_command_tree;
+
 typedef struct	s_mini {
-	int		status;
-	bool	exit;
-	t_map	*env;
-} t_mini;
+	t_command_tree	*tree;
+	int				status;
+	bool			exit;
+	t_map			*env;
+}	t_mini;
 
 t_mini	g_mini;
 
@@ -67,9 +71,7 @@ typedef struct s_ast_item
 
 t_ast_item	*ast_item_new(t_ast_item_type type);
 void		ast_item_free(void *ptr);
-
-// btree where each node is t_ast_item
-typedef t_btree	t_command_tree;
+void		ast_item_print(void *ptr);
 
 //free utility
 void		free_struct(void);
@@ -86,14 +88,20 @@ int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv);
+int			builtin_execute_fd(t_simple_command *cmd, int fd_out);
 
 void		get_signal(int signal);
 
+// Redirects (for executor)
+void		dup2_and_close(int new, int old);
+void		set_fd_out(char *fname, bool append, int *fd);
+void		set_fd_in(char *fname, int *fd);
+
 // Executor
-int 		simple_command_execute_io(t_simple_command *cmd, int io[2]);
-int 		command_tree_execute_io(t_command_tree *tree, int fd[2]);
+int 		simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out);
+int 		command_tree_execute_io(t_command_tree *tree, int fd_in, int fd_out);
 int 		command_tree_execute(t_command_tree *tree);
-int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int io[2]);
+int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int fd_in, int fd_out);
 
 // Utils
 char	*lookup_full_path(char *path);
@@ -150,6 +158,8 @@ bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
 
+t_btree			*ast_node_from_token(t_token *token);
+
 // Lookup functions
 t_token			*token_list_lookup_logical(t_token_list *lst, t_token *end_token);
 t_token			*token_list_lookup_pipe(t_token_list *lst, t_token *end_token);
@@ -173,7 +183,7 @@ t_command_tree	*parser(char *input);
 char			**lex_and_expand(char *input);
 
 // Expander
-char	*ft_expander(char *str);
+char			*ft_expander(char *str);
 
 // Expander Til
 char	*ft_expander_til(t_token *token);

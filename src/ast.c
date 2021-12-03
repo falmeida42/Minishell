@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:36:00 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/01 16:45:37 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/03 10:38:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ t_ast_item	*ast_item_new(t_ast_item_type type)
 		return (NULL);
 	item->type = type;
 	return (item);
+}
+
+t_btree	*ast_node_from_token(t_token *token)
+{
+	t_ast_item	*item;
+
+	if (!token)
+		return (NULL);
+	if (token->type == TOKEN_PIPE)
+		item = ast_item_new(AST_PIPE);
+	else if (token->type == TOKEN_AND)
+		item = ast_item_new(AST_AND);
+	else if (token->type == TOKEN_OR)
+		item = ast_item_new(AST_OR);
+	else
+		return (NULL);
+	return (btree_create_node(item));
 }
 
 void	ast_item_free(void *ptr)
@@ -40,17 +57,18 @@ void	ast_item_print(void *ptr)
 	t_ast_item	*item;
 
 	item = (t_ast_item *)ptr;
+	ft_putstr("-------------------------------------\n");
 	if (item == NULL)
 		return ;
 	if (item->type == AST_PIPE)
 		ft_putstr("PIPE\n");
 	else if (item->type == AST_AND)
-		ft_putstr("AST_AND\n");
+		ft_putstr("AND\n");
 	else if (item->type == AST_OR)
-		ft_putstr("AST_OR\n");
+		ft_putstr("OR\n");
 	else if (item->type == AST_CMD)
 	{
-		ft_putstr("AST_CMD\n");
+		ft_putstr("SIMPLE COMMAND\n");
 		simple_command_print(item->cmd);
 	}
 }
