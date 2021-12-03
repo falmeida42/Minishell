@@ -17,10 +17,7 @@ char	*cmp_env(char *value)
 {
 	char	*expanded;
 	if (env_get(value) == NULL)
-	{
-		free(value);
-		return(NULL);
-	}
+		return(ft_strdup(""));
 	else
 	{
 		expanded = env_get(value);
@@ -50,7 +47,7 @@ char	*join_dollar(char *str, char *expand, int size)
 			first++;
 			while (str[i] != '\0')
 			{
-				if (str[i] == ' ')
+				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'')
 					break ;
 				i++;
 			}
@@ -82,7 +79,7 @@ char	*check_dollar(char *str, int i)
 	j = i;
 	while (str[j] != '\0')
 	{
-		if (str[j] == ' ')
+		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"')
 			break ;
 		j++;
 	}
@@ -90,7 +87,7 @@ char	*check_dollar(char *str, int i)
 	value = ft_substr(str, i + 1, j - (i + 1));
 	expand = cmp_env(value);
 	if (expand == NULL)
-		return (NULL);
+		return (ft_strdup(""));
 	return (join_dollar(str, expand, dollar_size));
 }
 

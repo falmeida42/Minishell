@@ -29,9 +29,14 @@ int	find_char(char *str, char c)
 void	*expand_operation(void *content)
 {
 	t_token	*token;
+	bool	check;
 
-	//expander
-	if (find_char(token->value, '$'))
+	token = (t_token *) content;
+	if (token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
+		check = true;
+	else
+		check = false;
+	if (find_char(token->value, '$') && check == true)
 		token->value = ft_expander(token->value);
 	if (find_char(token->value, '~'))
 		token->value = ft_expander_til(token);
