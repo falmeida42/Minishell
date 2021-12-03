@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 12:37:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 17:21:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	status = exec_child_process(argv);
 	ft_str_array_clear(argv, 0);
 	mini_final_clear(&g_mini);
-	exit(status);
+	return (status);
 }
 
-int	simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
+int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out)
 {
 	int		status;
 	pid_t	pid;
@@ -63,7 +63,7 @@ int	simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 	if (!cmd->argv || !cmd->argv->content)
 		return (1);
 	if (is_builtin(cmd->argv->content))
-		return (builtin_execute_fd(cmd, fd_out));
+		return (builtin_execute_fd(cmd, fork_builtin, fd_out));
 	pid = fork();
 	if (pid < 0)
 	{
@@ -71,7 +71,7 @@ int	simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 		return (EXIT_FAILURE);
 	}
 	if (pid == 0)
-		simple_command_execute_io_child_process(cmd, fd_in, fd_out);
+		exit(simple_command_execute_io_child_process(cmd, fd_in, fd_out));
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -80,7 +80,7 @@ int	simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 
 int	simple_command_execute(t_simple_command *cmd)
 {
-	return (simple_command_execute_io(cmd, STDIN_FILENO, STDOUT_FILENO));
+	return (simple_command_execute_io(cmd, false, STDIN_FILENO, STDOUT_FILENO));
 }
 
 int	ft_exec(char **argv)

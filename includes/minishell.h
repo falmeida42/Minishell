@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 16:36:53 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/03 17:02:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv);
-int			builtin_execute_fd(t_simple_command *cmd, int fd_out);
+int			builtin_execute_fd(t_simple_command *cmd, bool do_fork, int fd_out);
 
 void		get_signal(int signal);
 
@@ -100,8 +100,8 @@ void		set_fd_out(char *fname, bool append, int *fd);
 void		set_fd_in(char *fname, int *fd);
 
 // Executor
-int 		simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out);
-int 		command_tree_execute_io(t_command_tree *tree, int fd_in, int fd_out);
+int 		simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out);
+int 		command_tree_execute_io(t_command_tree *tree, bool fork_builtin, int fd_in, int fd_out);
 int 		command_tree_execute(t_command_tree *tree);
 int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int fd_in, int fd_out);
 
