@@ -16,11 +16,17 @@
 char	*cmp_env(char *value)
 {
 	if (!ft_strcmp(value, "\?"))
+	{
 		return (ft_strdup(ft_itoa(g_mini.status)));
+		free(value);
+	}
 	else if (env_get(value) == NULL)
 		return(ft_strdup(""));
 	else
+	{
 		return (ft_strdup(env_get(value)));
+		//free(value);
+	}
 }
 
 char	*join_dollar(char *str, char *expand, int size)
@@ -32,7 +38,7 @@ char	*join_dollar(char *str, char *expand, int size)
 	int	first;
 	char	*result;
 
-	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand)));
+	result = malloc(sizeof(char) * (ft_strlen(str) - size) + (ft_strlen(expand) + 1));
 	i = 0;
 	j = 0;
 	z = 0;
@@ -64,6 +70,8 @@ char	*join_dollar(char *str, char *expand, int size)
 		x--;
 	}
 	result[j] = '\0';
+	free(expand);
+	free(str);
 	return (result);
 }
 
@@ -106,6 +114,9 @@ char	*ft_expander(char *str)
 		i++;
 	}
 	if (ft_contains('$', result))
+	{
+		printf("Hello\n");
 		return (ft_expander(result));
+	}
 	return (result);
 }

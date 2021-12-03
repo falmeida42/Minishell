@@ -31,7 +31,7 @@ OBJS 		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 INC_FLAGS	= $(addprefix -I, $(INC_DIRS))
 WARN_FLAGS	= -Wall -Wextra -Werror
-DEBUG_FLAGS = -g -fsanitize=address -DDEBUG
+DEBUG_FLAGS = -g
 LIBS_FLAGS	= -L$(FT_DIR) -lft -lreadline
 
 # Adds the readline lib directory to the libs flags
