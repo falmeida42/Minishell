@@ -15,14 +15,12 @@
 
 char	*cmp_env(char *value)
 {
-	char	*expanded;
-	if (env_get(value) == NULL)
+	if (!ft_strcmp(value, "\?"))
+		return (ft_strdup(ft_itoa(g_mini.status)));
+	else if (env_get(value) == NULL)
 		return(ft_strdup(""));
 	else
-	{
-		expanded = env_get(value);
-		return (expanded);
-	}
+		return (ft_strdup(env_get(value)));
 }
 
 char	*join_dollar(char *str, char *expand, int size)
