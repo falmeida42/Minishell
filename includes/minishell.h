@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:34:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:33:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef t_btree	t_command_tree;
 
 typedef struct	s_mini {
 	t_command_tree	*tree;
+	char			*input;
 	int				status;
 	bool			exit;
 	t_map			*env;
