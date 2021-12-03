@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:04:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 10:18:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,16 @@ int builtin_execute_fd(t_simple_command *cmd, int fd_out)
 	char	**argv;
 
 	set_fd_out(cmd->outfile, cmd->append, &fd_out);
-	bak = dup(STDOUT_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	if (fd_out != STDOUT_FILENO)
+	{
+		bak = dup(STDOUT_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
 	argv = ft_lst_to_arr(cmd->argv);
 	status = builtin_execute(argv);
 	free(argv);
-	if (cmd->outfile)
+	if (fd_out != STDOUT_FILENO)
 	{
 		dup2(bak, STDOUT_FILENO);
 		close(bak);
