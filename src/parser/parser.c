@@ -31,6 +31,8 @@ void	*expand_operation(void *content)
 	t_token	*token;
 
 	token = (t_token *)content;
+	if (!token->value)
+		return (token);
 	if (find_char(token->value, '$'))
 		token->value = ft_expander(token->value);
 	return (token);
@@ -71,6 +73,8 @@ t_command_tree	*parser(char *input)
 	t_token_list	*token_it;
 	t_command_tree	*ast;
 
+	if (!input)
+		return (NULL);
 	token_list = lex(input);
 	// apply expander
 	token_it = token_list;
