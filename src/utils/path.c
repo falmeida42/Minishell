@@ -65,20 +65,37 @@ char	*lookup_full_path(char *path)
 	return (full_path);
 }
 
+char	*get_relative_path(char *path)
+{
+	char	*relative_path;
+	char	*dir;
+
+	dir = getcwd(NULL, 0);
+	relative_path = path_join(dir, path);
+	free(dir);
+	if (access(relative_path, X_OK) < 0)
+	{
+		perror(path);
+		free(relative_path);
+		return (NULL);
+	}
+	return (relative_path);
+}
+
 char	*normalize_path(char *path)
 {
-	char	*dir;
-	
 	if (!path || !*path)
 		return ft_strdup("");
 	if (*path == '/') // absolute path
-		return ft_strdup(path);
-	if (*path == '.') // relative path
 	{
-		dir = getcwd(NULL, 0);
-		path = ft_strjoin(dir, path);
-		free(dir);
-		return (path);
+		if (access(path, X_OK) < 0)
+		{
+			perror(path);
+			return (NULL);
+		}
+		return (ft_strdup(path));
 	}
+	if (*path == '.') // relative path
+		return (get_relative_path(path));
 	return (lookup_full_path(path));
 }

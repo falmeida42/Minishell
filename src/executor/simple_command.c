@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/02 12:12:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 09:33:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int exec_child_process(char **argv)
 	char	**env_arr;
 	
 	program_name = normalize_path(*argv);
+	if (!program_name)
+		return (127);
 	env_arr = map_to_str_array(g_mini.env, '=');
 	status = execve(program_name, argv, env_arr);
 	free(argv);
@@ -47,24 +49,6 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	ft_str_array_clear(argv, 0);
 	free_struct();
 	exit(status);
-}
-
-int builtin_execute_fd(t_simple_command *cmd, int fd_out)
-{
-	int		status;
-	int		bak;
-	char	**argv;
-
-	set_fd_out(cmd->outfile, cmd->append, &bak, &fd_out);
-	argv = ft_lst_to_arr(cmd->argv);
-	status = builtin_execute(argv);
-	free(argv);
-	if (cmd->outfile)
-	{
-		dup2(bak, STDOUT_FILENO);
-		close(bak);
-	}
-	return (status);
 }
 
 int simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
