@@ -33,7 +33,7 @@ char    *til_text(char *str)
 {
     char    *home;
     home = env_get("HOME");
-    
+
     if (!ft_strcmp(str, "~"))
     {
         free(str);
