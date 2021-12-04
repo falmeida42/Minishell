@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/03 18:35:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:54:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,31 @@
  * one of the names is not a valid shell variable name.
  */
 
+int	ft_strcmp_key(void *ptr1, void *ptr2)
+{
+	t_pair	*p1;
+	t_pair	*p2;
+
+	p1 = (t_pair *)ptr1;
+	p2 = (t_pair *)ptr2;
+	if (!p1 || !p2)
+	{
+		ft_putendl_error("Invalid pairs");
+		return (0);
+	}
+	return (-ft_strcmp(p1->key, p2->key));
+}
+
 // Prints the map to the console.
 void	ft_export_no_args(void)
 {
+	t_map	*env;
 	t_map	*it;
 	t_pair	*p;
 
-	it = g_mini.env;
+	env = ft_lstcopy(g_mini.env);
+	ft_lstsort(&env, &ft_strcmp_key);
+	it = env;
 	while (it)
 	{
 		p = (t_pair *)it->content;
@@ -39,6 +57,7 @@ void	ft_export_no_args(void)
 		ft_putstr("\"\n");
 		it = it->next;
 	}
+	ft_lstclear(&env, 0);
 }
 
 /**
@@ -54,13 +73,13 @@ int	ft_export(char **argv)
 		ft_export_no_args();
 		return (0);
 	}
-	while(*(++argv))
+	while (*(++argv))
 	{
 		p = pair_from_str(*argv, '=');
 		if (!p)
 			return (1);
 		env_set(p->key, p->value);
-		free(p);	
+		free(p);
 	}
 	return (0);
 }
