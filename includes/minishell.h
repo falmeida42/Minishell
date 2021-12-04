@@ -74,7 +74,8 @@ void		ast_item_free(void *ptr);
 void		ast_item_print(void *ptr);
 
 //free utility
-void		free_struct(void);
+void		mini_final_clear(t_mini *ptr);
+void		mini_loop_clear(t_mini *ptr);
 
 //commands.c
 int			ft_pwd(char **argv);

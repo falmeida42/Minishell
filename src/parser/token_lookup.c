@@ -6,12 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:09:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/02 09:10:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 10:23:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_token	*token_list_lookup_logical(t_token_list *lst, t_token *end_token)
 {

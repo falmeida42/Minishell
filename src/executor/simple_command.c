@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:05:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:37:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
  * strings belonging to the simple-cmd struct.
  * Note that this line only runs if execve() fails.
  */
-int exec_child_process(char **argv)
+int	exec_child_process(char **argv)
 {
-	int 	status;
+	int		status;
 	char	*program_name;
 	char	**env_arr;
-	
+
 	program_name = normalize_path(*argv);
 	if (!program_name)
 		return (127);
@@ -39,9 +39,9 @@ int exec_child_process(char **argv)
 int	simple_command_execute_io_child_process(t_simple_command *cmd,
 		int fd_in, int fd_out)
 {
-	int 	status;
+	int		status;
 	char	**argv;
-	
+
 	set_fd_in(cmd->infile, &fd_in);
 	set_fd_out(cmd->outfile, cmd->append, &fd_out);
 	if (fd_in != STDIN_FILENO)
@@ -51,15 +51,15 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	argv = ft_lst_to_arr(cmd->argv);
 	status = exec_child_process(argv);
 	ft_str_array_clear(argv, 0);
-	free_struct();
+	mini_final_clear(&g_mini);
 	exit(status);
 }
 
-int simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
+int	simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 {
 	int		status;
-	pid_t   pid;
-	
+	pid_t	pid;
+
 	if (!cmd->argv || !cmd->argv->content)
 		return (1);
 	if (is_builtin(cmd->argv->content))
@@ -73,12 +73,12 @@ int simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out)
 	if (pid == 0)
 		simple_command_execute_io_child_process(cmd, fd_in, fd_out);
 	waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    return (-WTERMSIG(status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (-WTERMSIG(status));
 }
 
-int simple_command_execute(t_simple_command *cmd)
+int	simple_command_execute(t_simple_command *cmd)
 {
 	return (simple_command_execute_io(cmd, STDIN_FILENO, STDOUT_FILENO));
 }
@@ -97,7 +97,7 @@ int	ft_exec(char **argv)
 	if (pid == 0)
 		exec_child_process(argv);
 	waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    return (-WTERMSIG(status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (-WTERMSIG(status));
 }

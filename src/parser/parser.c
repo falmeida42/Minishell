@@ -28,8 +28,8 @@ int	find_char(char *str, char c)
 
 void	*expand_operation(void *content)
 {
-	t_token	*token;
-	bool	check;
+	t_token *token;
+	bool    check;
 
 	token = (t_token *) content;
 	if (token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
@@ -78,6 +78,8 @@ t_command_tree	*parser(char *input)
 	t_token_list	*token_it;
 	t_command_tree	*ast;
 
+	if (!input)
+		return (NULL);
 	token_list = lex(input);
 	// apply expander
 	token_it = token_list;

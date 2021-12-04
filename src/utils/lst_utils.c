@@ -6,13 +6,28 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 07:00:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:32:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_struct(void)
+void	mini_final_clear(t_mini *ptr)
 {
-	ft_lstclear(&g_mini.env, pair_clear);
+	mini_loop_clear(ptr);
+	ft_lstclear(&ptr->env, pair_clear);
+}
+
+void	mini_loop_clear(t_mini *ptr)
+{
+	if (ptr->tree)
+	{
+		command_tree_free(ptr->tree);
+		ptr->tree = NULL;
+	}
+	if (ptr->input)
+	{
+		free(ptr->input);
+		ptr->input = NULL;
+	}
 }

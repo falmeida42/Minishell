@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:20:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:07:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:37:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	dup2_and_close(int new, int old)
 	close(new);
 }
 
-void set_fd_out(char *fname, bool append, int *fd)
+void	set_fd_out(char *fname, bool append, int *fd)
 {
 	if (fname)
 	{
@@ -40,7 +40,7 @@ void set_fd_out(char *fname, bool append, int *fd)
 	}
 }
 
-void set_fd_in(char *fname, int *fd)
+void	set_fd_in(char *fname, int *fd)
 {
 	if (fname)
 	{
