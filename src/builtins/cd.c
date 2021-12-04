@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/03 18:23:24 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:54:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 int	change_directory(char *dir)
 {
 	char	*pwd;
-	
+
 	pwd = env_get("PWD");
 	if (!pwd)
 		pwd = getcwd(NULL, PATH_MAX);
@@ -57,8 +57,6 @@ int	ft_cd(char **argv)
 {
 	char	*dir;
 
-	// check number of arguments
-	// if > 1, print error message: "cd: too many arguments"
 	dir = argv[1];
 	if (!dir)
 	{
