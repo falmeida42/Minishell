@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 18:29:45 by jceia             #+#    #+#             */
-/*   Updated: 2021/11/19 18:41:21 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:46:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_str_array_clear(char **str_arr, int len)
 	}
 	else
 	{
-		while(str_arr[index])
+		while (str_arr[index])
 		{
 			free(str_arr[index]);
 			index++;
