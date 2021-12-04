@@ -24,6 +24,8 @@ t_token	*token_next(char **cursor)
 		c = char_iterator_next(cursor);
 	if (c == '\0')
 		return (NULL);
+	if (ft_contains(c, "$"))
+		return (take_breakets(cursor));
 	if (ft_contains(c, "|&><)("))
 		return (take_symbol(cursor));
 	if (c == '"')

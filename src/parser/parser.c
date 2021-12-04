@@ -37,7 +37,9 @@ void	*expand_operation(void *content)
 	else
 		check = false;
 	if (find_char(token->value, '$') && check == true)
+	{
 		token->value = ft_expander(token->value);
+	}
 	if (find_char(token->value, '~'))
 		token->value = ft_expander_til(token);
 	return (token);

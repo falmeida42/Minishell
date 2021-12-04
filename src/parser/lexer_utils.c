@@ -139,6 +139,52 @@ t_token	*take_dquoted(char **cursor)
 	return (token_new(TOKEN_DQUOTED, remove_quotes(start)));
 }
 
+int	ft_contains_breakets(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '{')
+		{
+			while (str[i] != '\0')
+			{
+				if (str[i] == '}')
+					return (0);
+				i++;
+			}
+			return (1);
+		}
+		i++;
+	}
+	return (1);
+}
+
+t_token	*take_breakets(char **cursor)
+{
+	char	c;
+	char	*start;
+	char	*end;
+
+	start = *cursor;
+	if (ft_contains_breakets(start))
+		return (take_text(cursor));
+	c = char_iterator_peek(cursor);
+	while (c != '{')
+		c = char_iterator_next(cursor);
+	while (c)
+	{
+		if (c == '}')
+			break ;
+		c = char_iterator_next(cursor);
+	}
+	end = *cursor;
+	char_iterator_next(cursor);
+	printf("%s\n", ft_substr(start, 1, end - (start - 1)));
+	return (token_new(TOKEN_BREAKETS, ft_substr(start, 0, end - (start - 1))));
+}
+
 t_token	*take_quoted(char **cursor)
 {
 	char	c;

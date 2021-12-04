@@ -33,6 +33,7 @@ typedef struct	s_mini {
 	int				status;
 	bool			exit;
 	t_map			*env;
+	char			*input;
 }	t_mini;
 
 t_mini	g_mini;
@@ -138,6 +139,7 @@ typedef enum e_token_type
 	TOKEN_DLESS,
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
+	TOKEN_BREAKETS,
 }	t_token_type;
 
 typedef struct s_token
@@ -172,6 +174,7 @@ t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
+t_token			*take_breakets(char **cursor);
 t_token			*take_text(char **cursor);
 
 // Parsing
@@ -188,4 +191,7 @@ char			*ft_expander(char *str);
 
 // Expander Til
 char	*ft_expander_til(t_token *token);
+
+//Expander breakets
+char	*expand_breakets(char *str, int i);
 #endif
