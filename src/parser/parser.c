@@ -72,6 +72,11 @@ char	**lex_and_expand(char *input)
 	return (arr);
 }
 
+int	is_empty_word_token_wrap(void *ptr)
+{
+	return (is_empty_word_token((t_token *)ptr));
+}
+
 t_command_tree	*parser(char *input)
 {
 	t_token_list	*token_list;
@@ -81,7 +86,8 @@ t_command_tree	*parser(char *input)
 	if (!input)
 		return (NULL);
 	token_list = lex(input);
-	// apply expander
+	ft_lstapplymap(token_list, expand_operation);
+	ft_lstremove_if(&token_list, is_empty_word_token_wrap, token_free);
 	token_it = token_list;
 	ast = command_tree_parse(&token_it, NULL);
 	ft_lstclear(&token_list, token_free);

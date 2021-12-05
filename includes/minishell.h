@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 00:32:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/05 12:55:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 #include <stdbool.h>
 #include "libft.h"
 #include "map.h"
-
-// TODO: handle multiple redirects (outputs)
-// TODO: heredoc
 
 // btree where each node is t_ast_item
 typedef t_btree	t_command_tree;
