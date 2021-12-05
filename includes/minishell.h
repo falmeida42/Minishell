@@ -183,6 +183,7 @@ t_token			*token_iterator_peek(t_token_iterator *it);
 bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
+bool			is_empty_word_token(t_token *token);
 
 t_btree			*ast_node_from_token(t_token *token);
 
