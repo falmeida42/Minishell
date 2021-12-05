@@ -23,12 +23,9 @@ void	simple_command_parse_redirection_token(
 	if (token == NULL)
 		return ;
 	if (type == TOKEN_GREATER)
-		cmd->outfile = ft_strdup(token->value);
+		ft_lstpush_back(&cmd->outfiles, outfile_new(token->value, false));
 	else if (type == TOKEN_DGREATER)
-	{
-		cmd->outfile = ft_strdup(token->value);
-		cmd->append = true;
-	}
+		ft_lstpush_back(&cmd->outfiles, outfile_new(token->value, true));
 	else if (type == TOKEN_LESS)
 		cmd->infile = ft_strdup(token->value);
 	else if (type == TOKEN_DLESS)

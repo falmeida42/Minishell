@@ -24,17 +24,21 @@ void	dup2_and_close(int new, int old)
 	close(new);
 }
 
-void	set_fd_out(char *fname, bool append, int *fd)
+void	set_fd_out(t_outfile *out, int *fd)
 {
-	if (fname)
+	int	oflag;
+
+	if (out)
 	{
-		if (append)
-			*fd = open(fname, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		oflag = O_WRONLY | O_CREAT;
+		if (out->append)
+			oflag |= O_APPEND;
 		else
-			*fd = open(fname, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+			oflag |= O_TRUNC;
+		*fd = open(out->fname, oflag, 0644);
 		if (*fd < 0)
 		{
-			perror(fname);
+			perror(out->fname);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -52,3 +56,19 @@ void	set_fd_in(char *fname, int *fd)
 		}
 	}
 }
+
+void	set_fd_out_list(t_list *outfiles, int *fd)
+{
+	t_outfile	*out;
+	t_list		*lst;
+	
+	lst = outfiles;
+	while (lst) {
+		out = (t_outfile *)lst->content;
+		set_fd_out(out, fd);
+		lst = lst->next;
+		if (lst)
+			close(*fd);
+	}
+}
+

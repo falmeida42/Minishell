@@ -38,15 +38,25 @@ typedef struct	s_mini {
 
 t_mini	g_mini;
 
+// Outfile
+
+typedef	struct s_outfile
+{
+	char	*fname;
+	bool	append;
+}	t_outfile;
+
+t_outfile		*outfile_new(char *fname, bool append);
+void			outfile_free(void *ptr);
+
 // Commands
 
 typedef struct s_simple_command
 {
 	t_list	*argv;
-	char	*infile;
-	char	*outfile;
+	char 	*infile;
 	bool	here_doc;
-	bool	append;
+	t_list	*outfiles;
 }	t_simple_command;
 
 void			simple_command_print(t_simple_command *cmd);
@@ -96,8 +106,7 @@ void		get_signal(int signal);
 
 // Redirects (for executor)
 void		dup2_and_close(int new, int old);
-void		set_fd_out(char *fname, bool append, int *fd);
-void		set_fd_in(char *fname, int *fd);
+void		set_fd_out_list(t_list *outfiles, int *fd);
 
 // Executor
 int 		simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out);

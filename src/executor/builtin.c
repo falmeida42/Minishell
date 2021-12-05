@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 17:21:04 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/04 22:04:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	builtin_execute_fd(t_simple_command *cmd, bool do_fork, int fd_out)
 	int		bak;
 	char	**argv;
 
-	set_fd_out(cmd->outfile, cmd->append, &fd_out);
+	set_fd_out_list(cmd->outfiles, &fd_out);
 	if (fd_out != STDOUT_FILENO)
 	{
 		bak = dup(STDOUT_FILENO);
