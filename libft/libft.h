@@ -120,6 +120,8 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstsort(t_list **begin_list, int (*cmp)());
 t_list	*ft_lstcopy(t_list *lst);
+void	ft_lstremove_if(t_list **begin_list, int (*f)(void *),
+			void (*free_fct)(void *));
 
 /*
  * Binary Tree
