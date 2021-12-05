@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:34:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/05 12:55:14 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef t_btree	t_command_tree;
 
 typedef struct	s_mini {
 	t_command_tree	*tree;
+	char			*input;
 	int				status;
 	bool			exit;
 	t_map			*env;
@@ -37,15 +38,35 @@ typedef struct	s_mini {
 
 t_mini	g_mini;
 
+// Outfile
+
+typedef	struct s_outfile
+{
+	char	*fname;
+	bool	append;
+}	t_outfile;
+
+t_outfile		*outfile_new(char *fname, bool append);
+void			outfile_free(void *ptr);
+
+// Infile
+
+typedef struct s_infile
+{
+	char	*data;
+	bool	heredoc;
+}	t_infile;
+
+t_infile		*infile_new(char *str, bool heredoc);
+void			infile_free(void *ptr);
+
 // Commands
 
 typedef struct s_simple_command
 {
 	t_list	*argv;
-	char	*infile;
-	char	*outfile;
-	bool	here_doc;
-	bool	append;
+	t_list	*infiles;
+	t_list	*outfiles;
 }	t_simple_command;
 
 void			simple_command_print(t_simple_command *cmd);
@@ -89,18 +110,19 @@ int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv);
-int			builtin_execute_fd(t_simple_command *cmd, int fd_out);
+int			builtin_execute_fd(t_simple_command *cmd, bool do_fork, int fd_out);
 
 void		get_signal(int signal);
 
 // Redirects (for executor)
 void		dup2_and_close(int new, int old);
-void		set_fd_out(char *fname, bool append, int *fd);
-void		set_fd_in(char *fname, int *fd);
+// void		set_fd_out(t_outfile *out, int *fd);
+void		set_fd_out_list(t_list *outfiles, int *fd);
+void		set_fd_in_list(t_list *infiles, int *fd);
 
 // Executor
-int 		simple_command_execute_io(t_simple_command *cmd, int fd_in, int fd_out);
-int 		command_tree_execute_io(t_command_tree *tree, int fd_in, int fd_out);
+int 		simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out);
+int 		command_tree_execute_io(t_command_tree *tree, bool fork_builtin, int fd_in, int fd_out);
 int 		command_tree_execute(t_command_tree *tree);
 int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int fd_in, int fd_out);
 
@@ -158,6 +180,7 @@ t_token			*token_iterator_peek(t_token_iterator *it);
 bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
+bool			is_empty_word_token(t_token *token);
 
 t_btree			*ast_node_from_token(t_token *token);
 

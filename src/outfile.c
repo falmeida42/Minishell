@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_array_clear.c                               :+:      :+:    :+:   */
+/*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 18:29:45 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/04 09:46:14 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/04 15:11:45 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/04 16:12:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
-void	ft_str_array_clear(char **str_arr, int len)
+t_outfile	*outfile_new(char *fname, bool append)
 {
-	int	index;
+	t_outfile	*outfile;
 
-	index = 0;
-	if (len > 0)
-	{
-		while (index < len)
-		{
-			free(str_arr[index]);
-			index++;
-		}
-	}
-	else
-	{
-		while (str_arr[index])
-		{
-			free(str_arr[index]);
-			index++;
-		}
-	}
-	free(str_arr);
+	outfile = malloc(sizeof(*outfile));
+	if (!outfile)
+		return (NULL);
+	outfile->fname = ft_strdup(fname);
+	outfile->append = append;
+	return (outfile);
+}
+
+void	outfile_free(void *ptr)
+{
+	t_outfile	*outfile;
+
+	outfile = (t_outfile *)ptr;
+	free(outfile->fname);
+	free(outfile);
 }

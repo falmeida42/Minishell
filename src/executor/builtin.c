@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 12:41:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 22:04:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,38 @@ int	builtin_execute(char **argv)
 	return (0);
 }
 
-int	builtin_execute_fd(t_simple_command *cmd, int fd_out)
+int builtin_execute_with_fork(char **argv)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		return (EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		//dup2(fd_out, STDOUT_FILENO);
+		status = builtin_execute(argv);
+		//free(argv);
+		exit(status);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		return (status);
+	}
+}
+
+int	builtin_execute_fd(t_simple_command *cmd, bool do_fork, int fd_out)
 {
 	int		status;
 	int		bak;
 	char	**argv;
 
-	set_fd_out(cmd->outfile, cmd->append, &fd_out);
+	set_fd_out_list(cmd->outfiles, &fd_out);
 	if (fd_out != STDOUT_FILENO)
 	{
 		bak = dup(STDOUT_FILENO);
@@ -67,12 +92,15 @@ int	builtin_execute_fd(t_simple_command *cmd, int fd_out)
 		close(fd_out);
 	}
 	argv = ft_lst_to_arr(cmd->argv);
-	status = builtin_execute(argv);
-	free(argv);
+	if (do_fork)
+		status = builtin_execute_with_fork(argv);
+	else
+		status = builtin_execute(argv);
 	if (fd_out != STDOUT_FILENO)
 	{
 		dup2(bak, STDOUT_FILENO);
 		close(bak);
 	}
+	free(argv);
 	return (status);
 }

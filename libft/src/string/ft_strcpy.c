@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/16 00:59:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:45:32 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ char	*ft_strcpy(char *src, char *dst)
 		x++;
 	}
 	dst[x] = '\0';
-	return(dst);
+	return (dst);
 }

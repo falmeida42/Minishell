@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/02 09:02:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:48:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_putchar_error(char c);
 void	ft_putstr_error(char *s);
 void	ft_putendl_error(char *s);
 void	ft_putnbr_error(int n);
-
 
 /*
  * Memory related functions
@@ -106,9 +105,7 @@ typedef struct s_list
 	void			*content;
 }	t_list;
 
-
 t_list	*ft_lstnew(void *content);
-
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstprev(t_list *lst, void *data);
@@ -121,7 +118,11 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
+void	ft_lstapplymap(t_list *lst, void *(*f)(void *));
+void	ft_lstsort(t_list **begin_list, int (*cmp)());
+t_list	*ft_lstcopy(t_list *lst);
+void	ft_lstremove_if(t_list **begin_list, int (*f)(void *),
+			void (*free_fct)(void *));
 
 /*
  * Binary Tree

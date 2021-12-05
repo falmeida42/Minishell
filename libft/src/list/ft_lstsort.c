@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_array_clear.c                               :+:      :+:    :+:   */
+/*   ft_lstsort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 18:29:45 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/04 09:46:14 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/03 18:40:26 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/04 09:46:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_str_array_clear(char **str_arr, int len)
+void	ft_lstsort(t_list **begin_list, int (*cmp)(void *, void *))
 {
-	int	index;
+	t_list	*l;
+	t_list	*l_prev;
+	t_list	*holder;
 
-	index = 0;
-	if (len > 0)
+	l = *begin_list;
+	l_prev = NULL;
+	while (l->next)
 	{
-		while (index < len)
+		if (cmp(l->content, l->next->content) < 0)
 		{
-			free(str_arr[index]);
-			index++;
+			holder = l->next;
+			l->next = l->next->next;
+			holder->next = l;
+			if (l_prev)
+				l_prev->next = holder;
+			else
+				*begin_list = holder;
+			ft_lstsort(begin_list, cmp);
+			break ;
 		}
+		l_prev = l;
+		l = l->next;
 	}
-	else
-	{
-		while (str_arr[index])
-		{
-			free(str_arr[index]);
-			index++;
-		}
-	}
-	free(str_arr);
 }
