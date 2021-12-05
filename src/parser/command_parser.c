@@ -27,12 +27,9 @@ void	simple_command_parse_redirection_token(
 	else if (type == TOKEN_DGREATER)
 		ft_lstpush_back(&cmd->outfiles, outfile_new(token->value, true));
 	else if (type == TOKEN_LESS)
-		cmd->infile = ft_strdup(token->value);
+		ft_lstpush_back(&cmd->infiles, infile_new(token->value, false));
 	else if (type == TOKEN_DLESS)
-	{
-		cmd->infile = ft_strdup(token->value);
-		cmd->here_doc = true;
-	}
+		ft_lstpush_back(&cmd->infiles, infile_new(token->value, true));
 }
 
 t_simple_command	*simple_command_parse(t_token_iterator *it)

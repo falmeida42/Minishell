@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 17:02:06 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/05 00:32:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include <stdbool.h>
 #include "libft.h"
 #include "map.h"
+
+// TODO: handle multiple redirects (outputs)
+// TODO: heredoc
 
 // btree where each node is t_ast_item
 typedef t_btree	t_command_tree;
@@ -49,13 +52,23 @@ typedef	struct s_outfile
 t_outfile		*outfile_new(char *fname, bool append);
 void			outfile_free(void *ptr);
 
+// Infile
+
+typedef struct s_infile
+{
+	char	*data;
+	bool	heredoc;
+}	t_infile;
+
+t_infile		*infile_new(char *str, bool heredoc);
+void			infile_free(void *ptr);
+
 // Commands
 
 typedef struct s_simple_command
 {
 	t_list	*argv;
-	char 	*infile;
-	bool	here_doc;
+	t_list	*infiles;
 	t_list	*outfiles;
 }	t_simple_command;
 
@@ -106,7 +119,9 @@ void		get_signal(int signal);
 
 // Redirects (for executor)
 void		dup2_and_close(int new, int old);
+// void		set_fd_out(t_outfile *out, int *fd);
 void		set_fd_out_list(t_list *outfiles, int *fd);
+void		set_fd_in_list(t_list *infiles, int *fd);
 
 // Executor
 int 		simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out);

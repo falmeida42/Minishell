@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 00:27:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/05 00:35:46 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	simple_command_free(void *ptr)
 
 	cmd = (t_simple_command *)ptr;
 	ft_lstclear(&cmd->argv, free);
-	if (cmd->infile)
-		free(cmd->infile);
+	if (cmd->infiles)
+		ft_lstclear(&cmd->infiles, infile_free);
 	if (cmd->outfiles)
 		ft_lstclear(&cmd->outfiles, outfile_free);
 	free(cmd);
@@ -37,6 +37,7 @@ void	simple_command_print(t_simple_command *cmd)
 {
 	t_list		*lst;
 	t_outfile	*out;
+	t_infile	*in;
 
 	lst = cmd->argv;
 	ft_putstr("Argv: ");
@@ -46,12 +47,14 @@ void	simple_command_print(t_simple_command *cmd)
 		ft_putchar(' ');
 		lst = lst->next;
 	}
-	if (cmd->infile)
+	lst = cmd->infiles;
+	while (lst)
 	{
+		in = (t_infile *)lst->content;
 		ft_putstr("\nInfile: ");
-		ft_putstr(cmd->infile);
+		ft_putstr(in->data);
 		ft_putstr("\nHere doc: ");
-		ft_putnbr(cmd->here_doc);
+		ft_putnbr(in->heredoc);
 	}
 	lst = cmd->outfiles;
 	while (lst)

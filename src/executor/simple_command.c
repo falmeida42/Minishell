@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 17:21:35 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/05 00:34:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	int		status;
 	char	**argv;
 
-	set_fd_in(cmd->infile, &fd_in);
+	set_fd_in_list(cmd->infiles, &fd_in);
 	set_fd_out_list(cmd->outfiles, &fd_out);
 	if (fd_in != STDIN_FILENO)
 		dup2_and_close(fd_in, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:20:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 12:37:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/05 00:33:18 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,28 @@ void	set_fd_out(t_outfile *out, int *fd)
 	}
 }
 
-void	set_fd_in(char *fname, int *fd)
+void	set_fd_in(t_infile *in, int *fd)
 {
-	if (fname)
+	int	fd_pipe[2];
+	
+	if (in->heredoc)
 	{
-		*fd = open(fname, O_RDONLY);
+		if (pipe(fd_pipe) < 0)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+		*fd = fd_pipe[0];
+		ft_putstr_fd(in->data, fd_pipe[1]);
+		ft_putchar_fd(0, fd_pipe[1]);
+		close(fd_pipe[1]);
+	}
+	else
+	{
+		*fd = open(in->data, O_RDONLY);
 		if (*fd < 0)
 		{
-			perror(fname);
+			perror(in->data);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -72,3 +86,18 @@ void	set_fd_out_list(t_list *outfiles, int *fd)
 	}
 }
 
+void	set_fd_in_list(t_list *infiles, int *fd)
+{
+	t_infile	*in;
+	t_list		*lst;
+
+	lst = infiles;
+	while (lst)
+	{
+		in = (t_infile *)lst->content;
+		set_fd_in(in, fd);
+		lst = lst->next;
+		if (lst)
+			close(*fd);
+	}
+}
