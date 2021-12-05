@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/03 18:23:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 16:03:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	echo_n_flag(char **argv)
 int	ft_echo(char **argv)
 {
 	if (argv[1] && ft_strcmp(argv[1], "-n") == 0)
-		echo_n_flag(argv);
+		echo_n_flag(argv + 1);
 	else
 	{
 		echo_n_flag(argv);
