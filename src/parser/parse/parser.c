@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 12:17:05 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 14:48:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,14 @@ void	*expand_operation(void *content)
 	bool	check;
 
 	token = (t_token *) content;
+	if (!token || !is_word_token(token))
+		return (token);
 	if (token->type == TOKEN_BREKETS)
 		token->value = ft_expand_brekets(token->value);
-	if (token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
-		check = true;
-	else
-		check = false;
-	if (find_char(token->value, '$') && check == true)
-	{
+	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
+	if (check && find_char(token->value, '$'))
 		token->value = ft_expander(token->value);
-	}
-	if (find_char(token->value, '~'))
+	if (token->type == TOKEN_TEXT && find_char(token->value, '~'))
 		token->value = ft_expander_til(token);
 	return (token);
 }
