@@ -26,6 +26,8 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it,
 	if (!ast->left || token_iterator_peek(it) != token)
 		return (clean_exit(ast, NULL, command_tree_free));
 	token_iterator_next(it);
+	if (!token_iterator_peek(it))
+		return (clean_exit(ast, "syntax error", command_tree_free));
 	ast->right = command_tree_parse(it, end_token);
 	if (!ast->right)
 		return (clean_exit(ast, NULL, command_tree_free));
