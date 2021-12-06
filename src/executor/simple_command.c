@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 12:01:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:49:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	argv = ft_lst_to_arr(cmd->argv);
 	status = exec_child_process(argv);
 	ft_str_array_clear(argv, 0);
-	mini_final_clear(&g_mini);
 	return (status);
 }
 
