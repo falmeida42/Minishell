@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 12:54:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 15:14:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ bool	is_word_token(t_token *token)
 {
 	t_token_type	type;
 
+	if (!token)
+		return (false);
 	type = token->type;
 	return (type == TOKEN_TEXT
 		|| type == TOKEN_BREKETS
