@@ -68,11 +68,8 @@ int		cont_quotes(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '"')
-		{
-			if (!(str[i - 1] == '\\'))
+		if (i > 0 && str[i] == '"' && str[i - 1] != '\\')
 				len++;
-		}
 		i++;
 	}
 	return (len);
@@ -93,7 +90,7 @@ char	*remove_quotes(char *str)
 	{
 		while (str[i] == '"')
 		{
-			if (str[i - 1] == '\\')
+			if (i > 0 && str[i - 1] == '\\')
 			{
 				str2[j] = str[i];
 				i++;

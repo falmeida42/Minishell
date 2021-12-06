@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:14:24 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:24:02 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*join_dollar(char *str, char *expand, int size)
 			first++;
 			while (str[i] != '\0')
 			{
-				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'')
+				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '}')
 					break ;
 				i++;
 			}
