@@ -34,9 +34,10 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it,
 	return (ast);
 }
 
-t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it)
+t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it, t_token *end_token)
 {
-	t_ast_item			*item;
+	t_token		*token;
+	t_ast_item	*item;
 
 	item = ast_item_new(AST_CMD);
 	if (!item)
@@ -44,6 +45,9 @@ t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it)
 	item->cmd = simple_command_parse(it);
 	if (!item->cmd)
 		return (clean_exit(item, NULL, ast_item_free));
+	token = token_iterator_peek(it);
+	if (token != end_token)
+		return (clean_exit(item, syntax_error_msg(token), ast_item_free));
 	return (btree_create_node(item));
 }
 
@@ -94,5 +98,5 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 	token = token_iterator_peek(it);
 	if (token->type == TOKEN_LPAREN)
 		return (command_tree_parse_unwrap_parenthesis(it, end_token));
-	return (command_tree_parse_simple_command(it));
+	return (command_tree_parse_simple_command(it, end_token));
 }
