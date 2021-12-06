@@ -31,3 +31,12 @@ void	mini_loop_clear(t_mini *ptr)
 		ptr->input = NULL;
 	}
 }
+
+void	*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *))
+{
+	if (ptr && free_fct)
+		free_fct(ptr);
+	if (err_msg)
+		ft_putendl_error(err_msg);
+	return (NULL);
+}
