@@ -19,6 +19,7 @@ bool	is_word_token(t_token *token)
 
 	type = token->type;
 	return (type == TOKEN_TEXT
+		|| type == TOKEN_BREKETS
 		|| type == TOKEN_QUOTED
 		|| type == TOKEN_DQUOTED);
 }

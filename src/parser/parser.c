@@ -32,6 +32,8 @@ void	*expand_operation(void *content)
 	bool    check;
 
 	token = (t_token *) content;
+	if (token->type == TOKEN_BREAKETS)
+		token->value = ft_expand_breakets(token->value);
 	if (token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
 		check = true;
 	else

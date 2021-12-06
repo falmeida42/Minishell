@@ -106,10 +106,7 @@ char	*ft_expander(char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == '{')
-				result = expand_breakets(str, i + 2);
-			else
-				result = check_dollar(str, i);
+			result = check_dollar(str, i);
 			break ;
 		}
 		i++;

@@ -139,7 +139,7 @@ typedef enum e_token_type
 	TOKEN_DLESS,
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
-	TOKEN_BREAKETS,
+	TOKEN_BREKETS,
 }	t_token_type;
 
 typedef struct s_token
@@ -193,5 +193,5 @@ char			*ft_expander(char *str);
 char	*ft_expander_til(t_token *token);
 
 //Expander breakets
-char	*expand_breakets(char *str, int i);
+char	*ft_expand_brekets(char *str);
 #endif
