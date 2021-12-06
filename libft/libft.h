@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/06 16:20:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:25:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	ft_lstsort(t_list **begin_list, int (*cmp)());
 t_list	*ft_lstcopy(t_list *lst);
 void	ft_lstremove_if(t_list **begin_list, int (*f)(void *),
 			void (*free_fct)(void *));
+t_list	*ft_lstinsert_at(t_list *node, void *content);
 
 /*
  * Binary Tree
