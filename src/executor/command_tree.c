@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 18:09:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 12:01:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:23:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	command_tree_execute_and_io(t_command_tree *ast,
 {
 	int	status;
 
-	status = command_tree_execute_io(left, fork_builtin, fd_in, fd_out);
+	status = command_tree_execute_io(ast->left, fork_builtin, fd_in, fd_out);
 	if (status == 0)
-		status = command_tree_execute_io(right, fork_builtin, fd_in, fd_out);
+		status = command_tree_execute_io(ast->right, fork_builtin, fd_in, fd_out);
 	return (status);
 }
 
@@ -46,9 +46,9 @@ int	command_tree_execute_or_io(t_command_tree *ast,
 {
 	int	status;
 
-	status = command_tree_execute_io(left, fork_builtin, fd_in, fd_out);
+	status = command_tree_execute_io(ast->left, fork_builtin, fd_in, fd_out);
 	if (status > 0)
-		status = command_tree_execute_io(right, fork_builtin, fd_in, fd_out);
+		status = command_tree_execute_io(ast->right, fork_builtin, fd_in, fd_out);
 	return (status);
 }
 
