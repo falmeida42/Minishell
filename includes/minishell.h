@@ -81,6 +81,7 @@ typedef enum e_ast_item_type
 	AST_PIPE,
 	AST_OR,
 	AST_CMD,
+	AST_PAREN
 }	t_ast_item_type;
 
 // command is NULL except when type == AST_CMD

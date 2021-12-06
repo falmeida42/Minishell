@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 10:24:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:35:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:53:20 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,28 @@ t_command_tree	*command_tree_parse_unwrap_parenthesis(
 	t_command_tree	*ast;
 	t_token_list	*lst;
 
+	if (!it || !*it)
+		return (NULL);
+	ast = ast_node_from_token(token_iterator_peek(it));
 	token_iterator_next(it);
 	lst = ft_lstprev(*it, end_token);
 	if (!lst)
+	{
+		command_tree_free(ast);
 		return (NULL);
+	}
 	end_token = lst->content;
 	if (end_token->type != TOKEN_RPAREN)
+	{
+		command_tree_free(ast);
 		return (NULL);
-	ast = command_tree_parse(it, end_token);
+	}
+	ast->left = command_tree_parse(it, end_token);
+	if (!ast->left)
+	{
+		command_tree_free(ast);
+		return (NULL);
+	}
 	if (token_iterator_peek(it) != end_token)
 	{
 		command_tree_free(ast);
