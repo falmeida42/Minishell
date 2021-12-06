@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/02 12:29:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:39:18 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,8 @@ int		cont_quotes(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '"')
-		{
-			if (!(str[i - 1] == '\\'))
-				len++;
-		}
+		if (i > 0 && str[i] == '"' && str[i - 1] != '\\')
+			len++;
 		i++;
 	}
 	return (len);
@@ -93,7 +90,7 @@ char	*remove_quotes(char *str)
 	{
 		while (str[i] == '"')
 		{
-			if (str[i - 1] == '\\')
+			if (i > 0 && str[i - 1] == '\\')
 			{
 				str2[j] = str[i];
 				i++;
@@ -123,6 +120,7 @@ t_token	*take_dquoted(char **cursor)
 	char_iterator_next(cursor);
 	c = char_iterator_peek(cursor);
 	len = 1;
+	prev_char = 0;
 	while (c)
 	{
 		if (c == '"' && prev_char != '\\')

@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_array_clear.c                               :+:      :+:    :+:   */
+/*   ft_lstcopy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 18:29:45 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/04 09:46:14 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/03 18:44:35 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/04 09:47:08 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_str_array_clear(char **str_arr, int len)
+t_list	*ft_lstcopy(t_list *lst)
 {
-	int	index;
+	t_list	*copy;
 
-	index = 0;
-	if (len > 0)
+	copy = NULL;
+	while (lst)
 	{
-		while (index < len)
-		{
-			free(str_arr[index]);
-			index++;
-		}
+		ft_lstpush_back(&copy, lst->content);
+		lst = lst->next;
 	}
-	else
-	{
-		while (str_arr[index])
-		{
-			free(str_arr[index]);
-			index++;
-		}
-	}
-	free(str_arr);
+	return (copy);
 }

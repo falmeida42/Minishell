@@ -6,20 +6,15 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/11/29 11:45:37 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/03 16:36:20 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-
 int main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	char	**args;
-	bool	input_empty;
-
 	(void) argc;
 	(void) argv;
 	g_mini.env = map_from_str_array(envp, '=');
@@ -29,20 +24,14 @@ int main(int argc, char **argv, char **envp)
 	//signal(SIGQUIT , get_signal);
 	while (42)
 	{
-		input = readline("minishell: ");
-		input_empty = ft_strwc(input, ' ') == 0;
-		if (input && !input_empty)
+		g_mini.input = readline("minishell: ");
+		g_mini.tree = parser(g_mini.input);
+		if (g_mini.tree)
 		{
-			add_history(input);
-			args = lex_and_expand(input);
-			if (is_builtin(args[0]))
-				g_mini.status = builtin_execute(args);
-			else
-				g_mini.status = ft_exec(args);
-			ft_str_array_clear(args, 0);
+			add_history(g_mini.input);
+			g_mini.status = command_tree_execute(g_mini.tree);
 		}
-		if (input)
-			free(input);
+		mini_loop_clear(&g_mini);
 		if (g_mini.exit)
 		{
 			ft_putstr("exit\n");

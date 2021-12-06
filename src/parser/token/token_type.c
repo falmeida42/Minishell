@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:13:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/05 12:54:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,14 @@ bool	is_redirection_token(t_token *token)
 bool	is_simple_command_token(t_token *token)
 {
 	return (is_word_token(token) || is_redirection_token(token));
+}
+
+// Checks if a token is empty word
+bool	is_empty_word_token(t_token *token)
+{
+	if (!is_word_token(token))
+		return (false);
+	if (!token->value)
+		return (true);
+	return (token->value[0] == '\0');
 }

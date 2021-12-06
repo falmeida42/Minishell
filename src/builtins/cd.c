@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/03 09:36:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/04 09:54:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,51 +35,17 @@
  * false otherwise.
  */
 
-/**
-char	*get_path(t_cd *cd)
-{
-	char	*path;
-	int		i;
-
-	i = 1;
-	path = ft_strjoin("/", g_mini.argv[i]);
-	while (g_mini.argv[i + 1] != NULL)
-	{
-		path = ft_strjoin(path , " ");
-		path = ft_strjoin(path , g_mini.argv[i + 1]);
-		i++;
-	}
-	path = ft_strjoin(cd->pwd , path);
-	return (path);
-}
-
-void	change_path(t_cd *cd)
-{
-	char	*str;
-
-	str = NULL;
-	str = getcwd(str, PATH_MAX);
-	cd->tmp = g_mini.env;				// ???
-	cd->pwd = ft_strdup(str);
-	cd->path1 = get_path(cd);
-	chdir(cd->path1);
-	map_set(&g_mini.env, ft_strdup("PWD"), cd->path1);
-	map_set(&g_mini.env, ft_strdup("OLDPWD"), cd->pwd);
-}
-*/
-
 int	change_directory(char *dir)
 {
 	char	*pwd;
-	
+
 	pwd = env_get("PWD");
 	if (!pwd)
 		pwd = getcwd(NULL, PATH_MAX);
 	if (chdir(dir) < 0)
 	{
 		ft_putstr_error("cd: ");
-		ft_putstr_error(dir);
-		ft_putendl_error(": no such file or directory");
+		perror(dir);
 		return (1);
 	}
 	env_set("OLDPWD", ft_strdup(pwd));
@@ -91,8 +57,6 @@ int	ft_cd(char **argv)
 {
 	char	*dir;
 
-	// check number of arguments
-	// if > 1, print error message: "cd: too many arguments"
 	dir = argv[1];
 	if (!dir)
 	{

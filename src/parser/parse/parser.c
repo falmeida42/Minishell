@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:37:26 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:17:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int	find_char(char *str, char c)
 
 void	*expand_operation(void *content)
 {
-	t_token *token;
-	bool    check;
+	t_token	*token;
+	bool	check;
 
+<<<<<<< HEAD:src/parser/parser.c
 	token = (t_token *) content;
 	if (token->type == TOKEN_BREAKETS)
 		token->value = ft_expand_breakets(token->value);
@@ -43,6 +44,13 @@ void	*expand_operation(void *content)
 		token->value = ft_expander(token->value);
 	}
 	if (find_char(token->value, '~'))
+=======
+	token = (t_token *)content;
+	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
+	if (check && find_char(token->value, '$'))
+		token->value = ft_expander(token->value);
+	if (token->type == TOKEN_TEXT && find_char(token->value, '~'))
+>>>>>>> 5398e72ab310eff75e2ed5d2ea338598e6c755a4:src/parser/parse/parser.c
 		token->value = ft_expander_til(token);
 	return (token);
 }
@@ -76,6 +84,11 @@ char	**lex_and_expand(char *input)
 	return (arr);
 }
 
+int	is_empty_word_token_wrap(void *ptr)
+{
+	return (is_empty_word_token((t_token *)ptr));
+}
+
 t_command_tree	*parser(char *input)
 {
 	t_token_list	*token_list;
@@ -85,7 +98,8 @@ t_command_tree	*parser(char *input)
 	if (!input)
 		return (NULL);
 	token_list = lex(input);
-	// apply expander
+	ft_lstapplymap(token_list, expand_operation);
+	ft_lstremove_if(&token_list, is_empty_word_token_wrap, token_free);
 	token_it = token_list;
 	ast = command_tree_parse(&token_it, NULL);
 	ft_lstclear(&token_list, token_free);

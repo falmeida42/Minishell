@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 10:24:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:35:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:22:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,11 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it,
 		return (NULL);
 	ast->left = command_tree_parse(it, token);
 	if (!ast->left || token_iterator_peek(it) != token)
-	{
-		btree_apply_suffix(ast, ast_item_free);
-		return (NULL);
-	}
+		return (clean_exit(ast, NULL, command_tree_free));
 	token_iterator_next(it);
 	ast->right = command_tree_parse(it, end_token);
 	if (!ast->right)
-	{
-		command_tree_free(ast->left);
-		btree_apply_suffix(ast, ast_item_free);
-		return (NULL);
-	}
+		return (clean_exit(ast, NULL, command_tree_free));
 	return (ast);
 }
 
@@ -56,19 +49,25 @@ t_command_tree	*command_tree_parse_unwrap_parenthesis(
 	t_command_tree	*ast;
 	t_token_list	*lst;
 
+	if (!it || !*it)
+		return (NULL);
+	ast = ast_node_from_token(token_iterator_peek(it));
 	token_iterator_next(it);
 	lst = ft_lstprev(*it, end_token);
 	if (!lst)
-		return (NULL);
+		return (clean_exit(ast, NULL, command_tree_free));
 	end_token = lst->content;
 	if (end_token->type != TOKEN_RPAREN)
-		return (NULL);
-	ast = command_tree_parse(it, end_token);
-	if (token_iterator_peek(it) != end_token)
 	{
-		command_tree_free(ast);
-		return (NULL);
+		ft_putstr_error("synax error near unexpected token `");
+		ft_putstr_error(end_token->value);
+		clean_exit(ast, "'", command_tree_free);
 	}
+	ast->left = command_tree_parse(it, end_token);
+	if (!ast->left)
+		return (clean_exit(ast, NULL, command_tree_free));
+	if (token_iterator_peek(it) != end_token)
+		return (clean_exit(ast, "'", command_tree_free));
 	token_iterator_next(it);
 	return (ast);
 }

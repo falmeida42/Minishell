@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:36:00 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/03 10:38:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:50:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ t_btree	*ast_node_from_token(t_token *token)
 
 	if (!token)
 		return (NULL);
+	item = NULL;
 	if (token->type == TOKEN_PIPE)
 		item = ast_item_new(AST_PIPE);
 	else if (token->type == TOKEN_AND)
 		item = ast_item_new(AST_AND);
 	else if (token->type == TOKEN_OR)
 		item = ast_item_new(AST_OR);
-	else
+	else if (token->type == TOKEN_LPAREN)
+		item = ast_item_new(AST_PAREN);
+	if (!item)
 		return (NULL);
 	return (btree_create_node(item));
 }

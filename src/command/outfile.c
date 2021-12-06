@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/03 12:32:14 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/04 15:11:45 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/04 16:12:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-void	mini_final_clear(t_mini *ptr)
+t_outfile	*outfile_new(char *fname, bool append)
 {
-	mini_loop_clear(ptr);
-	ft_lstclear(&ptr->env, pair_clear);
+	t_outfile	*outfile;
+
+	outfile = malloc(sizeof(*outfile));
+	if (!outfile)
+		return (NULL);
+	outfile->fname = ft_strdup(fname);
+	outfile->append = append;
+	return (outfile);
 }
 
-void	mini_loop_clear(t_mini *ptr)
+void	outfile_free(void *ptr)
 {
-	if (ptr->tree)
-	{
-		command_tree_free(ptr->tree);
-		ptr->tree = NULL;
-	}
-	if (ptr->input)
-	{
-		free(ptr->input);
-		ptr->input = NULL;
-	}
+	t_outfile	*outfile;
+
+	outfile = (t_outfile *)ptr;
+	free(outfile->fname);
+	free(outfile);
 }
