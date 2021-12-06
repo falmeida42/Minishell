@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_print.c                                        :+:      :+:    :+:   */
+/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/31 02:48:24 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/06 16:56:27 by jpceia           ###   ########.fr       */
+/*   Created: 2021/08/27 19:10:07 by jceia             #+#    #+#             */
+/*   Updated: 2021/12/06 16:23:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
-#include <stdio.h>
+#include "libft.h"
+#include <sys/resource.h>
 
-// Prints the map to the console.
-void	map_print_fd(t_map *map, char sep, int fd)
+int	ft_get_next_line(int fd, char **line)
 {
-	t_pair	*p;
+	int		nb;
+	char	c;
 
-	while (map)
+	if (fd < 0 || fd >= RLIMIT_NOFILE || !line)
+		return (-1);
+	*line = ft_strdup("");
+	if (!*line)
+		return (-1);
+	while (1)
 	{
-		p = (t_pair *)map->content;
-		ft_putstr_fd(p->key, fd);
-		ft_putchar_fd(sep, fd);
-		ft_putendl_fd(p->value, fd);
-		map = map->next;
+		nb = read(fd, &c, 1);
+		if (nb <= 0 || c == '\n')
+			break ;
+		*line = ft_straddc(*line, c);
 	}
+	return (nb);
 }

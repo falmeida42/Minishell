@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/04 09:54:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:58:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ int	change_directory(char *dir)
 	return (0);
 }
 
-int	ft_cd(char **argv)
+int	ft_cd(char **argv, int fd)
 {
 	char	*dir;
 
+	(void)fd;
 	dir = argv[1];
 	if (!dir)
 	{

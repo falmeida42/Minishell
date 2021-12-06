@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 12:06:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:00:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,18 +101,18 @@ void		mini_final_clear(t_mini *ptr);
 void		mini_loop_clear(t_mini *ptr);
 
 //commands.c
-int			ft_pwd(char **argv);
-int			ft_echo(char **argv);
-int			ft_cd(char **argv);
-int			ft_env(char **argv);
-int			ft_export(char **argv);
-int			ft_unset(char **argv);
+int			ft_pwd(char **argv, int fd);
+int			ft_echo(char **argv, int fd);
+int			ft_cd(char **argv, int fd);
+int			ft_env(char **argv, int fd);
+int			ft_export(char **argv, int fd);
+int			ft_unset(char **argv, int fd);
 
 int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
-int			builtin_execute(char **argv);
-int			builtin_execute_fd(t_simple_command *cmd, bool do_fork, int fd_out);
+int			builtin_execute(char **argv, int fd);
+int			builtin_execute_parent(t_simple_command *cmd, bool do_fork, int fd);
 
 void		get_signal(int signal);
 
@@ -185,6 +185,8 @@ bool			is_word_token(t_token *token);
 bool			is_redirection_token(t_token *token);
 bool			is_simple_command_token(t_token *token);
 bool			is_empty_word_token(t_token *token);
+
+char			*syntax_error_msg(t_token *token);
 
 t_btree			*ast_node_from_token(t_token *token);
 

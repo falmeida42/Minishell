@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:12:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/11/17 01:18:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:58:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ t_map	*map_set(t_map **map, char *key, char *value);
 char	**map_to_str_array(t_map *map, char sep);
 t_map	*map_from_str_array(char **arr, char sep);
 
-void	map_print(t_map *map, char sep);
+void	map_print_fd(t_map *map, char sep, int fd);
 
 #endif
