@@ -112,6 +112,7 @@ t_token	*take_dquoted(char **cursor)
 	char	c;
 	char	prev_char;
 	char	*start;
+	char	*end;
 	int		len;
 
 	start = *cursor;
@@ -121,6 +122,7 @@ t_token	*take_dquoted(char **cursor)
 	c = char_iterator_peek(cursor);
 	len = 1;
 	prev_char = 0;
+	end = NULL;
 	while (c)
 	{
 		if (c == '"' && prev_char != '\\')
@@ -129,6 +131,7 @@ t_token	*take_dquoted(char **cursor)
 		{
 			if (*(*cursor + 1) == ' ')
 			{
+				end = *cursor;
 				char_iterator_next(cursor);
 				break;
 			}
@@ -136,6 +139,7 @@ t_token	*take_dquoted(char **cursor)
 		prev_char = c;
 		c = char_iterator_next(cursor);
 	}
+	start = ft_substr(start, 0, end - (start - 1));
 	return (token_new(TOKEN_DQUOTED, remove_quotes(start)));
 }
 
