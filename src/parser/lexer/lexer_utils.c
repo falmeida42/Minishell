@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 11:39:18 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/06 15:36:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,25 @@
 
 t_token	*take_twochar_symbol(t_char_iterator *cursor)
 {
-	t_token_type	type;
+	t_token	*token;
 
-	type = TOKEN_NULL;
 	if (!ft_strncmp(*cursor, "||", 2))
-		type = TOKEN_OR;
+		token = token_new(TOKEN_OR, ft_strdup("||"));
 	else if (!ft_strncmp(*cursor, "&&", 2))
-		type = TOKEN_AND;
+		token = token_new(TOKEN_AND, ft_strdup("&&"));
 	else if (!ft_strncmp(*cursor, ">>", 2))
-		type = TOKEN_DGREATER;
+		token = token_new(TOKEN_DGREATER, ft_strdup(">>"));
 	else if (!ft_strncmp(*cursor, "<<", 2))
-		type = TOKEN_DLESS;
-	if (type == TOKEN_NULL)
+		token = token_new(TOKEN_DLESS, ft_strdup("<<"));
+	else
 		return (NULL);
 	char_iterator_next(cursor);
 	char_iterator_next(cursor);
-	return (token_new(type, NULL));
+	return (token);
 }
 
 t_token	*take_symbol(t_char_iterator *cursor)
 {
-	t_token_type	type;
 	t_token			*token;
 	char			c;
 
@@ -44,20 +42,20 @@ t_token	*take_symbol(t_char_iterator *cursor)
 		return (token);
 	c = char_iterator_peek(cursor);
 	if (c == '|')
-		type = TOKEN_PIPE;
+		token = token_new(TOKEN_PIPE, ft_strdup("|"));
 	else if (c == '>')
-		type = TOKEN_GREATER;
+		token = token_new(TOKEN_GREATER, ft_strdup(">"));
 	else if (c == '<')
-		type = TOKEN_LESS;
+		token = token_new(TOKEN_DLESS, ft_strdup("<"));
 	else if (c == '(')
-		type = TOKEN_LPAREN;
+		token = token_new(TOKEN_LPAREN, ft_strdup("("));
+	else if (c == ')')
+		token = token_new(TOKEN_RPAREN, ft_strdup(")"));
 	else
-		type = TOKEN_RPAREN;
+		token = NULL;
 	char_iterator_next(cursor);
-	token = token_new(type, NULL);
 	return (token);
 }
-
 
 int		cont_quotes(char *str)
 {
