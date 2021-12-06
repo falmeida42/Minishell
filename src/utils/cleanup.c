@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/06 12:06:54 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 14:15:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *))
 	if (ptr && free_fct)
 		free_fct(ptr);
 	if (err_msg)
+	{
+		g_mini.status = 2;
 		ft_putendl_error(err_msg);
+	}
 	return (NULL);
 }
