@@ -1,7 +1,20 @@
 #include "minishell.h"
 
+int brekets_space(char *str){
+    
+    if (ft_contains(' ', str))
+        return (1);
+    else
+        return (0);
+}
+
 char    *cmp_brekets(char *str)
-{
+{    
+    if (brekets_space(str))
+    {
+        g_mini.parse_error = "bad substitution";
+        return (ft_strdup(""));
+    }
     if (env_get(str) == NULL)
         return (ft_strdup(""));
     else
@@ -29,7 +42,7 @@ char    *ft_brekets_error(char *str)
     
 }
 
-char	*ft_expand_breakets(char *str)
+char	*ft_expand_brekets(char *str)
 {
     if (str[1] != '{')
         return(ft_brekets_error(str));

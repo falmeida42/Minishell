@@ -30,6 +30,7 @@ void	mini_loop_clear(t_mini *ptr)
 		free(ptr->input);
 		ptr->input = NULL;
 	}
+	ptr->parse_error = NULL;
 }
 
 void	*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *))

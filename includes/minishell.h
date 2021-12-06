@@ -30,11 +30,11 @@ typedef t_btree	t_command_tree;
 
 typedef struct	s_mini {
 	t_command_tree	*tree;
-	char			*input;
 	int				status;
 	bool			exit;
 	t_map			*env;
 	char			*input;
+	char			*parse_error;
 }	t_mini;
 
 t_mini	g_mini;

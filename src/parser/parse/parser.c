@@ -31,10 +31,9 @@ void	*expand_operation(void *content)
 	t_token	*token;
 	bool	check;
 
-<<<<<<< HEAD:src/parser/parser.c
 	token = (t_token *) content;
-	if (token->type == TOKEN_BREAKETS)
-		token->value = ft_expand_breakets(token->value);
+	if (token->type == TOKEN_BREKETS)
+		token->value = ft_expand_brekets(token->value);
 	if (token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
 		check = true;
 	else
@@ -44,13 +43,6 @@ void	*expand_operation(void *content)
 		token->value = ft_expander(token->value);
 	}
 	if (find_char(token->value, '~'))
-=======
-	token = (t_token *)content;
-	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
-	if (check && find_char(token->value, '$'))
-		token->value = ft_expander(token->value);
-	if (token->type == TOKEN_TEXT && find_char(token->value, '~'))
->>>>>>> 5398e72ab310eff75e2ed5d2ea338598e6c755a4:src/parser/parse/parser.c
 		token->value = ft_expander_til(token);
 	return (token);
 }

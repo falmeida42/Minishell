@@ -19,6 +19,7 @@ int main(int argc, char **argv, char **envp)
 	(void) argv;
 	g_mini.env = map_from_str_array(envp, '=');
 	g_mini.exit = false;
+	g_mini.parse_error = NULL;
 
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
@@ -26,7 +27,12 @@ int main(int argc, char **argv, char **envp)
 	{
 		g_mini.input = readline("minishell: ");
 		g_mini.tree = parser(g_mini.input);
-		if (g_mini.tree)
+		if (g_mini.parse_error)
+		{
+			add_history(g_mini.input);
+			ft_putendl_error(g_mini.parse_error);
+		}
+		else if (g_mini.tree)
 		{
 			add_history(g_mini.input);
 			g_mini.status = command_tree_execute(g_mini.tree);

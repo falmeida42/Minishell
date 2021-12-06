@@ -116,7 +116,7 @@ t_token	*take_dquoted(char **cursor)
 
 	start = *cursor;
 	if (ft_contains('{', start))
-		ft_expand_breakets(start);
+		ft_expand_brekets(start);
 	char_iterator_next(cursor);
 	c = char_iterator_peek(cursor);
 	len = 1;
