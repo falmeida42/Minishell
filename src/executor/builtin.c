@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/04 22:04:04 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:55:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	builtin_execute(char **argv)
 	return (0);
 }
 
-int builtin_execute_with_fork(char **argv)
+int	builtin_execute_with_fork(char **argv)
 {
 	pid_t	pid;
 	int		status;

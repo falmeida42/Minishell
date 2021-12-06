@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 11:40:25 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/06 12:17:05 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	find_char(char *str, char c)
 
 void	*expand_operation(void *content)
 {
-	t_token *token;
-	bool    check;
+	t_token	*token;
+	bool	check;
 
-	token = (t_token *) content;
+	token = (t_token *)content;
 	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
 	if (check && find_char(token->value, '$'))
 		token->value = ft_expander(token->value);
