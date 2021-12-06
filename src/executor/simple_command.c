@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 00:34:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:01:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	simple_command_execute_io_child_process(t_simple_command *cmd,
 	return (status);
 }
 
-int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin, int fd_in, int fd_out)
+int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
+		int fd_in, int fd_out)
 {
 	int		status;
 	pid_t	pid;

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:20:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 00:33:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:01:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	set_fd_out(t_outfile *out, int *fd)
 void	set_fd_in(t_infile *in, int *fd)
 {
 	int	fd_pipe[2];
-	
+
 	if (in->heredoc)
 	{
 		if (pipe(fd_pipe) < 0)
@@ -75,9 +75,10 @@ void	set_fd_out_list(t_list *outfiles, int *fd)
 {
 	t_outfile	*out;
 	t_list		*lst;
-	
+
 	lst = outfiles;
-	while (lst) {
+	while (lst)
+	{
 		out = (t_outfile *)lst->content;
 		set_fd_out(out, fd);
 		lst = lst->next;

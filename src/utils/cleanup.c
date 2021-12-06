@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/03 12:32:14 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:06:54 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,13 @@ void	mini_loop_clear(t_mini *ptr)
 		free(ptr->input);
 		ptr->input = NULL;
 	}
+}
+
+void	*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *))
+{
+	if (ptr && free_fct)
+		free_fct(ptr);
+	if (err_msg)
+		ft_putendl_error(err_msg);
+	return (NULL);
 }

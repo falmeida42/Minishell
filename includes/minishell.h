@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 12:55:14 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:06:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef enum e_ast_item_type
 	AST_PIPE,
 	AST_OR,
 	AST_CMD,
+	AST_PAREN
 }	t_ast_item_type;
 
 // command is NULL except when type == AST_CMD
@@ -129,6 +130,7 @@ int 		pipe_execute_io(t_command_tree *left, t_command_tree *right, int fd_in, in
 // Utils
 char	*lookup_full_path(char *path);
 char	*normalize_path(char *path);
+void	*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *));
 
 // env variable
 int			env_unset(char *key);
