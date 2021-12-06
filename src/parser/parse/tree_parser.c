@@ -26,6 +26,8 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it,
 	if (!ast->left || token_iterator_peek(it) != token)
 		return (clean_exit(ast, NULL, command_tree_free));
 	token_iterator_next(it);
+	if (!token_iterator_peek(it))
+		return (clean_exit(ast, "syntax error", command_tree_free));
 	ast->right = command_tree_parse(it, end_token);
 	if (!ast->right)
 		return (clean_exit(ast, NULL, command_tree_free));
@@ -59,9 +61,9 @@ t_command_tree	*command_tree_parse_unwrap_parenthesis(
 	end_token = lst->content;
 	if (end_token->type != TOKEN_RPAREN)
 	{
-		ft_putstr_error("synax error near unexpected token `");
+		ft_putstr_error("syntax error near unexpected token `");
 		ft_putstr_error(end_token->value);
-		clean_exit(ast, "'", command_tree_free);
+		return (clean_exit(ast, "'", command_tree_free));
 	}
 	ast->left = command_tree_parse(it, end_token);
 	if (!ast->left)

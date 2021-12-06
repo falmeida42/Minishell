@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:29:21 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/17 20:35:17 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:53:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	btree_clear(t_btree *root, void (*del)(void *))
 {
 	if (!root)
 		return ;
-	btree_clear(root->left, del);
-	btree_clear(root->right, del);
+	if (root->left)
+		btree_clear(root->left, del);
+	if (root->right)
+		btree_clear(root->right, del);
 	if (del)
 		del(root->item);
 	free(root);
