@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/04 09:48:35 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:20:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 int		find_quote(char *s, int i);
+int		ft_get_next_line(int fd, char **line);
 
 /*
  * Print/Write related functions
