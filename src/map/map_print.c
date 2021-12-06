@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 02:48:24 by jceia             #+#    #+#             */
-/*   Updated: 2021/11/16 16:48:24 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:56:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include <stdio.h>
 
 // Prints the map to the console.
-void	map_print(t_map *map, char sep)
+void	map_print_fd(t_map *map, char sep, int fd)
 {
 	t_pair	*p;
 
 	while (map)
 	{
 		p = (t_pair *)map->content;
-		ft_putstr(p->key);
-		ft_putchar(sep);
-		ft_putendl(p->value);
+		ft_putstr_fd(p->key, fd);
+		ft_putchar_fd(sep, fd);
+		ft_putendl_fd(p->value, fd);
 		map = map->next;
 	}
 }
