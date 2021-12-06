@@ -27,7 +27,7 @@ t_command_tree	*command_tree_parse_split_on(t_token_iterator *it,
 		return (clean_exit(ast, NULL, command_tree_free));
 	token_iterator_next(it);
 	if (!token_iterator_peek(it))
-		return (clean_exit(ast, "syntax error", command_tree_free));
+		return (clean_exit(ast, syntax_error_msg(NULL), command_tree_free));
 	ast->right = command_tree_parse(it, end_token);
 	if (!ast->right)
 		return (clean_exit(ast, NULL, command_tree_free));
@@ -42,6 +42,8 @@ t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it)
 	if (!item)
 		return (NULL);
 	item->cmd = simple_command_parse(it);
+	if (!item->cmd)
+		return (clean_exit(item, NULL, ast_item_free));
 	return (btree_create_node(item));
 }
 
@@ -60,11 +62,7 @@ t_command_tree	*command_tree_parse_unwrap_parenthesis(
 		return (clean_exit(ast, NULL, command_tree_free));
 	end_token = lst->content;
 	if (end_token->type != TOKEN_RPAREN)
-	{
-		ft_putstr_error("syntax error near unexpected token `");
-		ft_putstr_error(end_token->value);
-		return (clean_exit(ast, "'", command_tree_free));
-	}
+		return (clean_exit(ast, syntax_error_msg(end_token), command_tree_free));
 	ast->left = command_tree_parse(it, end_token);
 	if (!ast->left)
 		return (clean_exit(ast, NULL, command_tree_free));
