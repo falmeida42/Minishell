@@ -110,6 +110,7 @@ t_token	*take_dquoted(char **cursor)
 	char	c;
 	char	prev_char;
 	char	*start;
+	char	*end;
 	int		len;
 
 	start = *cursor;
@@ -119,6 +120,7 @@ t_token	*take_dquoted(char **cursor)
 	c = char_iterator_peek(cursor);
 	len = 1;
 	prev_char = 0;
+	end = NULL;
 	while (c)
 	{
 		if (c == '"' && prev_char != '\\')
@@ -127,6 +129,7 @@ t_token	*take_dquoted(char **cursor)
 		{
 			if (*(*cursor + 1) == ' ')
 			{
+				end = *cursor;
 				char_iterator_next(cursor);
 				break;
 			}
@@ -134,6 +137,7 @@ t_token	*take_dquoted(char **cursor)
 		prev_char = c;
 		c = char_iterator_next(cursor);
 	}
+	start = ft_substr(start, 0, end - (start - 1));
 	return (token_new(TOKEN_DQUOTED, remove_quotes(start)));
 }
 
@@ -159,27 +163,6 @@ int	ft_contains_breakets(char *str)
 		i++;
 	}
 	return (1);
-}
-
-t_token	*take_breakets(char **cursor)
-{
-	char	c;
-	char	*start;
-	char	*end;
-
-	start = *cursor;
-	if (ft_contains_breakets(start))
-		return (take_text(cursor));
-	c = char_iterator_peek(cursor);
-	while (c)
-	{
-		if (c == '}')
-			break ;
-		c = char_iterator_next(cursor);
-	}
-	end = *cursor;
-	char_iterator_next(cursor);
-	return (token_new(TOKEN_BREKETS, ft_substr(start, 0, end - (start - 1))));
 }
 
 t_token	*take_quoted(char **cursor)

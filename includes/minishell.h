@@ -221,6 +221,6 @@ char	*ft_expander_til(t_token *token);
 
 //Expander breakets
 char	*ft_expand_brekets(char *str);
-
 void	apply_star_expander(t_token_list *lst);
+char    *cmp_brekets(char *str);
 #endif
