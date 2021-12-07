@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 17:00:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:34:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,6 @@ char	*ft_expander_til(t_token *token);
 
 //Expander breakets
 char	*ft_expand_brekets(char *str);
+void	apply_star_expander(t_token_list *lst);
 char    *cmp_brekets(char *str);
 #endif
