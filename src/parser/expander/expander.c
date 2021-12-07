@@ -49,10 +49,11 @@ char	*join_dollar(char *str, char *expand, int size)
 			{
 				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '{' || str[i + 1] == '$')
 				{
-					i++;
 					if (str[i] == '{')
 						while (str[i - 1] != '}')
 							i++;
+					else
+						i++;
 					break ;
 				}
 				i++;
