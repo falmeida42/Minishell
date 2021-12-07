@@ -165,27 +165,6 @@ int	ft_contains_breakets(char *str)
 	return (1);
 }
 
-t_token	*take_breakets(char **cursor)
-{
-	char	c;
-	char	*start;
-	char	*end;
-
-	start = *cursor;
-	if (ft_contains_breakets(start))
-		return (take_text(cursor));
-	c = char_iterator_peek(cursor);
-	while (c)
-	{
-		if (c == '}')
-			break ;
-		c = char_iterator_next(cursor);
-	}
-	end = *cursor;
-	char_iterator_next(cursor);
-	return (token_new(TOKEN_BREKETS, ft_substr(start, 0, end - (start - 1))));
-}
-
 t_token	*take_quoted(char **cursor)
 {
 	char	c;

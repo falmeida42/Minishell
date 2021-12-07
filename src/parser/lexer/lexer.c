@@ -30,8 +30,6 @@ t_token	*token_next(char **cursor)
 		return (take_dquoted(cursor));
 	if (c == '\'')
 		return (take_quoted(cursor));
-	if (ft_contains(c, "$"))
-		return (take_breakets(cursor));
 	return (take_text(cursor));
 }
 

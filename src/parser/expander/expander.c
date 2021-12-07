@@ -47,8 +47,13 @@ char	*join_dollar(char *str, char *expand, int size)
 			first++;
 			while (str[i] != '\0')
 			{
-				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'')
+				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '{')
+				{
+					if (str[i] == '{')
+						while (str[i - 1] != '}')
+							i++;
 					break ;
+				}
 				i++;
 			}
 			while (expand[z] != '\0')
