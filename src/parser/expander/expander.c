@@ -16,14 +16,15 @@
 void	*expand_operation(void *content)
 {
 	t_token	*token;
-	bool	check;
 
 	token = (t_token *) content;
-	if (!token || !is_word_token(token))
+	if (!token || !is_word_token(token) || !token->value)
 		return (token);
-	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
-	if (check && ft_contains('$', token->value))
+	if ((token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT)
+		&& ft_contains('$', token->value))
 		token->value = ft_expander(token->value);
+	if (!token->value)
+		return (NULL);
 	if (token->type == TOKEN_TEXT && *token->value == '~')
 		token->value = ft_expander_til(token);
 	return (token);
@@ -120,12 +121,13 @@ char	*ft_expander(char *str)
 {
 	char	*result;
 	int	i;
+
+	if (!str)
+		return (NULL);
 	i = 0;
 	result = str;
-
 	if (!needs_to_replace_dollar(str))
 		return (str);
-
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
