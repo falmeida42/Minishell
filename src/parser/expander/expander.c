@@ -47,8 +47,9 @@ char	*join_dollar(char *str, char *expand, int size)
 			first++;
 			while (str[i] != '\0')
 			{
-				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '{')
+				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '{' || str[i + 1] == '$')
 				{
+					i++;
 					if (str[i] == '{')
 						while (str[i - 1] != '}')
 							i++;
@@ -84,7 +85,7 @@ char	*check_dollar(char *str, int i)
 	j = i;
 	while (str[j] != '\0')
 	{
-		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"' || str[j] == '{')
+		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"' || str[j] == '{' || str[j + 1] == '$')
 		{
 			if (str[j] == '{')
 				while (str[j] != '}')
@@ -94,7 +95,7 @@ char	*check_dollar(char *str, int i)
 		j++;
 	}
 	dollar_size = j - i;
-	if (str[j] == '}')
+	if (str[j] == '}' || str[j + 1] == '$')
 		value = ft_substr(str, i + 1, j - (i));
 	else
 		value = ft_substr(str, i + 1, j - (i + 1));	
