@@ -6,12 +6,30 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 11:24:02 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/07 11:58:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
+
+void	*expand_operation(void *content)
+{
+	t_token	*token;
+	bool	check;
+
+	token = (t_token *) content;
+	if (!token || !is_word_token(token))
+		return (token);
+	if (token->type == TOKEN_BREKETS)
+		token->value = ft_expand_brekets(token->value);
+	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
+	if (check && ft_contains('$', token->value))
+		token->value = ft_expander(token->value);
+	if (token->type == TOKEN_TEXT && ft_contains('~', token->value))
+		token->value = ft_expander_til(token);
+	return (token);
+}
 
 char	*cmp_env(char *value)
 {
