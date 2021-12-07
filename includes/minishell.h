@@ -219,4 +219,5 @@ char	*ft_expander_til(t_token *token);
 
 //Expander breakets
 char	*ft_expand_brekets(char *str);
+char    *cmp_brekets(char *str);
 #endif

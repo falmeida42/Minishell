@@ -1,16 +1,8 @@
 #include "minishell.h"
 
-int brekets_space(char *str){
-    
-    if (ft_contains(' ', str))
-        return (1);
-    else
-        return (0);
-}
-
 char    *cmp_brekets(char *str)
-{    
-    if (brekets_space(str))
+{
+    if (ft_contains(' ', str))
     {
         g_mini.parse_error = "bad substitution";
         return (ft_strdup(""));
