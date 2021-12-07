@@ -33,8 +33,6 @@ char	*cmp_env(char *value)
 {
 	if (ft_contains('{',  value))
 		return (cmp_brekets((ft_substr(value, 1, ft_strlen(value) - 2))));
-	if (!ft_strcmp(value, "\?"))
-		return (ft_strdup(ft_itoa(g_mini.status)));
 	else if (env_get(value) == NULL)
 		return(ft_strdup(""));
 	else
@@ -122,6 +120,37 @@ char	*check_dollar(char *str, int i)
 	return (join_dollar(str, expand, dollar_size));
 }
 
+char	*replace_dollar_status(char *str, int i)
+{
+	char	*result;
+	char	*prefix;
+	char	*aux;
+	char	*nb;
+
+	prefix = ft_substr(str, 0, i);
+	nb = ft_itoa(g_mini.status);
+	aux = ft_strjoin(prefix, nb);
+	result = ft_strjoin(aux, str + i + 2);
+	free(prefix);
+	free(aux);
+	free(nb);
+	return (result);
+}
+
+int		needs_to_replace_dollar(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && !ft_contains(str[i+1], " \0\""))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	*ft_expander(char *str)
 {
 	char	*result;
@@ -133,14 +162,15 @@ char	*ft_expander(char *str)
 	{
 		if (str[i] == '$')
 		{
-			result = check_dollar(str, i);
+			if (str[i+1] == '?')
+				result = replace_dollar_status(str, i);
+			else
+				result = check_dollar(str, i);
 			break ;
 		}
 		i++;
 	}
-	if (ft_contains('$', result))
-	{
+	if (needs_to_replace_dollar(result))
 		return (ft_expander(result));
-	}
 	return (result);
 }
