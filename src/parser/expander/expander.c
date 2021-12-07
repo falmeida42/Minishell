@@ -15,16 +15,14 @@
 
 char	*cmp_env(char *value)
 {
+	if (ft_contains('{',  value))
+		return (cmp_brekets((ft_substr(value, 1, ft_strlen(value) - 2))));
 	if (!ft_strcmp(value, "\?"))
-	{
 		return (ft_strdup(ft_itoa(g_mini.status)));
-	}
 	else if (env_get(value) == NULL)
 		return(ft_strdup(""));
 	else
-	{
 		return (ft_strdup(env_get(value)));
-	}
 }
 
 char	*join_dollar(char *str, char *expand, int size)
@@ -49,8 +47,15 @@ char	*join_dollar(char *str, char *expand, int size)
 			first++;
 			while (str[i] != '\0')
 			{
-				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '}')
+				if (str[i] == ' ' || str[i] == '"' || str[i] == '\'' || str[i] == '{' || str[i + 1] == '$')
+				{
+					if (str[i] == '{')
+						while (str[i - 1] != '}')
+							i++;
+					else
+						i++;
 					break ;
+				}
 				i++;
 			}
 			while (expand[z] != '\0')
@@ -68,8 +73,6 @@ char	*join_dollar(char *str, char *expand, int size)
 		x--;
 	}
 	result[j] = '\0';
-	free(expand);
-	free(str);
 	return (result);
 }
 
@@ -83,12 +86,20 @@ char	*check_dollar(char *str, int i)
 	j = i;
 	while (str[j] != '\0')
 	{
-		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"')
+		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"' || str[j] == '{' || str[j + 1] == '$')
+		{
+			if (str[j] == '{')
+				while (str[j] != '}')
+					j++;
 			break ;
+		}
 		j++;
 	}
 	dollar_size = j - i;
-	value = ft_substr(str, i + 1, j - (i + 1));
+	if (str[j] == '}' || str[j + 1] == '$')
+		value = ft_substr(str, i + 1, j - (i));
+	else
+		value = ft_substr(str, i + 1, j - (i + 1));	
 	expand = cmp_env(value);
 	if (expand == NULL)
 		return (ft_strdup(""));
