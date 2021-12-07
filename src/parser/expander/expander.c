@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 17:20:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:34:01 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*replace_dollar_brackets(char *str, int i)
 		j++;
 	if (str[j] != '}')
 	{
-		g_mini.parse_error = ft_strdup("bad substitution");
+		g_mini.parse_error = ft_strjoin(str, ": bad substitution");
 		g_mini.status = 1;
 		return (NULL); // Error
 	}
