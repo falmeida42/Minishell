@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:53:50 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 14:24:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:32:18 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ void	token_free(void *ptr)
 {
 	t_token	*token;
 
+	if (!ptr)
+		return ;
 	token = (t_token *)ptr;
-	free(token->value);
+	if (token->value)
+		free(token->value);
 	free(token);
 }
 
