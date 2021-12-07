@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 15:14:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:31:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	is_redirection_token(t_token *token)
 {
 	t_token_type	type;
 
+	if (!token)
+		return (false);
 	type = token->type;
 	return (type == TOKEN_GREATER
 		|| type == TOKEN_DGREATER
