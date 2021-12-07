@@ -4,7 +4,7 @@ char    *cmp_brekets(char *str)
 {
     if (ft_contains(' ', str))
     {
-        g_mini.parse_error = "bad substitution";
+        g_mini.parse_error = ft_strdup("bad substitution");
         return (ft_strdup(""));
     }
     if (env_get(str) == NULL)

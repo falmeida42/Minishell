@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/05 00:35:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 14:54:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	simple_command_free(void *ptr)
 {
 	t_simple_command	*cmd;
 
+	if (!ptr)
+		return ;
 	cmd = (t_simple_command *)ptr;
 	ft_lstclear(&cmd->argv, free);
 	if (cmd->infiles)

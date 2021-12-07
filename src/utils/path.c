@@ -58,7 +58,8 @@ char	*lookup_full_path(char *path)
 	}
 	if (*dir == NULL)
 	{
-		perror(path);
+		ft_putstr_error(path);
+		ft_putendl_error(": command not found");
 		full_path = NULL;
 	}
 	ft_str_array_clear(dir_start, 0);

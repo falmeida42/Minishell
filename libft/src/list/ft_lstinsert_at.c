@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_print.c                                        :+:      :+:    :+:   */
+/*   ft_lstinsert_at.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/31 02:48:24 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/06 16:56:27 by jpceia           ###   ########.fr       */
+/*   Created: 2021/12/06 17:20:54 by jpceia            #+#    #+#             */
+/*   Updated: 2021/12/06 17:38:56 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
-#include <stdio.h>
+#include "libft.h"
 
-// Prints the map to the console.
-void	map_print_fd(t_map *map, char sep, int fd)
+t_list	*ft_lstinsert_at(t_list *node, void *content)
 {
-	t_pair	*p;
-
-	while (map)
-	{
-		p = (t_pair *)map->content;
-		ft_putstr_fd(p->key, fd);
-		ft_putchar_fd(sep, fd);
-		ft_putendl_fd(p->value, fd);
-		map = map->next;
-	}
+    t_list	*node_new;
+    
+    node_new = ft_lstnew(content);
+    if (!node_new)
+        return (NULL);
+    if (node->next)
+        node_new->next = node->next;
+    node->next = node_new;
+    return (node_new);
 }

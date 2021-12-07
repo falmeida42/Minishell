@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/04 09:54:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:57:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_strcmp_key(void *ptr1, void *ptr2)
 }
 
 // Prints the map to the console.
-void	ft_export_no_args(void)
+void	ft_export_no_args(int fd)
 {
 	t_map	*env;
 	t_map	*it;
@@ -50,11 +50,11 @@ void	ft_export_no_args(void)
 	while (it)
 	{
 		p = (t_pair *)it->content;
-		ft_putstr("declare -x ");
-		ft_putstr(p->key);
-		ft_putstr("=\"");
-		ft_putstr(p->value);
-		ft_putstr("\"\n");
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(p->key, fd);
+		ft_putstr_fd("=\"", fd);
+		ft_putstr_fd(p->value, fd);
+		ft_putstr_fd("\"\n", fd);
 		it = it->next;
 	}
 	ft_lstclear(&env, 0);
@@ -64,13 +64,13 @@ void	ft_export_no_args(void)
  * Reimplementation of the builtin export
  * Adds or edits an environment variable, stored at g_mini.env
  */
-int	ft_export(char **argv)
+int	ft_export(char **argv, int fd)
 {
 	t_pair	*p;
 
 	if (!argv[1])
 	{
-		ft_export_no_args();
+		ft_export_no_args(fd);
 		return (0);
 	}
 	while (*(++argv))

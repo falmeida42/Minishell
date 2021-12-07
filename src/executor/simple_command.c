@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 12:49:09 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:02:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
 	if (!cmd->argv || !cmd->argv->content)
 		return (1);
 	if (is_builtin(cmd->argv->content))
-		return (builtin_execute_fd(cmd, fork_builtin, fd_out));
+		return (builtin_execute_parent(cmd, fork_builtin, fd_out));
 	pid = fork();
 	if (pid < 0)
 	{
