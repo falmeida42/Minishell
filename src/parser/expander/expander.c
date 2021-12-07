@@ -21,8 +21,6 @@ void	*expand_operation(void *content)
 	token = (t_token *) content;
 	if (!token || !is_word_token(token))
 		return (token);
-	if (token->type == TOKEN_BREKETS)
-		token->value = ft_expand_brekets(token->value);
 	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
 	if (check && ft_contains('$', token->value))
 		token->value = ft_expander(token->value);
