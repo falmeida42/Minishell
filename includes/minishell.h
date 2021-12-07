@@ -211,18 +211,17 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token);
 
 t_command_tree	*parser(char *input);
 
-char			**lex_and_expand(char *input);
-
 // Expander
 char			*ft_expander(char *str);
+
+char			*replace_dollar_generic(char *str, int i);
+char			*replace_dollar_brackets(char *str, int i);
+char			*replace_dollar_status(char *str, int i);
 
 // Expander Til
 char	*ft_expander_til(t_token *token);
 
-//Expander breakets
-char	*ft_expand_brekets(char *str);
-
 void	*expand_operation(void *content);
 void	apply_star_expander(t_token_list *lst);
-char    *cmp_brekets(char *str);
+
 #endif

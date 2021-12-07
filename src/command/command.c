@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 14:54:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 19:40:48 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	simple_command_free(void *ptr)
 
 void	command_tree_free(void *ptr)
 {
-	t_command_tree *ast;
+	t_command_tree	*ast;
 
 	ast = (t_command_tree *)ptr;
 	btree_clear(ast, ast_item_free);
