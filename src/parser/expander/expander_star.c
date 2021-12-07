@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_star.c                                      :+:      :+:    :+:   */
+/*   expander_star.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 18:54:34 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 11:51:22 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_list *match_files(char *to_match, char *dir)
 			break ;
 		if (!is_file_or_directory(entry))
 			continue ;
-		if (entry->d_name && entry->d_name[0] == '.')
+		if (entry->d_name[0] == '.')
 			continue ;
 		if (str_match_star(entry->d_name, to_match))
 			ft_lstpush_back(&files, ft_strdup(entry->d_name));

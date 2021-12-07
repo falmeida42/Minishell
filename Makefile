@@ -6,7 +6,7 @@
 #    By: jceia <jceia@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 01:25:25 by jpceia            #+#    #+#              #
-#    Updated: 2021/11/29 11:25:58 by jceia            ###   ########.fr        #
+#    Updated: 2021/12/07 11:49:34 by jceia            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS 		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 INC_FLAGS	= $(addprefix -I, $(INC_DIRS))
 WARN_FLAGS	= -Wall -Wextra -Werror
-DEBUG_FLAGS = -g
+DEBUG_FLAGS = -g -DDEBUG
 LIBS_FLAGS	= -L$(FT_DIR) -lft -lreadline
 
 # Adds the readline lib directory to the libs flags
