@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_star.c                                      :+:      :+:    :+:   */
+/*   expander_star.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 18:54:34 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 13:57:53 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,21 @@
 #include <dirent.h>
 
 // checks if a string matches with a another string with wildcard '*'
-int str_match_star(char *s, char *s_star)
+int str_match_star(char *s, char *pattern)
 {
-	int i = 0; 
-	int j = 0;
-
-	while (s[i] != '\0')
+	if (*s == '\0' && *pattern == '\0')
+		return (1);
+	if (*pattern != '*')
 	{
-		if (s_star[j] == '*')
-		{
-			if (s_star[j + 1] == '\0')
-				return (1);
-			while (s[i] != '\0' && s[i] != s_star[j + 1])
-				i++;
-			j++;
-		}
-		else if (s[i] != s_star[j])
+		if (*s != *pattern)
 			return (0);
-		i++;
-		j++;
+		return (str_match_star(s + 1, pattern + 1));
 	}
-	return (1);
+	if (str_match_star(s, pattern + 1))
+		return (1);
+	if (*s && str_match_star(s + 1, pattern))
+		return (1);
+	return (0);
 }
 
 bool	is_file_or_directory(struct dirent *entry)
