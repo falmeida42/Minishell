@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 10:24:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 15:55:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 11:50:48 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_command_tree	*command_tree_parse_simple_command(t_token_iterator *it, t_token 
 t_command_tree	*command_tree_parse_unwrap_parenthesis(
 					t_token_iterator *it, t_token *end_token)
 {
+	t_ast_item		*item;
 	t_command_tree	*ast;
 	t_token_list	*lst;
 
