@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 14:48:21 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:33:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_command_tree	*parser(char *input)
 	if (!input)
 		return (NULL);
 	token_list = lex(input);
+	apply_star_expander(token_list);
 	ft_lstapplymap(token_list, expand_operation);
 	ft_lstremove_if(&token_list, is_empty_word_token_wrap, token_free);
 	token_it = token_list;
