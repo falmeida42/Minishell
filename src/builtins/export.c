@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/06 16:57:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 14:31:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_strcmp_key(void *ptr1, void *ptr2)
 		ft_putendl_error("Invalid pairs");
 		return (0);
 	}
-	return (-ft_strcmp(p1->key, p2->key));
+	return (ft_strcmp(p1->key, p2->key));
 }
 
 // Prints the map to the console.

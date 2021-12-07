@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 14:00:33 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 14:36:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,20 @@ void	apply_star_expander(t_token_list *lst)
 	while (lst)
 	{
 		token = (t_token *)lst->content;
-		if (is_word_token(token) && ft_contains('*', token->value))
+		if (token->type == TOKEN_TEXT && ft_contains('*', token->value))
 		{
 			files_start = match_files(token->value, ".");
 			if (files_start)
 			{
-				ft_lstsort(&files_start, ft_strcmp);
 				files = files_start;
+				ft_lstsort(&files, ft_strcmp);
 				token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
 				lst->content = token;
 				files = files->next;
 				while (files)
 				{
 					token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
-					ft_lstinsert_at(lst, token);
+					lst = ft_lstinsert_at(lst, token);
 					files = files->next;
 				}
 				ft_lstclear(&files_start, NULL);

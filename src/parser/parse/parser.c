@@ -3,46 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 17:33:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 15:09:09 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	find_char(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	*expand_operation(void *content)
-{
-	t_token	*token;
-	bool	check;
-
-	token = (t_token *) content;
-	if (!token || !is_word_token(token))
-		return (token);
-	//if (token->type == TOKEN_BREKETS)
-	//	token->value = ft_expand_brekets(token->value);
-	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
-	if (check && find_char(token->value, '$'))
-		token->value = ft_expander(token->value);
-	if (token->type == TOKEN_TEXT && find_char(token->value, '~'))
-		token->value = ft_expander_til(token);
-	return (token);
-}
 
 char	**lex_and_expand(char *input)
 {
