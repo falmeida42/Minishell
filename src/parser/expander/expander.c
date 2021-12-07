@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 11:58:44 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/07 17:20:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,79 +29,60 @@ void	*expand_operation(void *content)
 	return (token);
 }
 
-char    *cmp_brekets(char *str)
-{
-	char	*var;
-
-    if (ft_contains(' ', str))
-    {
-        g_mini.parse_error = ft_strdup("bad substitution");
-        return ("");
-    }
-    var = env_get(str);
-	if (!var)
-		return ("");
-    return (var);
-}
-
-char	*cmp_env(char *value)
-{
-	char	*var;
-	char	*result;
-
-	if (ft_contains('{',  value))
-	{
-		var = ft_substr(value, 1, ft_strlen(value) - 2);
-		result = cmp_brekets(var);
-		free(var);
-		return (result);
-	}
-	var = env_get(value);
-	if (!var)
-		return ("");
-	return (var);
-}
-
-char	*check_dollar(char *str, int i)
+char	*replace_dollar_generic(char *str, int i)
 {
 	char	*prefix;
 	char	*aux;
-	char	*result;
-	char	*key;
+	char	*value;
+	int		shift;
 	int		j;
 
-	j = i;
-	while (str[j] != '\0')
-	{
-		if (str[j] == ' ' || str[j] == '\'' || str[j] == '"' || str[j] == '{' || str[j + 1] == '$')
-		{
-			if (str[j] == '{')
-				while (str[j] != '}')
-					j++;
-			break ;
-		}
+	j = i + 1;
+	while (str[j] != '\0' && !ft_contains(str[j], " \t${\\"))
 		j++;
-	}
-	//if (dollar_size == 1)
-	//	return (ft_strdup(str));
-	if (str[j] == '}' || str[j + 1] == '$')
-		key = ft_substr(str, i + 1, j - (i));
-	else
-		key = ft_substr(str, i + 1, j - (i + 1));
-	// ft_putchar('"');
-	// ft_putstr(value);
-	// ft_putchar('"');
-	// ft_putnbr(dollar_size);
-	// ft_putchar('\n');
-	
-	prefix = ft_substr(str, 0, i);
-	aux = ft_strjoin(prefix, cmp_env(key));
-	result = ft_strjoin(aux, str + j + 1);
-	free(key);
-	free(prefix);
+	shift = 0;
+	if (str[j] == ' ')
+		shift = 1;
+	aux = ft_substr(str, i + 1, j - i - 1);
+	value = env_get(aux);
 	free(aux);
-	// free(str)
-	return (result);
+	if (!value)
+		value = "";
+	prefix = ft_substr(str, 0, i);
+	aux = ft_strjoin(prefix, value);
+	free(prefix);
+	value = ft_strjoin(aux, str + j + shift);
+	free(aux);
+	return (value);
+}
+
+char	*replace_dollar_brackets(char *str, int i)
+{
+	char	*prefix;
+	char	*aux;
+	char	*value;
+	int		j;
+
+	j = i + 1;
+	while (str[j] != '\0' && str[j] != '}' && str[j] != ' ')
+		j++;
+	if (str[j] != '}')
+	{
+		g_mini.parse_error = ft_strdup("bad substitution");
+		g_mini.status = 1;
+		return (NULL); // Error
+	}
+	aux = ft_substr(str, i + 2, j - i - 2);	
+	value = env_get(aux);
+	free(aux);
+	if (!value)
+		value = "";
+	prefix = ft_substr(str, 0, i);
+	aux = ft_strjoin(prefix, value);
+	free(prefix);
+	value = ft_strjoin(aux, str + j + 1);
+	free(aux);
+	return (value);
 }
 
 char	*replace_dollar_status(char *str, int i)
@@ -128,7 +109,7 @@ int		needs_to_replace_dollar(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && !ft_contains(str[i+1], " \0\""))
+		if (str[i] == '$' && !(ft_contains(str[i+1], " \t") || str[i+1] == '\0'))
 			return (1);
 		i++;
 	}
@@ -151,8 +132,15 @@ char	*ft_expander(char *str)
 		{
 			if (str[i+1] == '?')
 				result = replace_dollar_status(str, i);
+			else if (str[i+1] == '{')
+				result = replace_dollar_brackets(str, i);
+			else if (ft_contains(str[i+1], " \"") || str[i+1] == '\0')
+			{
+				i++ ;
+				continue ;
+			}
 			else
-				result = check_dollar(str, i);
+				result = replace_dollar_generic(str, i);
 			break ;
 		}
 		i++;

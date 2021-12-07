@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 15:36:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:24:19 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ t_token	*take_dquoted(char **cursor)
 	int		len;
 
 	start = *cursor;
-	if (ft_contains('{', start))
-		ft_expand_brekets(start);
 	char_iterator_next(cursor);
 	c = char_iterator_peek(cursor);
 	len = 1;
