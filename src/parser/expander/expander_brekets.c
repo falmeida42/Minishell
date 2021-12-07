@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-char    *cmp_brekets(char *str)
-{
-    if (ft_contains(' ', str))
-    {
-        g_mini.parse_error = ft_strdup("bad substitution");
-        return (ft_strdup(""));
-    }
-    if (env_get(str) == NULL)
-        return (ft_strdup(""));
-    else
-    {
-        return (ft_strdup(env_get(str)));
-    }
-}
-
 char    *ft_brekets_error(char *str)
 {
     int i;
