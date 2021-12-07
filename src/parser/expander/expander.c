@@ -26,7 +26,7 @@ void	*expand_operation(void *content)
 	check = token->type == TOKEN_DQUOTED || token->type == TOKEN_TEXT;
 	if (check && ft_contains('$', token->value))
 		token->value = ft_expander(token->value);
-	if (token->type == TOKEN_TEXT && ft_contains('~', token->value))
+	if (token->type == TOKEN_TEXT && *token->value == '~')
 		token->value = ft_expander_til(token);
 	return (token);
 }
