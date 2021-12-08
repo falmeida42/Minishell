@@ -97,6 +97,7 @@ t_ast_item	*ast_item_new(t_ast_item_type type);
 void		ast_item_free(void *ptr);
 void		ast_item_print(void *ptr);
 
+t_mini		*mini_init(t_mini *ptr, char **envp);
 //free utility
 void		mini_final_clear(t_mini *ptr);
 void		mini_loop_clear(t_mini *ptr);
