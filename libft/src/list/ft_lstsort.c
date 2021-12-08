@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:40:26 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 14:55:49 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/08 16:24:59 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstsort(t_list **begin_list, int (*cmp)(void *, void *))
 	t_list	*l_prev;
 	t_list	*holder;
 
-	if (begin_list || *begin_list)
+	if (begin_list == NULL || *begin_list == NULL || cmp == NULL)
 		return ;
 	l = *begin_list;
 	l_prev = NULL;
