@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:36:04 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/04 22:07:08 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/08 09:15:46 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ void	infile_free(void *ptr)
 	infile = (t_infile *)ptr;
 	free(infile->data);
 	free(infile);
+}
+
+void	infile_print(t_infile *infile)
+{
+	if (infile->heredoc)
+		ft_putstr("heredoc:\n");
+	else
+		ft_putstr("infile: ");
+	ft_putstr(infile->data);
+	ft_putchar('\n');
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 15:08:42 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/08 09:12:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef	struct s_outfile
 
 t_outfile		*outfile_new(char *fname, bool append);
 void			outfile_free(void *ptr);
-
+void			outfile_print(t_outfile *outfile);
 // Infile
 
 typedef struct s_infile
@@ -60,6 +60,7 @@ typedef struct s_infile
 
 t_infile		*infile_new(char *str, bool heredoc);
 void			infile_free(void *ptr);
+void			infile_print(t_infile *infile);
 
 // Commands
 
