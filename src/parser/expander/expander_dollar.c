@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 16:45:04 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/09 17:26:50 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*replace_dollar_generic(char *str, int i)
 	aux = ft_strjoin(prefix, value);
 	free(prefix);
 	value = ft_strjoin(aux, str + j + shift);
+	free(str);
 	free(aux);
 	return (value);
 }
@@ -64,6 +65,7 @@ char	*replace_dollar_brackets(char *str, int i)
 	aux = ft_strjoin(prefix, value);
 	free(prefix);
 	value = ft_strjoin(aux, str + j + 1);
+	free(str);
 	free(aux);
 	return (value);
 }
@@ -79,6 +81,7 @@ char	*replace_dollar_status(char *str, int i)
 	nb = ft_itoa(g_mini.status);
 	aux = ft_strjoin(prefix, nb);
 	result = ft_strjoin(aux, str + i + 2);
+	free(str);
 	free(prefix);
 	free(aux);
 	free(nb);
