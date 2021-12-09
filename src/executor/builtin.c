@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 17:07:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 13:31:18 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,20 @@ int	builtin_execute(char **argv, int fd)
 
 int	builtin_execute_with_fork(char **argv, int fd)
 {
-	pid_t	pid;
 	int		status;
 
-	pid = fork();
-	if (pid < 0)
+	g_mini.pid = fork();
+	if (g_mini.pid < 0)
 	{
 		perror("fork");
 		return (EXIT_FAILURE);
 	}
-	if (pid == 0)
-	{
-		status = builtin_execute(argv, fd);
-		exit(status);
-	}
+	if (g_mini.pid == 0)
+		exit(builtin_execute(argv, fd));
 	else
 	{
-		waitpid(pid, &status, 0);
+		waitpid(g_mini.pid, &status, 0);
+		g_mini.pid = 0;
 		return (status);
 	}
 }
