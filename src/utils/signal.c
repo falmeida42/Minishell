@@ -3,23 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:00:13 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 13:40:09 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:47:28 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_signal(int signal)
+void	handle_sigint(void)
 {
-	//signal == SIGQUIT
-	if (signal == SIGINT)
+	ft_putchar('\n');
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	if (g_mini.pid)
 	{
-		write(1,"\n", 1);
-		//rl_replace_line("", 0);
-		rl_on_new_line();
+		ft_putstr("^C\n");
+		g_mini.status = 130;
+	}
+	else
+	{
+		g_mini.status = 1;
 		rl_redisplay();
 	}
+}
+
+void	handle_sigquit(void)
+{
+	if (g_mini.pid)
+	{
+		ft_putstr("^\\Quit: 3\n");
+		g_mini.status = 131;
+		rl_redisplay();
+	}
+	else
+	{
+		ft_putstr(g_mini.prompt);
+		ft_putstr(rl_line_buffer);
+	}
+}
+
+void	get_signal(int signal)
+{
+	if (signal == SIGINT)
+		handle_sigint();
+	else if (signal == SIGQUIT)
+		handle_sigquit();
 }

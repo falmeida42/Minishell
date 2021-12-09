@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/06 16:34:48 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 13:27:27 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int main(int argc, char **argv, char **envp)
 	mini_init(&g_mini, envp);
 	if (argc > 1)
 		return (minishell_non_interactive(argv[1]));
-	//signal(SIGINT , get_signal);
-	//signal(SIGQUIT , get_signal);
+	signal(SIGINT , get_signal);
+	signal(SIGQUIT , get_signal);
+	signal(SIGSEGV, get_signal);
 	while (42)
 	{
 		g_mini.input = readline(g_mini.prompt);
