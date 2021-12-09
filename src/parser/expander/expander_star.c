@@ -73,6 +73,7 @@ t_token_list	*insert_files_in_token_list(t_token_list *lst, t_list *files)
 	{
 		ft_lstsort(&files, ft_strcmp);
 		token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
+		token_free(lst->content);
 		lst->content = token;
 		files = files->next;
 		while (files)

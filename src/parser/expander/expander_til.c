@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_til.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 18:23:22 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 19:39:25 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 17:32:48 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ char	*ft_expander_til(t_token *token)
 	if (!home)
 		home = "";
 	if (!ft_strcmp(token->value, "~"))
+	{
+		free(token->value);
 		return (ft_strdup(home));
+	}
 	return (check_til(token->value));
 }
