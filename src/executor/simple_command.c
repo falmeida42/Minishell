@@ -82,22 +82,3 @@ int	simple_command_execute(t_simple_command *cmd)
 {
 	return (simple_command_execute_io(cmd, false, STDIN_FILENO, STDOUT_FILENO));
 }
-
-int	ft_exec(char **argv)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
-	if (pid == 0)
-		exec_child_process(argv);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (-WTERMSIG(status));
-}

@@ -110,8 +110,6 @@ int			ft_env(char **argv, int fd);
 int			ft_export(char **argv, int fd);
 int			ft_unset(char **argv, int fd);
 
-int			ft_exec(char **argv);
-
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv, int fd);
 int			builtin_execute_parent(t_simple_command *cmd, bool do_fork, int fd);
