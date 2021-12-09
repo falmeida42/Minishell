@@ -60,8 +60,10 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		g_mini.input = readline("minishell: ");
+		if (!g_mini.input)
+			break ;
 		g_mini.tree = parser(g_mini.input);
-		if (g_mini.input && ft_strwc(g_mini.input, ' ') > 0)
+		if (ft_strwc(g_mini.input, ' ') > 0)
 			add_history(g_mini.input);
 		if (g_mini.parse_error)
 			ft_putendl_error(g_mini.parse_error);
