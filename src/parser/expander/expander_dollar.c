@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 19:35:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 16:45:04 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*replace_dollar_generic(char *str, int i)
 	int		j;
 
 	j = i + 1;
-	while (str[j] != '\0' && !ft_contains(str[j], " \t${\\"))
+	while (str[j] != '\0' && !ft_contains(str[j], " '\t${\\\""))
 		j++;
 	shift = 0;
 	if (str[j] == ' ')
