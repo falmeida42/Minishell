@@ -3,38 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 09:43:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 13:32:24 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <limits.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <stdbool.h>
-#include "libft.h"
-#include "map.h"
+# include <stdio.h>
+# include <limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <stdbool.h>
+# include "libft.h"
+# include "map.h"
+# include <termios.h>
+# include <curses.h>
+# include <term.h>
 
 // btree where each node is t_ast_item
 typedef t_btree	t_command_tree;
 
 typedef struct	s_mini {
 	t_command_tree	*tree;
+	char			*prompt;
 	int				status;
+	int				pid;
 	bool			exit;
 	t_map			*env;
 	char			*input;
 	char			*parse_error;
+	struct termios	term;
 }	t_mini;
 
 t_mini	g_mini;
@@ -109,8 +115,6 @@ int			ft_cd(char **argv, int fd);
 int			ft_env(char **argv, int fd);
 int			ft_export(char **argv, int fd);
 int			ft_unset(char **argv, int fd);
-
-int			ft_exec(char **argv);
 
 bool		is_builtin(char *name);
 int			builtin_execute(char **argv, int fd);

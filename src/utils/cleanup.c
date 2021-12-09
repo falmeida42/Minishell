@@ -16,6 +16,9 @@ void	mini_final_clear(t_mini *ptr)
 {
 	mini_loop_clear(ptr);
 	ft_lstclear(&ptr->env, pair_clear);
+	g_mini.term.c_lflag |= ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_mini.term) != 0)
+		ft_putendl_error("Error: tcsetattr");
 }
 
 void	mini_loop_clear(t_mini *ptr)

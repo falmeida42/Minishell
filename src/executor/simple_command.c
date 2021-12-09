@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 17:02:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 13:31:56 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
 		int fd_in, int fd_out)
 {
 	int		status;
-	pid_t	pid;
 
 	if (!cmd->argv || !cmd->argv->content)
 		return (1);
 	if (is_builtin(cmd->argv->content))
 		return (builtin_execute_parent(cmd, fork_builtin, fd_out));
-	pid = fork();
-	if (pid < 0)
+	g_mini.pid = fork();
+	if (g_mini.pid < 0)
 	{
 		perror("fork");
 		return (EXIT_FAILURE);
 	}
-	if (pid == 0)
+	if (g_mini.pid == 0)
 		exit(simple_command_execute_io_child_process(cmd, fd_in, fd_out));
-	waitpid(pid, &status, 0);
+	waitpid(g_mini.pid, &status, 0);
+	g_mini.pid = 0;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (-WTERMSIG(status));
@@ -81,23 +81,4 @@ int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
 int	simple_command_execute(t_simple_command *cmd)
 {
 	return (simple_command_execute_io(cmd, false, STDIN_FILENO, STDOUT_FILENO));
-}
-
-int	ft_exec(char **argv)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
-	if (pid == 0)
-		exec_child_process(argv);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (-WTERMSIG(status));
 }
