@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 14:31:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 19:26:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_export_no_args(int fd)
 	while (it)
 	{
 		p = (t_pair *)it->content;
+		if (ft_strcmp(p->key, "_"))
+			continue ;
 		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(p->key, fd);
 		ft_putstr_fd("=\"", fd);
