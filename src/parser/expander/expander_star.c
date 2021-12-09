@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/08 15:24:04 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 09:57:42 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <dirent.h>
 
 // checks if a string matches with a another string with wildcard '*'
-int str_match_star(char *s, char *pattern)
+int	str_match_star(char *s, char *pattern)
 {
 	if (*s == '\0' && *pattern == '\0')
 		return (1);
@@ -31,7 +31,7 @@ int str_match_star(char *s, char *pattern)
 	return (0);
 }
 
-bool is_file_or_directory(struct dirent *entry)
+bool	is_file_or_directory(struct dirent *entry)
 {
 	if (!entry)
 		return (false);
@@ -39,11 +39,11 @@ bool is_file_or_directory(struct dirent *entry)
 }
 
 // checks which files in a directory match with a string with wildcard '*'
-t_list *match_files(char *to_match, char *dir)
+t_list	*match_files(char *to_match, char *dir)
 {
-	DIR *d;
-	struct dirent *entry;
-	t_list *files;
+	DIR				*d;
+	struct dirent	*entry;
+	t_list			*files;
 
 	d = opendir(dir);
 	files = NULL;
@@ -53,11 +53,11 @@ t_list *match_files(char *to_match, char *dir)
 	{
 		entry = readdir(d);
 		if (!entry)
-			break;
+			break ;
 		if (!is_file_or_directory(entry))
-			continue;
+			continue ;
 		if (entry->d_name[0] == '.')
-			continue;
+			continue ;
 		if (str_match_star(entry->d_name, to_match))
 			ft_lstpush_back(&files, ft_strdup(entry->d_name));
 	}
@@ -65,9 +65,9 @@ t_list *match_files(char *to_match, char *dir)
 	return (files);
 }
 
-t_token_list *insert_files_in_token_list(t_token_list *lst, t_list *files)
+t_token_list	*insert_files_in_token_list(t_token_list *lst, t_list *files)
 {
-	t_token *token;
+	t_token	*token;
 
 	if (files)
 	{
@@ -85,10 +85,10 @@ t_token_list *insert_files_in_token_list(t_token_list *lst, t_list *files)
 	return (lst);
 }
 
-void apply_star_expander(t_token_list *lst)
+void	apply_star_expander(t_token_list *lst)
 {
-	t_token *token;
-	t_list *files;
+	t_token	*token;
+	t_list	*files;
 
 	while (lst)
 	{
