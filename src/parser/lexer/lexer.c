@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:28 by jpceia            #+#    #+#             */
-/*   Updated: 2021/11/18 21:43:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 09:42:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,3 @@ t_token_list	*lex(char *input)
 	}
 	return (token_list);
 }
-
-/*
-int main(int argc, char **argv)
-{
-	t_token_list *token_list;
-	t_token_list *token_it;
-	t_token *token;
-
-	if (argc != 2)
-	{
-		printf("usage: ./lexer <input>\n");
-		return (1);
-	}
-	token_list = lex(argv[1]);
-	token_it = token_list;
-	while (token_it)
-	{
-		token = token_it->content;
-		printf("%d: %s\n", token->type, token->value);
-		token_it = token_it->next;
-	}
-
-	token_it = token_list;
-	t_commands_group *group = commands_group_parse(&token_it);
-
-	btree_apply_infix(group, print_ast_nodes);
-	//command_table_free(table);
-	//ft_lstclear(&token_list, token_free);
-	return (0);
-}
-*/
