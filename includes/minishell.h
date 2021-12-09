@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/08 09:12:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 09:43:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,7 @@ typedef enum e_token_type
 	TOKEN_DGREATER,
 	TOKEN_DLESS,
 	TOKEN_LPAREN,
-	TOKEN_RPAREN,
-	TOKEN_BREKETS,
+	TOKEN_RPAREN
 }	t_token_type;
 
 typedef struct s_token
@@ -203,7 +202,6 @@ t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
-t_token			*take_breakets(char **cursor);
 t_token			*take_text(char **cursor);
 
 // Parsing
