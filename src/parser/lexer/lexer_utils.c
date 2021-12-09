@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 19:33:21 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 11:37:02 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*remove_quotes(char *str)
 	int		j;
 
 	len = ft_strlen(str);
-	str2 = malloc(sizeof(char) * len - cont_quotes(str));
+	str2 = malloc(len - cont_quotes(str));
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -58,6 +58,7 @@ char	*remove_quotes(char *str)
 		j++;
 	}
 	str2[j] = '\0';
+	free(str);
 	return (str2);
 }
 
@@ -127,5 +128,5 @@ t_token	*take_text(char **cursor)
 	while (c && !ft_contains(c, " |&><)("))
 		c = char_iterator_next(cursor);
 	end = *cursor;
-	return (token_new(TOKEN_TEXT, ft_substr(start, 0, end - start)));
+	return (token_new(TOKEN_TEXT, remove_quotes(ft_substr(start, 0, end - start))));
 }
