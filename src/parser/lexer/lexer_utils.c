@@ -6,39 +6,20 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 11:37:02 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/09 16:49:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-
-int	cont_quotes(char *str)
-{
-	int	i;
-	int	len;
-
-	len = 0;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (i > 0 && str[i] == '"' && str[i - 1] != '\\')
-			len++;
-		i++;
-	}
-	return (len);
-}
-
 char	*remove_quotes(char *str)
 {
 	char	*str2;
-	int		len;
 	int		i;
 	int		j;
 
-	len = ft_strlen(str);
-	str2 = malloc(len - cont_quotes(str));
+	str2 = malloc(ft_strlen(str) + 1);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
