@@ -6,14 +6,15 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 16:47:29 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/05 12:40:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 09:56:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_lstremove_if(t_list **begin_list, int (*f)(void *), void (*free_fct)(void *))
+void	ft_lstremove_if(t_list **begin_list, int (*f)(void *),
+			void (*free_fct)(void *))
 {
 	t_list	*lst;
 	t_list	*lst_prev;

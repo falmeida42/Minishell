@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/06 16:58:17 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/08 09:06:01 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_cd(char **argv, int fd)
 			ft_putendl_error("cd: OLDPWD not set");
 			return (1);
 		}
+		ft_putendl_fd(dir, fd);
 	}
 	return (change_directory(dir));
 }

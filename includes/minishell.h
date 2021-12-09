@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 15:08:42 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/09 09:43:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef	struct s_outfile
 
 t_outfile		*outfile_new(char *fname, bool append);
 void			outfile_free(void *ptr);
-
+void			outfile_print(t_outfile *outfile);
 // Infile
 
 typedef struct s_infile
@@ -60,6 +60,7 @@ typedef struct s_infile
 
 t_infile		*infile_new(char *str, bool heredoc);
 void			infile_free(void *ptr);
+void			infile_print(t_infile *infile);
 
 // Commands
 
@@ -96,6 +97,7 @@ t_ast_item	*ast_item_new(t_ast_item_type type);
 void		ast_item_free(void *ptr);
 void		ast_item_print(void *ptr);
 
+t_mini		*mini_init(t_mini *ptr, char **envp);
 //free utility
 void		mini_final_clear(t_mini *ptr);
 void		mini_loop_clear(t_mini *ptr);
@@ -162,8 +164,7 @@ typedef enum e_token_type
 	TOKEN_DGREATER,
 	TOKEN_DLESS,
 	TOKEN_LPAREN,
-	TOKEN_RPAREN,
-	TOKEN_BREKETS,
+	TOKEN_RPAREN
 }	t_token_type;
 
 typedef struct s_token
@@ -201,7 +202,6 @@ t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
 t_token			*take_dquoted(char **cursor);
 t_token			*take_quoted(char **cursor);
-t_token			*take_breakets(char **cursor);
 t_token			*take_text(char **cursor);
 
 // Parsing
@@ -211,18 +211,17 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token);
 
 t_command_tree	*parser(char *input);
 
-char			**lex_and_expand(char *input);
-
 // Expander
 char			*ft_expander(char *str);
+
+char			*replace_dollar_generic(char *str, int i);
+char			*replace_dollar_brackets(char *str, int i);
+char			*replace_dollar_status(char *str, int i);
 
 // Expander Til
 char	*ft_expander_til(t_token *token);
 
-//Expander breakets
-char	*ft_expand_brekets(char *str);
-
 void	*expand_operation(void *content);
 void	apply_star_expander(t_token_list *lst);
-char    *cmp_brekets(char *str);
+
 #endif

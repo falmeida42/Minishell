@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 14:36:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 09:57:42 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <dirent.h>
 
 // checks if a string matches with a another string with wildcard '*'
-int str_match_star(char *s, char *pattern)
+int	str_match_star(char *s, char *pattern)
 {
 	if (*s == '\0' && *pattern == '\0')
 		return (1);
@@ -39,11 +39,11 @@ bool	is_file_or_directory(struct dirent *entry)
 }
 
 // checks which files in a directory match with a string with wildcard '*'
-t_list *match_files(char *to_match, char *dir)
+t_list	*match_files(char *to_match, char *dir)
 {
-	DIR *d;
-	struct dirent *entry;
-	t_list *files;
+	DIR				*d;
+	struct dirent	*entry;
+	t_list			*files;
 
 	d = opendir(dir);
 	files = NULL;
@@ -65,33 +65,39 @@ t_list *match_files(char *to_match, char *dir)
 	return (files);
 }
 
+t_token_list	*insert_files_in_token_list(t_token_list *lst, t_list *files)
+{
+	t_token	*token;
+
+	if (files)
+	{
+		ft_lstsort(&files, ft_strcmp);
+		token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
+		lst->content = token;
+		files = files->next;
+		while (files)
+		{
+			token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
+			lst = ft_lstinsert_at(lst, token);
+			files = files->next;
+		}
+	}
+	return (lst);
+}
+
 void	apply_star_expander(t_token_list *lst)
 {
 	t_token	*token;
-	t_list	*files_start;
 	t_list	*files;
-	
+
 	while (lst)
 	{
 		token = (t_token *)lst->content;
 		if (token->type == TOKEN_TEXT && ft_contains('*', token->value))
 		{
-			files_start = match_files(token->value, ".");
-			if (files_start)
-			{
-				files = files_start;
-				ft_lstsort(&files, ft_strcmp);
-				token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
-				lst->content = token;
-				files = files->next;
-				while (files)
-				{
-					token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
-					lst = ft_lstinsert_at(lst, token);
-					files = files->next;
-				}
-				ft_lstclear(&files_start, NULL);
-			}
+			files = match_files(token->value, ".");
+			lst = insert_files_in_token_list(lst, files);
+			ft_lstclear(&files, NULL);
 		}
 		lst = lst->next;
 	}

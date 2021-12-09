@@ -52,10 +52,7 @@ int	minishell_non_interactive(char *fname)
 
 int main(int argc, char **argv, char **envp)
 {
-	g_mini.env = map_from_str_array(envp, '=');
-	g_mini.exit = false;
-	g_mini.parse_error = NULL;
-
+	mini_init(&g_mini, envp);
 	if (argc > 1)
 		return (minishell_non_interactive(argv[1]));
 	//signal(SIGINT , get_signal);

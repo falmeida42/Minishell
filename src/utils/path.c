@@ -31,6 +31,22 @@ char	*path_join(char *path, char *fname)
 	return (new_path);
 }
 
+char	*lookup_exe_in_directories(char *path, char **dir)
+{
+	char	*full_path;
+
+	full_path = NULL;
+	while (*dir)
+	{
+		full_path = path_join(*dir, path);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		dir++;
+	}
+	return (NULL);
+}
+
 /*
  * Find the full path to an executable file, from the PATH environment
  * variable.
@@ -39,30 +55,19 @@ char	*lookup_full_path(char *path)
 {
 	char	*full_path;
 	char	*env_paths;
-	char	**dir_start;
 	char	**dir;
 
 	env_paths = env_get("PATH");
 	if (!env_paths)
 		env_paths = "";
-	dir_start = ft_split(env_paths, ':');
-	dir = dir_start;
-	full_path = NULL;
-	while (*dir)
-	{
-		full_path = path_join(*dir, path);
-		if (access(full_path, X_OK) == 0)
-			break ;
-		free(full_path);
-		dir++;
-	}
-	if (*dir == NULL)
+	dir = ft_split(env_paths, ':');
+	full_path = lookup_exe_in_directories(path, dir);
+	if (!full_path)
 	{
 		ft_putstr_error(path);
 		ft_putendl_error(": command not found");
-		full_path = NULL;
 	}
-	ft_str_array_clear(dir_start, 0);
+	ft_str_array_clear(dir, 0);
 	return (full_path);
 }
 
@@ -86,8 +91,8 @@ char	*get_relative_path(char *path)
 char	*normalize_path(char *path)
 {
 	if (!path || !*path)
-		return ft_strdup("");
-	if (*path == '/') // absolute path
+		return (ft_strdup(""));
+	if (*path == '/')
 	{
 		if (access(path, X_OK) < 0)
 		{
@@ -96,7 +101,7 @@ char	*normalize_path(char *path)
 		}
 		return (ft_strdup(path));
 	}
-	if (*path == '.') // relative path
+	if (*path == '.')
 		return (get_relative_path(path));
 	return (lookup_full_path(path));
 }

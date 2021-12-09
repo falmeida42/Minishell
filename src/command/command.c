@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 09:36:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/06 14:54:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/08 09:18:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	simple_command_free(void *ptr)
 
 void	command_tree_free(void *ptr)
 {
-	t_command_tree *ast;
+	t_command_tree	*ast;
 
 	ast = (t_command_tree *)ptr;
 	btree_clear(ast, ast_item_free);
@@ -38,8 +38,6 @@ void	command_tree_free(void *ptr)
 void	simple_command_print(t_simple_command *cmd)
 {
 	t_list		*lst;
-	t_outfile	*out;
-	t_infile	*in;
 
 	lst = cmd->argv;
 	ft_putstr("Argv: ");
@@ -49,23 +47,17 @@ void	simple_command_print(t_simple_command *cmd)
 		ft_putchar(' ');
 		lst = lst->next;
 	}
+	ft_putchar('\n');
 	lst = cmd->infiles;
 	while (lst)
 	{
-		in = (t_infile *)lst->content;
-		ft_putstr("\nInfile: ");
-		ft_putstr(in->data);
-		ft_putstr("\nHere doc: ");
-		ft_putnbr(in->heredoc);
+		infile_print(lst->content);
+		lst = lst->next;
 	}
 	lst = cmd->outfiles;
 	while (lst)
 	{
-		out = (t_outfile *)(lst->content);
-		ft_putstr("\nOutfile: ");
-		ft_putstr(out->fname);
-		ft_putstr("\nAppend: ");
-		ft_putnbr(out->append);
+		outfile_print(lst->content);
 		lst = lst->next;
 	}
 	ft_putchar('\n');

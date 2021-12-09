@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/06 16:57:19 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/08 16:03:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_pwd(char **argv, int fd)
 
 	(void)argv;
 	str = NULL;
-	str = getcwd(str, PATH_MAX);
+	str = getcwd(NULL, 0);
 	ft_putendl_fd(str, fd);
+	free(str);
 	return (0);
 }
