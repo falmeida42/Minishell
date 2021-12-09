@@ -11,19 +11,22 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <limits.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <stdbool.h>
-#include "libft.h"
-#include "map.h"
+# include <stdio.h>
+# include <limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <stdbool.h>
+# include "libft.h"
+# include "map.h"
+# include <termios.h>
+# include <curses.h>
+# include <term.h>
 
 // btree where each node is t_ast_item
 typedef t_btree	t_command_tree;
@@ -36,6 +39,7 @@ typedef struct	s_mini {
 	t_map			*env;
 	char			*input;
 	char			*parse_error;
+	struct termios	term;
 }	t_mini;
 
 t_mini	g_mini;
