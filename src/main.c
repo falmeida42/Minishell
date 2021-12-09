@@ -59,7 +59,7 @@ int main(int argc, char **argv, char **envp)
 	//signal(SIGQUIT , get_signal);
 	while (42)
 	{
-		g_mini.input = readline("minishell: ");
+		g_mini.input = readline(g_mini.prompt);
 		if (!g_mini.input)
 			break ;
 		g_mini.tree = parser(g_mini.input);
