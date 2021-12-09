@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 09:57:42 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:34:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_token_list	*insert_files_in_token_list(t_token_list *lst, t_list *files)
 
 	if (files)
 	{
-		ft_lstsort(&files, ft_strcmp);
 		token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
 		token_free(lst->content);
 		lst->content = token;
@@ -97,8 +96,9 @@ void	apply_star_expander(t_token_list *lst)
 		if (token->type == TOKEN_TEXT && ft_contains('*', token->value))
 		{
 			files = match_files(token->value, ".");
+			ft_lstsort(&files, ft_strcmp);
 			lst = insert_files_in_token_list(lst, files);
-			ft_lstclear(&files, NULL);
+			ft_lstclear(&files, free);
 		}
 		lst = lst->next;
 	}
