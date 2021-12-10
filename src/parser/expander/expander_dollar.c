@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 17:26:50 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 15:54:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ char	*replace_dollar_generic(char *str, int i)
 	return (value);
 }
 
+void	*bad_substitution_error(void)
+{
+	g_mini.parse_error = ft_strdup("bad substitution");
+	g_mini.status = 1;
+	return (NULL);
+}
+
 void	free_strings(char *prefix, char *str, char *aux)
 {
 	free(prefix);
@@ -58,11 +65,7 @@ char	*replace_dollar_brackets(char *str, int i)
 	while (str[j] != '\0' && str[j] != '}' && str[j] != ' ')
 		j++;
 	if (str[j] != '}')
-	{
-		g_mini.parse_error = ft_strdup("bad substitution");
-		g_mini.status = 1;
-		return (NULL);
-	}
+		return (bad_substitution_error());
 	aux = ft_substr(str, i + 2, j - i - 2);
 	value = env_get(aux);
 	free(aux);

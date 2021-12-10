@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 03:00:11 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 13:31:18 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 16:20:17 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	builtin_execute(char **argv, int fd)
 	if (!ft_strcmp(argv[0], "exit"))
 	{
 		g_mini.exit = true;
-		return (0);
+		if (argv[1])
+			return (ft_atoi(argv[1]));
+		return (g_mini.status);
 	}
 	return (0);
 }

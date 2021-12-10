@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/06 15:40:35 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 19:52:56 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*syntax_error_msg(t_token *token)
 	char	*msg;
 	char	*s;
 
-	if (token && token->value != NULL)
+	if (token && token->value)
 		s = token->value;
 	else
 		s = "newline";
