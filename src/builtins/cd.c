@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/08 09:06:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:45:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	change_directory(char *dir)
 		perror(dir);
 		return (1);
 	}
-	env_set("OLDPWD", ft_strdup(pwd));
-	env_set("PWD", getcwd(NULL, 0));
+	env_set(ft_strdup("OLDPWD"), ft_strdup(pwd));
+	env_set(ft_strdup("PWD"), getcwd(NULL, 0));
 	return (0);
 }
 

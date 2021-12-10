@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:29:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/11/18 02:37:14 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:45:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	env_unset(char *key)
 
 t_map	*env_set(char *key, char *value)
 {
-	return (map_set(&g_mini.env, ft_strdup(key), value));
+	return (map_set(&g_mini.env, key, value));
 }
 
 char	*env_get(char *key)
