@@ -27,6 +27,7 @@ void	infile_heredoc_setup(t_infile *infile, char *eof)
 			break ;
 		}
 		holder = infile->data;
+		line = ft_expander(line);
 		infile->data = ft_strjoin(holder, line);
 		infile->data = ft_straddc(infile->data, '\n');
 		free(holder);
