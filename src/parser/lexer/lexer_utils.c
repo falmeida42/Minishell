@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 20:46:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 15:55:07 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*remove_quotes(char *str)
 	int		i;
 	int		j;
 
-	str2 = malloc(ft_strlen(str); + 1);
+	str2 = malloc(ft_strlen(str) + 1);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
