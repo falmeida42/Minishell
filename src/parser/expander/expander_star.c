@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 23:03:49 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:42:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 // check if a string matches with another string with wildcard '*'
 // considering only the wildcards '*' outside of single quotes
-bool str_match_star_quotes(char *s, char *pattern, t_quote_type state)
+// TODO: consider escaped chars
+bool	str_match_star_quotes(char *s, char *pattern, t_quote_type state)
 {
 	if (*s == '\0' && *pattern == '\0')
 		return (true);
@@ -46,14 +47,8 @@ int	str_match_star(char *s, char *pattern)
 	return (str_match_star_quotes(s, pattern, QUOTE_NONE));
 }
 
-bool	is_file_or_directory(struct dirent *entry)
-{
-	if (!entry)
-		return (false);
-	return (entry->d_type == '\b' || entry->d_type == '\004');
-}
-
 // checks which files in a directory match with a string with wildcard '*'
+// (entry->d_type == '\b' || entry->d_type == '\004') := is file or directory
 t_list	*match_files(char *to_match, char *dir)
 {
 	DIR				*d;
@@ -69,7 +64,7 @@ t_list	*match_files(char *to_match, char *dir)
 		entry = readdir(d);
 		if (!entry)
 			break ;
-		if (!is_file_or_directory(entry))
+		if (entry->d_type == '\b' || entry->d_type == '\004')
 			continue ;
 		if (entry->d_name[0] == '.')
 			continue ;
@@ -108,7 +103,8 @@ void	apply_star_expander(t_token_list *lst)
 	while (lst)
 	{
 		token = (t_token *)lst->content;
-		if (token->type == TOKEN_TEXT && ft_contains_unquoted(token->value, '*'))
+		if (token->type == TOKEN_TEXT
+			&& ft_contains_unquoted(token->value, '*'))
 		{
 			files = match_files(token->value, ".");
 			ft_lstsort(&files, ft_strcmp);
