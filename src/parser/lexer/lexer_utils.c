@@ -6,13 +6,12 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 23:19:20 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:39:34 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
-
 
 t_quote_type	update_quote_type(t_quote_type quote_type,
 					char c, char prev_char)
@@ -41,46 +40,6 @@ char	update_prev_char(char c, char prev_char)
 	return (c);
 }
 
-bool	ft_contains_unquoted(char *str, char needle)
-{
-	int				i;
-	char			prev_char;
-	t_quote_type	quote_type;
-
-	i = 0;
-	prev_char = 0;
-	quote_type = QUOTE_NONE;
-	while (str[i])
-	{
-		quote_type = update_quote_type(quote_type, str[i], prev_char);
-		if (quote_type != QUOTE_SINGLE && str[i] == needle && prev_char != '\\')
-			return (true);
-		prev_char = update_prev_char(str[i], prev_char);
-		i++;
-	}
-	return (false);
-}
-
-char	*ft_strchr_unquoted(char *str, char needle)
-{
-	int				i;
-	char			prev_char;
-	t_quote_type	quote_type;
-
-	i = 0;
-	prev_char = 0;
-	quote_type = QUOTE_NONE;
-	while (str[i])
-	{
-		quote_type = update_quote_type(quote_type, str[i], prev_char);
-		if (quote_type != QUOTE_SINGLE && str[i] == needle && prev_char != '\\')
-			return (&str[i]);
-		prev_char = update_prev_char(str[i], prev_char);
-		i++;
-	}
-	return (NULL);
-}
-
 /* takes a text token and returns it
  * as a string, using the same rules as bash
  * i.e., it stops in the end of string or
@@ -92,7 +51,7 @@ t_token	*take_text(char **cursor)
 	char			prev_char;
 	char			*start;
 	t_quote_type	quote_type;
-	
+
 	start = *cursor;
 	c = char_iterator_peek(cursor);
 	prev_char = 0;
@@ -106,6 +65,17 @@ t_token	*take_text(char **cursor)
 		c = char_iterator_next(cursor);
 	}
 	return (token_new(TOKEN_TEXT, ft_substr(start, 0, *cursor - start)));
+}
+
+bool	does_add_char(t_quote_type quote_type, char c, char prev_char)
+{
+	if (quote_type == QUOTE_NONE)
+		return (!(c == '\\' || c == '\'' || c == '"') || prev_char == '\\');
+	if (quote_type == QUOTE_SINGLE)
+		return (!(c == '\\' || c == '\'') || prev_char == '\\');
+	if (quote_type == QUOTE_DOUBLE)
+		return (!(c == '\\' || c == '"') || prev_char == '\\');
+	return (false);
 }
 
 /*
@@ -127,24 +97,8 @@ char	*clean_string(char *str)
 	{
 		c = str[i];
 		quote_type = update_quote_type(quote_type, c, prev_char);
-		if (quote_type == QUOTE_NONE)
-		{
-			// skip \ except if it is escaped
-			if (!(c == '\\' || c == '\'' || c == '"') || prev_char == '\\')
-				clean = ft_straddc(clean, c);
-		}
-		else if (quote_type == QUOTE_SINGLE)
-		{
-			if (!(c == '\\' || c== '\'') || prev_char == '\\')
-				clean = ft_straddc(clean, c);
-		}
-		else if (quote_type == QUOTE_DOUBLE)
-		{
-			// skip \ except if it is escaped
-			// skip " except if it is escaped
-			if (!(c == '\\' || c == '"') || prev_char == '\\')
-				clean = ft_straddc(clean, c);
-		}
+		if (does_add_char(quote_type, c, prev_char))
+			clean = ft_straddc(clean, c);
 		prev_char = update_prev_char(c, prev_char);
 		i++;
 	}
