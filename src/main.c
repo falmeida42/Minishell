@@ -50,13 +50,13 @@ int	minishell_non_interactive(char *fname)
 	return (EXIT_SUCCESS);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	mini_init(&g_mini, envp);
 	if (argc > 1)
 		return (minishell_non_interactive(argv[1]));
-	signal(SIGINT , get_signal);
-	signal(SIGQUIT , get_signal);
+	signal(SIGINT, get_signal);
+	signal(SIGQUIT, get_signal);
 	signal(SIGSEGV, get_signal);
 	while (42)
 	{
