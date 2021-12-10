@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/09 20:56:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 15:53:37 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	minishell_loop(void)
 			g_mini.status = command_tree_execute(g_mini.tree);
 		mini_loop_clear(&g_mini);
 	}
+	return (g_mini.status);
 }
 
 int	minishell_non_interactive_fd(int fd)
