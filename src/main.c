@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/10 15:53:37 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 16:20:31 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	minishell_non_interactive_fd(int fd)
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (g_mini.status);
 }
 
 int	minishell_non_interactive(char *fname)
@@ -66,7 +66,7 @@ int	minishell_non_interactive(char *fname)
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -90,5 +90,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	mini_final_clear(&g_mini);
-	return (EXIT_SUCCESS);
+	return (g_mini.status);
 }
