@@ -6,29 +6,44 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 18:34:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:03:49 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
 
+// check if a string matches with another string with wildcard '*'
+// considering only the wildcards '*' outside of single quotes
+bool str_match_star_quotes(char *s, char *pattern, t_quote_type state)
+{
+	if (*s == '\0' && *pattern == '\0')
+		return (true);
+	if (state == QUOTE_NONE && *pattern == '\'')
+		return (str_match_star_quotes(s, pattern + 1, QUOTE_SINGLE));
+	if (state == QUOTE_NONE && *pattern == '"')
+		return (str_match_star_quotes(s, pattern + 1, QUOTE_DOUBLE));
+	if (state == QUOTE_SINGLE && *pattern == '\'')
+		return (str_match_star_quotes(s, pattern + 1, QUOTE_NONE));
+	if (state == QUOTE_DOUBLE && *pattern == '"')
+		return (str_match_star_quotes(s, pattern + 1, QUOTE_NONE));
+	if (*pattern != '*' || state == QUOTE_SINGLE || state == QUOTE_DOUBLE)
+	{
+		if (*s != *pattern)
+			return (false);
+		return (str_match_star_quotes(s + 1, pattern + 1, state));
+	}
+	if (str_match_star_quotes(s, pattern + 1, state))
+		return (true);
+	if (*s && str_match_star_quotes(s + 1, pattern, state))
+		return (true);
+	return (false);
+}
+
 // checks if a string matches with a another string with wildcard '*'
 int	str_match_star(char *s, char *pattern)
 {
-	if (*s == '\0' && *pattern == '\0')
-		return (1);
-	if (*pattern != '*')
-	{
-		if (*s != *pattern)
-			return (0);
-		return (str_match_star(s + 1, pattern + 1));
-	}
-	if (str_match_star(s, pattern + 1))
-		return (1);
-	if (*s && str_match_star(s + 1, pattern))
-		return (1);
-	return (0);
+	return (str_match_star_quotes(s, pattern, QUOTE_NONE));
 }
 
 bool	is_file_or_directory(struct dirent *entry)
@@ -71,13 +86,13 @@ t_token_list	*insert_files_in_token_list(t_token_list *lst, t_list *files)
 
 	if (files)
 	{
-		token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
+		token = token_new(TOKEN_TEXT, ft_strdup(files->content));
 		token_free(lst->content);
 		lst->content = token;
 		files = files->next;
 		while (files)
 		{
-			token = token_new(TOKEN_QUOTED, ft_strdup(files->content));
+			token = token_new(TOKEN_TEXT, ft_strdup(files->content));
 			lst = ft_lstinsert_at(lst, token);
 			files = files->next;
 		}
@@ -93,7 +108,7 @@ void	apply_star_expander(t_token_list *lst)
 	while (lst)
 	{
 		token = (t_token *)lst->content;
-		if (token->type == TOKEN_TEXT && ft_contains('*', token->value))
+		if (token->type == TOKEN_TEXT && ft_contains_unquoted(token->value, '*'))
 		{
 			files = match_files(token->value, ".");
 			ft_lstsort(&files, ft_strcmp);
