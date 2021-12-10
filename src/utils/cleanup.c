@@ -57,7 +57,7 @@ char	*syntax_error_msg(t_token *token)
 	char	*msg;
 	char	*s;
 
-	if (token)
+	if (token && token->value != NULL)
 		s = token->value;
 	else
 		s = "newline";

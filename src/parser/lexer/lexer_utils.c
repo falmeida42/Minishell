@@ -51,13 +51,14 @@ t_token	*take_dquoted(char **cursor)
 	c = char_iterator_peek(cursor);
 	prev_char = 0;
 	end = NULL;
+	if (!ft_strcmp(start, "\"\"") || !ft_strcmp(start, "\""))
+		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));	
 	while (c)
 	{
 		if (c == '"' && prev_char != '\\')
 			inside_quotes = !inside_quotes;
 		else if (c == ' ' && !inside_quotes)
 		{
-			printf("here\n");
 			end = *cursor;
 			break ;
 		}
@@ -76,9 +77,11 @@ t_token	*take_quoted(char **cursor)
 	char	prev_char;
 	char	*start;
 	char	*end;
-
+	
 	char_iterator_next(cursor);
 	start = *cursor;
+	if (!ft_strcmp(start, "\'") || !ft_strcmp(start, ""))
+		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
 	prev_char = 0;
 	c = char_iterator_peek(cursor);
 	while (c && (c != '\'' || prev_char == '\\'))
