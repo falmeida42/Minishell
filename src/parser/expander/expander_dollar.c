@@ -6,12 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 22:01:07 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:41:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	free_strings(char *prefix, char *str, char *aux)
 {
@@ -52,7 +51,6 @@ void	*bad_substitution_error(void)
 	g_mini.status = 1;
 	return (NULL);
 }
-
 
 char	*replace_dollar_brackets(char *str, int i)
 {
