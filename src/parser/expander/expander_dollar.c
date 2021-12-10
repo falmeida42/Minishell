@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 20:49:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 15:54:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*replace_dollar_generic(char *str, int i)
 	return (value);
 }
 
-void	*bad_substitution_error(char *str)
+void	*bad_substitution_error(void)
 {
 	g_mini.parse_error = ft_strdup("bad substitution");
 	g_mini.status = 1;
@@ -65,7 +65,7 @@ char	*replace_dollar_brackets(char *str, int i)
 	while (str[j] != '\0' && str[j] != '}' && str[j] != ' ')
 		j++;
 	if (str[j] != '}')
-		return (bad_substitution_error(str));
+		return (bad_substitution_error());
 	aux = ft_substr(str, i + 2, j - i - 2);
 	value = env_get(aux);
 	free(aux);
