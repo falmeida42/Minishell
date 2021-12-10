@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 22:14:10 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:19:20 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ t_quote_type	update_quote_type(t_quote_type quote_type,
 	return (quote_type);
 }
 
+char	update_prev_char(char c, char prev_char)
+{
+	if (prev_char == '\\')
+		return (0);
+	return (c);
+}
+
 bool	ft_contains_unquoted(char *str, char needle)
 {
 	int				i;
@@ -48,7 +55,8 @@ bool	ft_contains_unquoted(char *str, char needle)
 		quote_type = update_quote_type(quote_type, str[i], prev_char);
 		if (quote_type != QUOTE_SINGLE && str[i] == needle && prev_char != '\\')
 			return (true);
-		prev_char = str[i++];
+		prev_char = update_prev_char(str[i], prev_char);
+		i++;
 	}
 	return (false);
 }
@@ -67,7 +75,8 @@ char	*ft_strchr_unquoted(char *str, char needle)
 		quote_type = update_quote_type(quote_type, str[i], prev_char);
 		if (quote_type != QUOTE_SINGLE && str[i] == needle && prev_char != '\\')
 			return (&str[i]);
-		prev_char = str[i++];
+		prev_char = update_prev_char(str[i], prev_char);
+		i++;
 	}
 	return (NULL);
 }
@@ -93,7 +102,7 @@ t_token	*take_text(char **cursor)
 		quote_type = update_quote_type(quote_type, c, prev_char);
 		if (quote_type == QUOTE_NONE && ft_contains(c, " \t\n\r|&><)("))
 			break ;
-		prev_char = c;
+		prev_char = update_prev_char(c, prev_char);
 		c = char_iterator_next(cursor);
 	}
 	return (token_new(TOKEN_TEXT, ft_substr(start, 0, *cursor - start)));
@@ -114,9 +123,9 @@ char	*clean_string(char *str)
 	quote_type = QUOTE_NONE;
 	clean = ft_strdup("");
 	i = 0;
-	c = str[i];
-	while (c)
+	while (str[i])
 	{
+		c = str[i];
 		quote_type = update_quote_type(quote_type, c, prev_char);
 		if (quote_type == QUOTE_NONE)
 		{
@@ -136,8 +145,8 @@ char	*clean_string(char *str)
 			if (!(c == '\\' || c == '"') || prev_char == '\\')
 				clean = ft_straddc(clean, c);
 		}
-		prev_char = c;
-		c = str[++i];
+		prev_char = update_prev_char(c, prev_char);
+		i++;
 	}
 	free(str);
 	return (clean);
