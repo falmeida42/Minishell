@@ -67,7 +67,7 @@ t_token	*take_dquoted(char **cursor)
 	end = NULL;
 	if (only_char(start, '"'))
 	{
-		g_mini.parse_error = ft_strdup("minishell: permission denied: ");
+		g_mini.parse_error = ft_strdup("minishell: : command not found");
 		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
 	}
 	while (c)
@@ -99,7 +99,7 @@ t_token	*take_quoted(char **cursor)
 	start = *cursor;
 	if (only_char(start, '\''))
 	{
-		g_mini.parse_error = ft_strdup("minishell: permission denied: ");
+		g_mini.parse_error = ft_strdup("minishell: : command not found");
 		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
 	}
 	prev_char = 0;
