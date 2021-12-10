@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 17:46:49 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/09 20:46:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 void	*remove_quotes(char *str)
 {
 	char	*str2;
-	int		len;
 	int		i;
 	int		j;
 
-	len = ft_strlen(str);
-	str2 = malloc(len + 1);
+	str2 = malloc(ft_strlen(str); + 1);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -56,7 +54,6 @@ t_token	*take_dquoted(char **cursor)
 	char	prev_char;
 	char	*start;
 	char	*end;
-	char	*aux;
 	bool	inside_quotes;
 
 	inside_quotes = true;
@@ -75,17 +72,14 @@ t_token	*take_dquoted(char **cursor)
 		if (c == '"' && prev_char != '\\')
 			inside_quotes = !inside_quotes;
 		else if (c == ' ' && !inside_quotes)
-		{
-			end = *cursor;
 			break ;
-		}
 		prev_char = c;
 		c = char_iterator_next(cursor);
 	}
 	if (end == NULL)
 		end = *cursor;
-	aux = ft_substr(start, 0, end - start);
-	return (token_new(TOKEN_DQUOTED, remove_quotes(aux)));
+	return (token_new(TOKEN_DQUOTED,
+			remove_quotes(ft_substr(start, 0, end - start))));
 }
 
 t_token	*take_quoted(char **cursor)

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:36:04 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 09:55:56 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/09 20:10:41 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ void	infile_heredoc_setup(t_infile *infile, char *eof)
 	{
 		line = readline("> ");
 		if (!ft_strcmp(line, eof))
+		{
+			free(line);
 			break ;
+		}
 		holder = infile->data;
+		line = ft_expander(line);
 		infile->data = ft_strjoin(holder, line);
 		infile->data = ft_straddc(infile->data, '\n');
+		free(holder);
 		free(line);
 	}
 	infile->heredoc = true;
