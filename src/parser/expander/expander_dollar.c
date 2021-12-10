@@ -47,6 +47,13 @@ void	*bad_substitution_error(char *str)
 	return (NULL);
 }
 
+void	free_strings(char *prefix, char *str, char *aux)
+{
+	free(prefix);
+	free(str);
+	free(aux);
+}
+
 char	*replace_dollar_brackets(char *str, int i)
 {
 	char	*prefix;
@@ -66,10 +73,8 @@ char	*replace_dollar_brackets(char *str, int i)
 		value = "";
 	prefix = ft_substr(str, 0, i);
 	aux = ft_strjoin(prefix, value);
-	free(prefix);
 	value = ft_strjoin(aux, str + j + 1);
-	free(str);
-	free(aux);
+	free_strings(prefix, str, aux);
 	return (value);
 }
 

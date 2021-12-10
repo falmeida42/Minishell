@@ -17,6 +17,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		size;
 	char	*res;
 
+	if (s2 == NULL)
+		return (ft_strdup(s1));
 	size = ft_strlen(s1);
 	size += ft_strlen(s2);
 	res = malloc(size + 1);

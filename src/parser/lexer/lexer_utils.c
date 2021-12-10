@@ -34,6 +34,20 @@ void	*remove_quotes(char *str)
 	return (str2);
 }
 
+int	only_char(char *str, char c)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 t_token	*take_dquoted(char **cursor)
 {
 	char	c;
@@ -48,6 +62,11 @@ t_token	*take_dquoted(char **cursor)
 	c = char_iterator_peek(cursor);
 	prev_char = 0;
 	end = NULL;
+	if (only_char(start, '"'))
+	{
+		g_mini.parse_error = ft_strdup("minishell: permission denied: ");
+		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
+	}
 	while (c)
 	{
 		if (c == '"' && prev_char != '\\')
@@ -72,6 +91,11 @@ t_token	*take_quoted(char **cursor)
 
 	char_iterator_next(cursor);
 	start = *cursor;
+	if (only_char(start, '\''))
+	{
+		g_mini.parse_error = ft_strdup("minishell: permission denied: ");
+		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
+	}
 	prev_char = 0;
 	c = char_iterator_peek(cursor);
 	while (c && (c != '\'' || prev_char == '\\'))
@@ -89,12 +113,15 @@ t_token	*take_text(char **cursor)
 	char	c;
 	char	*start;
 	char	*end;
+	char	*result;
 
 	start = *cursor;
 	c = char_iterator_peek(cursor);
 	while (c && !ft_contains(c, " |&><)("))
 		c = char_iterator_next(cursor);
 	end = *cursor;
-	return (token_new(TOKEN_TEXT,
-			remove_quotes(ft_substr(start, 0, end - start))));
+	result = ft_substr(start, 0, end - start);
+	if (!ft_contains('\'', start) || !ft_contains('"', start))
+		result = remove_quotes(result);
+	return (token_new(TOKEN_TEXT, result));
 }
