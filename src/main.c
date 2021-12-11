@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/10 16:20:31 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 19:27:39 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		g_mini.input = readline(g_mini.prompt);
 		if (!g_mini.input)
+		{
+			ft_putendl("exit");
 			break ;
+		}
 		minishell_loop();
 		if (g_mini.exit)
 		{
-			ft_putstr("exit\n");
+			ft_putendl("exit");
 			break ;
 		}
 	}

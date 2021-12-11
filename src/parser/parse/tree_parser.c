@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 10:24:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 18:26:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 10:09:48 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_command_tree	*command_tree_parse(t_token_iterator *it, t_token *end_token)
 	token = token_iterator_peek(it);
 	if (token->type == TOKEN_AND || token->type == TOKEN_OR
 		|| token->type == TOKEN_PIPE)
-		return (NULL);
+		return (clean_exit(NULL, syntax_error_msg(token), NULL));
 	token = token_list_lookup_logical(*it, end_token);
 	if (token)
 		return (command_tree_parse_split_on(it, token, end_token));
