@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 09:39:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 11:30:22 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,7 @@ typedef enum e_quote_type
 {
 	QUOTE_NONE,
 	QUOTE_SINGLE,
-	QUOTE_DOUBLE,
-	QUOTE_ANY
+	QUOTE_DOUBLE
 }	t_quote_type;
 
 typedef struct s_token
@@ -232,6 +231,7 @@ t_command_tree	*parser(char *input);
 
 // Expander
 char			*ft_expander(char *str);
+char			*ft_expander_heredoc(char *str);
 
 char			*replace_dollar_generic(char *str, int i);
 char			*replace_dollar_brackets(char *str, int i);
