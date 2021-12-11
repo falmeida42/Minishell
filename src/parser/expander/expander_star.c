@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:32:27 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 23:42:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 12:06:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_list	*match_files(char *to_match, char *dir)
 		entry = readdir(d);
 		if (!entry)
 			break ;
-		if (entry->d_type == '\b' || entry->d_type == '\004')
+		if (!(entry->d_type == '\b' || entry->d_type == '\004'))
 			continue ;
 		if (entry->d_name[0] == '.')
 			continue ;
