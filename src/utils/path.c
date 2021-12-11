@@ -13,6 +13,20 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+
+bool	is_executable(char *path)
+{
+	struct stat buf;
+
+	if (access(path, X_OK) != 0)
+		return (false);
+	if (stat(path, &buf) != 0)
+		return (false);
+	if (!S_ISREG(buf.st_mode))
+		return (false);
+	return (true);
+}
 
 char	*path_join(char *path, char *fname)
 {
@@ -39,7 +53,7 @@ char	*lookup_exe_in_directories(char *path, char **dir)
 	while (*dir)
 	{
 		full_path = path_join(*dir, path);
-		if (access(full_path, X_OK) == 0)
+		if (is_executable(full_path))
 			return (full_path);
 		free(full_path);
 		dir++;
@@ -90,11 +104,11 @@ char	*get_relative_path(char *path)
 
 char	*normalize_path(char *path)
 {
-	if (!path || !*path)
-		return (ft_strdup(""));
+	if (!path)
+		return (NULL);
 	if (*path == '/')
 	{
-		if (access(path, X_OK) < 0)
+		if (is_executable(path))
 		{
 			perror(path);
 			return (NULL);
