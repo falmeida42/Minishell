@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 22:59:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 09:39:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ t_token			*take_text(char **cursor);
 
 t_quote_type	update_quote_type(t_quote_type quote_type,
 					char c, char prev_char);
+char			update_prev_char(char c, char prev_char);
 bool			ft_contains_unquoted(char *str, char needle);
 char			*ft_strchr_unquoted(char *str, char needle);
 char			*clean_string(char *str);
