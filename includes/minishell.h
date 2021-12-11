@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 11:30:22 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 14:30:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int				pipe_execute_io(t_command_tree *left, t_command_tree *right,
 // Utils
 char			*lookup_full_path(char *path);
 char			*normalize_path(char *path);
+bool			is_executable(char *path);
 void			*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *));
 
 // env variable
