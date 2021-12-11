@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 16:47:29 by jceia             #+#    #+#             */
-/*   Updated: 2021/12/09 09:56:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 10:04:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_lstremove_if(t_list **begin_list, int (*f)(void *),
 		{
 			if (lst_prev)
 				lst_prev->next = lst->next;
+			else
+				*begin_list = lst->next;
 			lst_next = lst->next;
 			free_fct(lst->content);
 			free(lst);

@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 15:54:43 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 23:41:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_strings(char *prefix, char *str, char *aux)
+{
+	free(prefix);
+	free(str);
+	free(aux);
+}
 
 char	*replace_dollar_generic(char *str, int i)
 {
@@ -33,10 +40,8 @@ char	*replace_dollar_generic(char *str, int i)
 		value = "";
 	prefix = ft_substr(str, 0, i);
 	aux = ft_strjoin(prefix, value);
-	free(prefix);
 	value = ft_strjoin(aux, str + j + shift);
-	free(str);
-	free(aux);
+	free_strings(prefix, str, aux);
 	return (value);
 }
 
@@ -45,13 +50,6 @@ void	*bad_substitution_error(void)
 	g_mini.parse_error = ft_strdup("bad substitution");
 	g_mini.status = 1;
 	return (NULL);
-}
-
-void	free_strings(char *prefix, char *str, char *aux)
-{
-	free(prefix);
-	free(str);
-	free(aux);
 }
 
 char	*replace_dollar_brackets(char *str, int i)
@@ -89,9 +87,7 @@ char	*replace_dollar_status(char *str, int i)
 	nb = ft_itoa(g_mini.status);
 	aux = ft_strjoin(prefix, nb);
 	result = ft_strjoin(aux, str + i + 2);
-	free(str);
-	free(prefix);
-	free(aux);
+	free_strings(prefix, str, aux);
 	free(nb);
 	return (result);
 }

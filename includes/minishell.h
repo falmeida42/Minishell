@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 13:32:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 09:39:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,6 @@ typedef enum e_token_type
 {
 	TOKEN_NULL,
 	TOKEN_TEXT,
-	TOKEN_QUOTED,
-	TOKEN_DQUOTED,
 	TOKEN_PIPE,
 	TOKEN_AND,
 	TOKEN_OR,
@@ -174,6 +172,14 @@ typedef enum e_token_type
 	TOKEN_LPAREN,
 	TOKEN_RPAREN
 }	t_token_type;
+
+typedef enum e_quote_type
+{
+	QUOTE_NONE,
+	QUOTE_SINGLE,
+	QUOTE_DOUBLE,
+	QUOTE_ANY
+}	t_quote_type;
 
 typedef struct s_token
 {
@@ -209,9 +215,14 @@ t_token_list	*lex(char *input);
 
 t_token			*take_twochar_symbol(t_char_iterator *cursor);
 t_token			*take_symbol(t_char_iterator *cursor);
-t_token			*take_dquoted(char **cursor);
-t_token			*take_quoted(char **cursor);
 t_token			*take_text(char **cursor);
+
+t_quote_type	update_quote_type(t_quote_type quote_type,
+					char c, char prev_char);
+char			update_prev_char(char c, char prev_char);
+bool			ft_contains_unquoted(char *str, char needle);
+char			*ft_strchr_unquoted(char *str, char needle);
+char			*clean_string(char *str);
 
 // Parsing
 t_simple_command*simple_command_parse(t_token_iterator *it);
