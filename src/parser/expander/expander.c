@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:29:58 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 23:39:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 11:31:40 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,25 @@ char	*ft_expander(char *str)
 		return (ft_expander(replace_dollar_brackets(str, pos - str)));
 	if (!(ft_contains(c, " \"") || c == '\0'))
 		return (ft_expander(replace_dollar_generic(str, pos - str)));
+	return (str);
+}
+
+char	*ft_expander_heredoc(char *str)
+{
+	char	c;
+	char	*pos;
+
+	if (!str)
+		return (NULL);
+	pos = ft_strchr(str, '$');
+	if (!pos)
+		return (str);
+	c = *(pos + 1);
+	if (c == '?')
+		return (ft_expander_heredoc(replace_dollar_status(str, pos - str)));
+	if (c == '{')
+		return (ft_expander_heredoc(replace_dollar_brackets(str, pos - str)));
+	if (!(ft_contains(c, " \"") || c == '\0'))
+		return (ft_expander_heredoc(replace_dollar_generic(str, pos - str)));
 	return (str);
 }
