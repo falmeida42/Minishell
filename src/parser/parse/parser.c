@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 01:47:24 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 18:25:04 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 14:35:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_command_tree	*parser(char *input)
 	token_list = lex(input);
 	apply_star_expander(token_list);
 	ft_lstapplymap(token_list, expand_operation);
-	ft_lstremove_if(&token_list, is_empty_word_token_wrap, token_free);
 	token_it = token_list;
 	ast = command_tree_parse(&token_it, NULL);
 	ft_lstclear(&token_list, token_free);
