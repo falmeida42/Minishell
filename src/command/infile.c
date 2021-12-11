@@ -21,6 +21,12 @@ void	infile_heredoc_setup(t_infile *infile, char *eof)
 	while (42)
 	{
 		line = readline("> ");
+		if (line == NULL)
+		{
+			free(infile->data);
+			infile->data = NULL;
+			break ;
+		}
 		if (!ft_strcmp(line, eof))
 		{
 			free(line);
