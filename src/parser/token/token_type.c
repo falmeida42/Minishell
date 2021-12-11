@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:14:37 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 09:41:59 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 21:29:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 // Checks if a token is a word ( simple text, quoted text, double quoted text )
 bool	is_word_token(t_token *token)
 {
-	t_token_type	type;
-
 	if (!token)
 		return (false);
-	type = token->type;
-	return (type == TOKEN_TEXT
-		|| type == TOKEN_QUOTED
-		|| type == TOKEN_DQUOTED);
+	return (token->type == TOKEN_TEXT);
 }
 
 // Checks if a token is a redirection token ( > , >> , < , << )

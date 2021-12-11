@@ -3,125 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 15:55:07 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/10 23:39:34 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-void	*remove_quotes(char *str)
+t_quote_type	update_quote_type(t_quote_type quote_type,
+					char c, char prev_char)
 {
-	char	*str2;
-	int		i;
-	int		j;
-
-	str2 = malloc(ft_strlen(str) + 1);
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
+	if (prev_char != '\\')
 	{
-		if (str[i] == '"' && (i == 0 || str[i - 1] != '\\'))
-			i++;
-		else
-			str2[j++] = str[i++];
+		if (quote_type == QUOTE_NONE)
+		{
+			if (c == '\'')
+				return (QUOTE_SINGLE);
+			if (c == '\"')
+				return (QUOTE_DOUBLE);
+		}
+		else if (quote_type == QUOTE_SINGLE && c == '\'')
+			return (QUOTE_NONE);
+		else if (quote_type == QUOTE_DOUBLE && c == '\"')
+			return (QUOTE_NONE);
 	}
-	str2[j] = '\0';
-	free(str);
-	return (str2);
+	return (quote_type);
 }
 
-int	only_char(char *str, char c)
+char	update_prev_char(char c, char prev_char)
 {
-	int	i;
-	
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != c)
-			return (0);
-		i++;
-	}
-	return (1);
+	if (prev_char == '\\')
+		return (0);
+	return (c);
 }
 
-t_token	*take_dquoted(char **cursor)
-{
-	char	c;
-	char	prev_char;
-	char	*start;
-	char	*end;
-	bool	inside_quotes;
-
-	inside_quotes = true;
-	start = *cursor;
-	char_iterator_next(cursor);
-	c = char_iterator_peek(cursor);
-	prev_char = 0;
-	end = NULL;
-	if (only_char(start, '"'))
-	{
-		g_mini.parse_error = ft_strdup("minishell: : command not found");
-		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
-	}
-	while (c)
-	{
-		if (c == '"' && prev_char != '\\')
-			inside_quotes = !inside_quotes;
-		else if (c == ' ' && !inside_quotes)
-			break ;
-		prev_char = c;
-		c = char_iterator_next(cursor);
-	}
-	if (end == NULL)
-		end = *cursor;
-	return (token_new(TOKEN_DQUOTED,
-			remove_quotes(ft_substr(start, 0, end - start))));
-}
-
-t_token	*take_quoted(char **cursor)
-{
-	char	c;
-	char	prev_char;
-	char	*start;
-	char	*end;
-
-	char_iterator_next(cursor);
-	start = *cursor;
-	if (only_char(start, '\''))
-	{
-		g_mini.parse_error = ft_strdup("minishell: : command not found");
-		return (token_new(TOKEN_DQUOTED, ft_strdup(" ")));
-	}
-	prev_char = 0;
-	c = char_iterator_peek(cursor);
-	while (c && (c != '\'' || prev_char == '\\'))
-	{
-		prev_char = c;
-		c = char_iterator_next(cursor);
-	}
-	end = *cursor;
-	char_iterator_next(cursor);
-	return (token_new(TOKEN_QUOTED, ft_substr(start, 0, end - start)));
-}
-
+/* takes a text token and returns it
+ * as a string, using the same rules as bash
+ * i.e., it stops in the end of string or
+ * space if it is outside quotes
+ */
 t_token	*take_text(char **cursor)
 {
-	char	c;
-	char	*start;
-	char	*end;
-	char	*result;
+	char			c;
+	char			prev_char;
+	char			*start;
+	t_quote_type	quote_type;
 
 	start = *cursor;
 	c = char_iterator_peek(cursor);
-	while (c && !ft_contains(c, " |&><)("))
+	prev_char = 0;
+	quote_type = QUOTE_NONE;
+	while (c)
+	{
+		quote_type = update_quote_type(quote_type, c, prev_char);
+		if (quote_type == QUOTE_NONE && ft_contains(c, " \t\n\r|&><)("))
+			break ;
+		prev_char = update_prev_char(c, prev_char);
 		c = char_iterator_next(cursor);
-	end = *cursor;
-	result = ft_substr(start, 0, end - start);
-	if (!ft_contains('\'', start) || !ft_contains('"', start))
-		result = remove_quotes(result);
-	return (token_new(TOKEN_TEXT, result));
+	}
+	return (token_new(TOKEN_TEXT, ft_substr(start, 0, *cursor - start)));
+}
+
+bool	does_add_char(t_quote_type quote_type, char c, char prev_char)
+{
+	if (quote_type == QUOTE_NONE)
+		return (!(c == '\\' || c == '\'' || c == '"') || prev_char == '\\');
+	if (quote_type == QUOTE_SINGLE)
+		return (!(c == '\\' || c == '\'') || prev_char == '\\');
+	if (quote_type == QUOTE_DOUBLE)
+		return (!(c == '\\' || c == '"') || prev_char == '\\');
+	return (false);
+}
+
+/*
+ * Cleans a string from quotes and escapes
+ */
+char	*clean_string(char *str)
+{
+	int				i;
+	char			*clean;
+	char			c;
+	char			prev_char;
+	t_quote_type	quote_type;
+
+	prev_char = 0;
+	quote_type = QUOTE_NONE;
+	clean = ft_strdup("");
+	i = 0;
+	while (str[i])
+	{
+		c = str[i];
+		quote_type = update_quote_type(quote_type, c, prev_char);
+		if (does_add_char(quote_type, c, prev_char))
+			clean = ft_straddc(clean, c);
+		prev_char = update_prev_char(c, prev_char);
+		i++;
+	}
+	free(str);
+	return (clean);
 }

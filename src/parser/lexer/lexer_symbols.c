@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_words.c                                      :+:      :+:    :+:   */
+/*   lexer_symbols.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:33:02 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/07 19:33:34 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/10 23:28:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*take_symbol(t_char_iterator *cursor)
 	else if (c == '>')
 		token = token_new(TOKEN_GREATER, ft_strdup(">"));
 	else if (c == '<')
-		token = token_new(TOKEN_DLESS, ft_strdup("<"));
+		token = token_new(TOKEN_LESS, ft_strdup("<"));
 	else if (c == '(')
 		token = token_new(TOKEN_LPAREN, ft_strdup("("));
 	else if (c == ')')
