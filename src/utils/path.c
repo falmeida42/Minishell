@@ -94,7 +94,7 @@ char	*normalize_path(char *path)
 		return (NULL);
 	if (*path == '/')
 	{
-		if (is_executable(path))
+		if (access(path, X_OK) < 0)
 		{
 			perror(path);
 			return (NULL);
