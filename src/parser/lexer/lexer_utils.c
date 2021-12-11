@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:49 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 09:35:57 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 14:16:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ t_token	*take_text(char **cursor)
 	while (c)
 	{
 		quote_type = update_quote_type(quote_type, c, prev_char);
-		if (quote_type == QUOTE_NONE && ft_contains(c, " \t\n\r|&><)("))
+		if (quote_type == QUOTE_NONE && (ft_isspace(c)
+				|| ft_contains(c, "|&><)(")))
 			break ;
 		prev_char = update_prev_char(c, prev_char);
 		c = char_iterator_next(cursor);

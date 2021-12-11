@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/10 21:48:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 13:16:45 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *str, char c);
 int		ft_strwc(char const *s, char c);
+int		ft_strwc_seps(char const *s, char *charset);
 int		ft_contains(char c, char const *charset);
 int		ft_startswith(const char *s, const char *pref);
 int		ft_endswith(const char *s, const char *suff);

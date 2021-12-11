@@ -6,13 +6,14 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/10 19:27:39 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 14:34:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include <fcntl.h>
+#include <readline/readline.h>
 
 int	minishell_loop(void)
 {
