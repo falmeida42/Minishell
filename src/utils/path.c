@@ -13,20 +13,6 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/stat.h>
-
-bool	is_executable(char *path)
-{
-	struct stat buf;
-
-	if (access(path, X_OK) != 0)
-		return (false);
-	if (stat(path, &buf) != 0)
-		return (false);
-	if (!S_ISREG(buf.st_mode))
-		return (false);
-	return (true);
-}
 
 char	*path_join(char *path, char *fname)
 {

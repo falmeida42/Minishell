@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:35:38 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/10 23:41:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 14:16:22 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*replace_dollar_generic(char *str, int i)
 	int		j;
 
 	j = i + 1;
-	while (str[j] != '\0' && !ft_contains(str[j], " '\t${\\\""))
+	while (str[j] != '\0' && !(ft_isspace(str[j])
+			|| ft_contains(str[j], "'${\\\"")))
 		j++;
 	shift = 0;
 	if (str[j] == ' ')
