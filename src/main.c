@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/11 13:17:09 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 14:34:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	minishell_loop(void)
 	g_mini.tree = parser(g_mini.input);
 	if (g_mini.input)
 	{
-		if (ft_strwc_seps(g_mini.input, " \t\b\n") > 0)
+		if (ft_strwc(g_mini.input, ' ') > 0)
 			add_history(g_mini.input);
 		if (g_mini.parse_error)
 			ft_putendl_error(g_mini.parse_error);
