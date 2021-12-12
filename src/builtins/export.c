@@ -81,7 +81,7 @@ int	ft_export(char **argv, int fd)
 		p = pair_from_str(*argv, '=');
 		if (!p)
 			return (1);
-		env_set(p->key, p->value);
+		env_set(p->key, ft_expander(p->value));
 		free(p);
 	}
 	return (0);

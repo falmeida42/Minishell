@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 09:35:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 09:52:59 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 17:19:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_mini	*mini_init(t_mini *ptr, char **envp)
 	ptr->exit = false;
 	ptr->parse_error = NULL;
 	ptr->pid = 0;
+	ptr->is_child = false;
 	ptr->prompt = "minishell: ";
 	if (tcgetattr(STDIN_FILENO, &g_mini.term) != 0)
 		ft_putendl_error("Error: tcgetattr");

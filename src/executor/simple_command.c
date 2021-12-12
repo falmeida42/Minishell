@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/09 13:31:56 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/11 17:18:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
 		return (EXIT_FAILURE);
 	}
 	if (g_mini.pid == 0)
+	{
+		g_mini.is_child = true;
 		exit(simple_command_execute_io_child_process(cmd, fd_in, fd_out));
+	}
 	waitpid(g_mini.pid, &status, 0);
 	g_mini.pid = 0;
 	if (WIFEXITED(status))

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 01:54:19 by jceia             #+#    #+#             */
-/*   Updated: 2021/11/16 16:47:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/11 17:50:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ char	**map_to_str_array(t_map *map, char sep)
 	return (arr);
 }
 
+char	*update_shlvl(char *shlvl)
+{
+	char	*holder;
+
+	holder = shlvl;
+	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+	free(holder);
+	return (shlvl);
+}
+
 // Generates a map from an array of strings.
 t_map	*map_from_str_array(char **arr, char sep)
 {
@@ -48,6 +58,8 @@ t_map	*map_from_str_array(char **arr, char sep)
 		++arr;
 		if (!p)
 			continue ;
+		if (!ft_strcmp(p->key, "SHLVL"))
+			p->value = update_shlvl(p->value);
 		if (!ft_lstpush_back(&map, p))
 		{
 			ft_lstclear(&map, &pair_clear);

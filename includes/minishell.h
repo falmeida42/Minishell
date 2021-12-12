@@ -37,6 +37,7 @@ typedef struct s_mini {
 	int				status;
 	int				pid;
 	bool			exit;
+	bool			is_child;
 	t_map			*env;
 	char			*input;
 	char			*parse_error;

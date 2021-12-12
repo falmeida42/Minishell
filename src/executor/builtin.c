@@ -66,7 +66,10 @@ int	builtin_execute_with_fork(char **argv, int fd)
 		return (EXIT_FAILURE);
 	}
 	if (g_mini.pid == 0)
+	{
+		g_mini.is_child = true;
 		exit(builtin_execute(argv, fd));
+	}
 	else
 	{
 		waitpid(g_mini.pid, &status, 0);
