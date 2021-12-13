@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/13 10:12:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/13 12:39:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	simple_command_execute_io(t_simple_command *cmd, bool fork_builtin,
 	g_mini.pid = 0;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	return (-WTERMSIG(status));
+	return (g_mini.status);
 }
 
 int	simple_command_execute(t_simple_command *cmd)
