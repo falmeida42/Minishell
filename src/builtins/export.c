@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/13 09:20:19 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 09:23:28 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ int	ft_export(char **argv, int fd)
 			return (0);
 		if (!valid_identifier(p->key))
 		{
-			ft_putstr_fd("export: `", fd);
-			ft_putstr_fd(*argv, fd);
-			ft_putendl_fd("': not a valid identifier", fd);
+			ft_putstr_error("export: `");
+			ft_putstr_error(*argv);
+			ft_putendl_error("': not a valid identifier");
 			return (1);
 		}
 		env_set(p->key, ft_expander(p->value));
