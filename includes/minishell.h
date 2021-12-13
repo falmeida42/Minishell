@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/13 09:53:41 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 10:34:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int				pipe_execute_io(t_command_tree *left, t_command_tree *right,
 char			*lookup_full_path(char *path);
 char			*normalize_path(char *path);
 bool			is_executable(char *path);
+bool			is_executable_verbose(char *full_path, char *path);
 void			*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *));
 
 // env variable

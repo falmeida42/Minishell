@@ -74,24 +74,15 @@ char	*lookup_full_path(char *path)
 
 char	*get_full_path(char *path)
 {
-	struct stat	sb;
 	char		*full_path;
 	char		*dir;
 
 	dir = getcwd(NULL, 0);
 	full_path = path_join(dir, path);
 	free(dir);
-	if (access(full_path, X_OK) < 0)
+	if (!is_executable_verbose(full_path, path))
 	{
 		free(full_path);
-		perror(path);
-		return (NULL);
-	}
-	if (stat(full_path, &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		free(full_path);
-		ft_putstr_error(path);
-		ft_putendl_error(": is a directory");
 		return (NULL);
 	}
 	return (full_path);
@@ -99,23 +90,12 @@ char	*get_full_path(char *path)
 
 char	*normalize_path(char *path)
 {
-	struct stat	sb;
-
 	if (!path)
 		return (NULL);
 	if (*path == '/')
 	{
-		if (access(path, X_OK) < 0)
-		{
-			perror(path);
+		if (!is_executable_verbose(path, path))
 			return (NULL);
-		}
-		if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
-		{
-			ft_putstr_error(path);
-			ft_putendl_error(": is a directory");
-			return (NULL);
-		}
 		return (ft_strdup(path));
 	}
 	if (*path == '.')
