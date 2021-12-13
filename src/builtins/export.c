@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/13 09:23:28 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 10:00:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	ft_export_no_args(int fd)
 }
 
 // checks if the key is a valid identifier.
-bool valid_identifier(char *str)
+bool	valid_identifier(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] != '_' && !ft_isalpha(str[i]))
