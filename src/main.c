@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/11 14:34:25 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 09:57:49 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ int	minishell_non_interactive_fd(int fd)
 	int	status;
 
 	status = 1;
-	while (status > 0)
+	while (status > 0 && !g_mini.exit)
 	{
 		status = ft_get_next_line(fd, &g_mini.input);
 		minishell_loop();
-		if (g_mini.exit)
-			break ;
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
@@ -78,7 +76,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, get_signal);
 	signal(SIGQUIT, get_signal);
 	signal(SIGSEGV, get_signal);
-	while (42)
+	while (!g_mini.exit)
 	{
 		g_mini.input = readline(g_mini.prompt);
 		if (!g_mini.input)
@@ -87,11 +85,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		minishell_loop();
-		if (g_mini.exit)
-		{
-			ft_putendl("exit");
-			break ;
-		}
 	}
 	mini_final_clear(&g_mini);
 	return (g_mini.status);
