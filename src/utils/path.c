@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 char	*path_join(char *path, char *fname)
 {
@@ -71,21 +72,20 @@ char	*lookup_full_path(char *path)
 	return (full_path);
 }
 
-char	*get_relative_path(char *path)
+char	*get_full_path(char *path)
 {
-	char	*relative_path;
-	char	*dir;
+	char		*full_path;
+	char		*dir;
 
 	dir = getcwd(NULL, 0);
-	relative_path = path_join(dir, path);
+	full_path = path_join(dir, path);
 	free(dir);
-	if (access(relative_path, X_OK) < 0)
+	if (!is_executable_verbose(full_path, path))
 	{
-		perror(path);
-		free(relative_path);
+		free(full_path);
 		return (NULL);
 	}
-	return (relative_path);
+	return (full_path);
 }
 
 char	*normalize_path(char *path)
@@ -94,14 +94,11 @@ char	*normalize_path(char *path)
 		return (NULL);
 	if (*path == '/')
 	{
-		if (access(path, X_OK) < 0)
-		{
-			perror(path);
+		if (!is_executable_verbose(path, path))
 			return (NULL);
-		}
 		return (ft_strdup(path));
 	}
 	if (*path == '.')
-		return (get_relative_path(path));
+		return (get_full_path(path));
 	return (lookup_full_path(path));
 }

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 02:17:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 17:18:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/13 10:12:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	exec_child_process(char **argv)
 		return (127);
 	env_arr = map_to_str_array(g_mini.env, '=');
 	status = execve(program_name, argv, env_arr);
-	free(argv);
 	free(program_name);
 	ft_str_array_clear(env_arr, 0);
 	return (status);

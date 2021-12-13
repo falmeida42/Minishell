@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 21:09:35 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 14:30:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/12/13 10:34:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int				ft_cd(char **argv, int fd);
 int				ft_env(char **argv, int fd);
 int				ft_export(char **argv, int fd);
 int				ft_unset(char **argv, int fd);
+int				ft_exit(char **argv, int fd);
 
 bool			is_builtin(char *name);
 int				builtin_execute(char **argv, int fd);
@@ -144,6 +145,7 @@ int				pipe_execute_io(t_command_tree *left, t_command_tree *right,
 char			*lookup_full_path(char *path);
 char			*normalize_path(char *path);
 bool			is_executable(char *path);
+bool			is_executable_verbose(char *full_path, char *path);
 void			*clean_exit(void *ptr, char *err_msg, void (*free_fct)(void *));
 
 // env variable
