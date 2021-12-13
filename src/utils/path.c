@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 char	*path_join(char *path, char *fname)
 {
@@ -71,25 +72,35 @@ char	*lookup_full_path(char *path)
 	return (full_path);
 }
 
-char	*get_relative_path(char *path)
+char	*get_full_path(char *path)
 {
-	char	*relative_path;
-	char	*dir;
+	struct stat	sb;
+	char		*full_path;
+	char		*dir;
 
 	dir = getcwd(NULL, 0);
-	relative_path = path_join(dir, path);
+	full_path = path_join(dir, path);
 	free(dir);
-	if (access(relative_path, X_OK) < 0)
+	if (access(full_path, X_OK) < 0)
 	{
+		free(full_path);
 		perror(path);
-		free(relative_path);
 		return (NULL);
 	}
-	return (relative_path);
+	if (stat(full_path, &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		free(full_path);
+		ft_putstr_error(path);
+		ft_putendl_error(": is a directory");
+		return (NULL);
+	}
+	return (full_path);
 }
 
 char	*normalize_path(char *path)
 {
+	struct stat	sb;
+
 	if (!path)
 		return (NULL);
 	if (*path == '/')
@@ -99,9 +110,15 @@ char	*normalize_path(char *path)
 			perror(path);
 			return (NULL);
 		}
+		if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
+		{
+			ft_putstr_error(path);
+			ft_putendl_error(": is a directory");
+			return (NULL);
+		}
 		return (ft_strdup(path));
 	}
 	if (*path == '.')
-		return (get_relative_path(path));
+		return (get_full_path(path));
 	return (lookup_full_path(path));
 }
