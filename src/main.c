@@ -20,7 +20,7 @@ int	minishell_loop(void)
 	g_mini.tree = parser(g_mini.input);
 	if (g_mini.input)
 	{
-		if (ft_strwc(g_mini.input, ' ') > 0)
+		if (ft_strlen(g_mini.input) > 0)
 			add_history(g_mini.input);
 		if (g_mini.parse_error)
 			ft_putendl_error(g_mini.parse_error);

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:00:13 by falmeida          #+#    #+#             */
-/*   Updated: 2021/12/09 14:47:28 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 12:44:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	handle_sigint(void)
 {
-	ft_putchar('\n');
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	if (g_mini.pid)
@@ -24,6 +23,7 @@ void	handle_sigint(void)
 	}
 	else
 	{
+		ft_putchar('\n');
 		g_mini.status = 1;
 		rl_redisplay();
 	}

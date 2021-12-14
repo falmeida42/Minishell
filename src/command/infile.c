@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:36:04 by jpceia            #+#    #+#             */
-/*   Updated: 2021/12/11 11:30:45 by jceia            ###   ########.fr       */
+/*   Updated: 2021/12/13 12:11:55 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	infile_heredoc_setup(t_infile *infile, char *eof)
 	{
 		line = readline("> ");
 		if (line == NULL)
-		{
-			free(infile->data);
-			infile->data = NULL;
 			break ;
-		}
 		if (!ft_strcmp(line, eof))
 		{
 			free(line);
